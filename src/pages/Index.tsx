@@ -675,9 +675,27 @@ function ContactForm({ inView }: { inView: boolean }) {
   const toggle = (key: string) =>
     setSelected((prev) => prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key]);
 
-  const handleSubmit = () => {
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async () => {
     if (!name || !phone) return;
-    setSent(true);
+    setLoading(true);
+    try {
+      await fetch("https://functions.poehali.dev/e0c4663b-8df6-4eed-958d-8a57089eb58a", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          phone,
+          furniture: selected.map((k) => FURNITURE_TYPES.find((f) => f.key === k)?.label).filter(Boolean),
+          time: time,
+          comment,
+        }),
+      });
+      setSent(true);
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (sent) {
@@ -752,9 +770,9 @@ function ContactForm({ inView }: { inView: boolean }) {
         <button
           onClick={handleSubmit}
           className="w-full btn-primary py-3.5 font-oswald font-semibold text-base disabled:opacity-50"
-          disabled={!name || !phone}
+          disabled={!name || !phone || loading}
         >
-          {selected.length > 0
+          {loading ? "Отправляем..." : selected.length > 0
             ? `Вызвать мастера — ${selected.map((k) => FURNITURE_TYPES.find((f) => f.key === k)?.label).join(", ")}`
             : "Вызвать мастера"}
         </button>
