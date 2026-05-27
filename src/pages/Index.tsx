@@ -132,18 +132,24 @@ const GALLERY_ITEMS = [
   { label: "Стулья до и после", tag: "Стулья", emoji: "✨", ratio: "1/1" },
 ];
 
-const CLEANING_TYPES = [
-  { id: "standard", label: "Стандартная", pricePerSqm: 45 },
-  { id: "general", label: "Генеральная", pricePerSqm: 90 },
-  { id: "repair", label: "После ремонта", pricePerSqm: 120 },
-  { id: "office", label: "Офисная", pricePerSqm: 55 },
+const FURNITURE_ITEMS = [
+  { id: "sofa_2", label: "Диван 2-местный", emoji: "🛋️", price: 2500 },
+  { id: "sofa_3", label: "Диван 3-местный", emoji: "🛋️", price: 3500 },
+  { id: "sofa_corner", label: "Угловой диван", emoji: "🛋️", price: 4500 },
+  { id: "chair", label: "Кресло", emoji: "🪑", price: 1500 },
+  { id: "mattress_s", label: "Матрас 1-спальный", emoji: "🛏️", price: 2000 },
+  { id: "mattress_d", label: "Матрас 2-спальный", emoji: "🛏️", price: 2800 },
+  { id: "carpet_s", label: "Ковёр до 6 м²", emoji: "🏡", price: 1800 },
+  { id: "carpet_l", label: "Ковёр от 6 м²", emoji: "🏡", price: 2800 },
+  { id: "car_seat", label: "Авто (салон)", emoji: "🚗", price: 3500 },
+  { id: "dining_chair", label: "Стул обеденный", emoji: "🪑", price: 600 },
 ];
 
 const EXTRA_OPTIONS = [
-  { key: "windows", label: "Мытьё окон", price: 800 },
-  { key: "balcony", label: "Уборка балкона", price: 500 },
-  { key: "fridge", label: "Чистка холодильника", price: 400 },
-  { key: "oven", label: "Чистка духовки", price: 350 },
+  { key: "express", label: "Экспресс-сушка (1–2 ч)", price: 800 },
+  { key: "deodorant", label: "Устранение запахов", price: 500 },
+  { key: "nano", label: "Нано-защита ткани", price: 700 },
+  { key: "disinfect", label: "Дезинфекция", price: 400 },
 ];
 
 // ============ ХУКИ ============
@@ -363,21 +369,32 @@ function Services() {
 }
 
 function Calculator() {
-  const [area, setArea] = useState(50);
-  const [type, setType] = useState("standard");
+  const [counts, setCounts] = useState<Record<string, number>>({});
   const [extras, setExtras] = useState<string[]>([]);
   const { ref, inView } = useInView();
 
-  const currentType = CLEANING_TYPES.find((t) => t.id === type)!;
   const toggleExtra = (key: string) =>
     setExtras((prev) => prev.includes(key) ? prev.filter((e) => e !== key) : [...prev, key]);
 
-  const basePrice = Math.round(area * currentType.pricePerSqm);
+  const changeCount = (id: string, delta: number) =>
+    setCounts((prev) => {
+      const next = (prev[id] || 0) + delta;
+      if (next <= 0) { const { [id]: _, ...rest } = prev; return rest; }
+      return { ...prev, [id]: next };
+    });
+
+  const itemsTotal = FURNITURE_ITEMS.reduce((sum, item) => sum + (counts[item.id] || 0) * item.price, 0);
   const extrasTotal = extras.reduce((sum, e) => {
     const opt = EXTRA_OPTIONS.find((o) => o.key === e);
     return sum + (opt ? opt.price : 0);
   }, 0);
-  const total = basePrice + extrasTotal;
+  const total = itemsTotal + extrasTotal;
+  const hasItems = Object.values(counts).some((c) => c > 0);
+
+  const selectedSummary = FURNITURE_ITEMS
+    .filter((f) => counts[f.id])
+    .map((f) => `${f.emoji} ${f.label} × ${counts[f.id]}`)
+    .join(", ");
 
   return (
     <section id="prices" className="py-20 relative overflow-hidden dark-mesh-bg">
@@ -396,39 +413,31 @@ function Calculator() {
 
         <div className={`bg-white rounded-3xl p-6 md:p-10 shadow-2xl ${inView ? "animate-scale-in stagger-3" : "opacity-0"}`}>
           <div className="grid md:grid-cols-2 gap-8">
+
+            {/* Левая часть — выбор мебели и доп. услуги */}
             <div className="space-y-6">
               <div>
-                <label className="block text-sm font-semibold mb-3" style={{ color: "var(--dark)" }}>Тип уборки</label>
-                <div className="grid grid-cols-2 gap-2">
-                  {CLEANING_TYPES.map((t) => (
-                    <button
-                      key={t.id}
-                      onClick={() => setType(t.id)}
-                      className="px-3 py-2.5 rounded-xl text-sm font-semibold transition-all"
-                      style={{
-                        background: type === t.id ? "var(--teal)" : "var(--teal-light)",
-                        color: type === t.id ? "white" : "var(--teal-dark)",
-                        border: type === t.id ? "2px solid var(--teal)" : "2px solid transparent",
-                      }}
-                    >
-                      {t.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold mb-2" style={{ color: "var(--dark)" }}>
-                  Площадь: <span style={{ color: "var(--teal)" }}>{area} м²</span>
-                </label>
-                <input
-                  type="range" min={20} max={300} step={5} value={area}
-                  onChange={(e) => setArea(Number(e.target.value))}
-                  className="w-full h-2 rounded-full outline-none cursor-pointer"
-                  style={{ accentColor: "var(--teal)" }}
-                />
-                <div className="flex justify-between text-xs mt-1" style={{ color: "var(--gray)" }}>
-                  <span>20 м²</span><span>300 м²</span>
+                <label className="block text-sm font-semibold mb-3" style={{ color: "var(--dark)" }}>Выберите мебель</label>
+                <div className="space-y-2">
+                  {FURNITURE_ITEMS.map((item) => {
+                    const count = counts[item.id] || 0;
+                    return (
+                      <div key={item.id} className="flex items-center justify-between py-2 px-3 rounded-xl transition-all" style={{ background: count > 0 ? "var(--teal-light)" : "#f9fafb", border: count > 0 ? "1.5px solid var(--teal)" : "1.5px solid transparent" }}>
+                        <div className="flex items-center gap-2 min-w-0">
+                          <span className="text-lg">{item.emoji}</span>
+                          <div className="min-w-0">
+                            <div className="text-sm font-medium truncate" style={{ color: "var(--dark)" }}>{item.label}</div>
+                            <div className="text-xs" style={{ color: "var(--gray)" }}>{item.price.toLocaleString("ru")} ₽</div>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2 flex-shrink-0">
+                          <button onClick={() => changeCount(item.id, -1)} className="w-7 h-7 rounded-full flex items-center justify-center font-bold text-lg transition-all" style={{ background: count > 0 ? "var(--teal)" : "#e5e7eb", color: count > 0 ? "white" : "#9ca3af" }}>−</button>
+                          <span className="w-5 text-center text-sm font-semibold" style={{ color: "var(--dark)" }}>{count}</span>
+                          <button onClick={() => changeCount(item.id, 1)} className="w-7 h-7 rounded-full flex items-center justify-center font-bold text-lg transition-all" style={{ background: "var(--teal)", color: "white" }}>+</button>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -437,10 +446,7 @@ function Calculator() {
                 <div className="space-y-2">
                   {EXTRA_OPTIONS.map((opt) => (
                     <label key={opt.key} className="flex items-center gap-3 cursor-pointer" onClick={() => toggleExtra(opt.key)}>
-                      <div
-                        className="w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all flex-shrink-0"
-                        style={{ background: extras.includes(opt.key) ? "var(--teal)" : "transparent", borderColor: extras.includes(opt.key) ? "var(--teal)" : "#d1d5db" }}
-                      >
+                      <div className="w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all flex-shrink-0" style={{ background: extras.includes(opt.key) ? "var(--teal)" : "transparent", borderColor: extras.includes(opt.key) ? "var(--teal)" : "#d1d5db" }}>
                         {extras.includes(opt.key) && <Icon name="Check" size={12} className="text-white" />}
                       </div>
                       <span className="text-sm" style={{ color: "var(--dark)" }}>{opt.label} <span style={{ color: "var(--gray)" }}>(+{opt.price} ₽)</span></span>
@@ -450,25 +456,37 @@ function Calculator() {
               </div>
             </div>
 
+            {/* Правая часть — итог */}
             <div className="flex flex-col justify-between gap-4">
-              <div className="rounded-2xl p-6 text-center" style={{ background: "var(--light-bg)", border: "1px solid rgba(12,184,160,0.15)" }}>
-                <div className="text-sm mb-1" style={{ color: "var(--gray)" }}>Базовая стоимость</div>
-                <div className="font-oswald font-bold text-2xl" style={{ color: "var(--dark)" }}>{basePrice.toLocaleString("ru")} ₽</div>
-                {extrasTotal > 0 && (
-                  <div className="mt-2 text-sm" style={{ color: "var(--gray)" }}>+ доп. услуги: {extrasTotal.toLocaleString("ru")} ₽</div>
+              <div className="rounded-2xl p-6" style={{ background: "var(--light-bg)", border: "1px solid rgba(12,184,160,0.15)" }}>
+                {hasItems ? (
+                  <>
+                    <div className="text-xs mb-3 leading-relaxed" style={{ color: "var(--gray)" }}>{selectedSummary}</div>
+                    <div className="border-t pt-3 space-y-1">
+                      <div className="flex justify-between text-sm" style={{ color: "var(--gray)" }}>
+                        <span>Мебель</span><span>{itemsTotal.toLocaleString("ru")} ₽</span>
+                      </div>
+                      {extrasTotal > 0 && (
+                        <div className="flex justify-between text-sm" style={{ color: "var(--gray)" }}>
+                          <span>Доп. услуги</span><span>+{extrasTotal.toLocaleString("ru")} ₽</span>
+                        </div>
+                      )}
+                    </div>
+                  </>
+                ) : (
+                  <div className="text-sm text-center py-4" style={{ color: "var(--gray)" }}>Выберите мебель слева, чтобы рассчитать стоимость</div>
                 )}
-                <div className="border-t mt-4 pt-4">
+                <div className="border-t mt-4 pt-4 text-center">
                   <div className="text-sm mb-1" style={{ color: "var(--gray)" }}>Итого:</div>
-                  <div className="font-oswald font-bold" style={{ fontSize: "2.8rem", color: "var(--teal)", lineHeight: 1 }}>
-                    {total.toLocaleString("ru")} ₽
+                  <div className="font-oswald font-bold" style={{ fontSize: "2.8rem", color: hasItems ? "var(--teal)" : "#d1d5db", lineHeight: 1 }}>
+                    {total > 0 ? `${total.toLocaleString("ru")} ₽` : "0 ₽"}
                   </div>
-                  <div className="text-xs mt-2" style={{ color: "var(--gray)" }}>{currentType.pricePerSqm} ₽/м² · {area} м²</div>
                 </div>
               </div>
 
-              <button className="w-full btn-primary py-3.5 font-oswald font-semibold text-base flex items-center justify-center gap-2">
+              <button className="w-full btn-primary py-3.5 font-oswald font-semibold text-base flex items-center justify-center gap-2 disabled:opacity-40" disabled={!hasItems}>
                 <Icon name="Calendar" size={18} />
-                Заказать за {total.toLocaleString("ru")} ₽
+                {hasItems ? `Заказать за ${total.toLocaleString("ru")} ₽` : "Выберите мебель"}
               </button>
               <button className="w-full py-3 rounded-full text-sm font-semibold transition-all hover:bg-gray-50" style={{ color: "var(--gray)", border: "1px solid #e5e7eb" }}>
                 Обсудить условия
