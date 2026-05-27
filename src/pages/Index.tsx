@@ -175,13 +175,12 @@ function Navbar() {
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-white/95 backdrop-blur-md shadow-sm py-3" : "bg-transparent py-5"}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between">
-        <a href="#" className="flex items-center gap-2">
-          <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: "var(--teal)" }}>
-            <Icon name="Sparkles" size={18} className="text-white" />
-          </div>
-          <span className="font-oswald font-bold text-xl" style={{ color: "var(--dark)" }}>
-            Чисто<span style={{ color: "var(--teal)" }}>тел</span>
-          </span>
+        <a href="#" className="flex items-center">
+          <img
+            src="https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/b6cb14ab-4c2a-4c89-a582-9b46d4e0a360.jpg"
+            alt="Аренда Чистоты"
+            className="h-10 w-auto object-contain"
+          />
         </a>
         <div className="hidden lg:flex items-center gap-6">
           {NAV_LINKS.map((l) => (
@@ -230,7 +229,7 @@ function Hero() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-7">
             <div className="animate-fade-up stagger-1">
-              <span className="section-tag">Химчистка мебели №1 в СПб</span>
+              <span className="section-tag">Аренда Чистоты — химчистка мебели</span>
             </div>
             <h1 className="font-oswald font-bold animate-fade-up stagger-2" style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", color: "var(--dark)", lineHeight: 1.1 }}>
               Ваша мебель будет{" "}
@@ -830,11 +829,12 @@ function Footer() {
     <footer className="py-10" style={{ background: "var(--dark)" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: "var(--teal)" }}>
-              <Icon name="Sparkles" size={16} className="text-white" />
-            </div>
-            <span className="font-oswald font-bold text-lg text-white">Чисто<span style={{ color: "var(--teal)" }}>тел</span></span>
+          <div className="flex items-center">
+            <img
+              src="https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/b6cb14ab-4c2a-4c89-a582-9b46d4e0a360.jpg"
+              alt="Аренда Чистоты"
+              className="h-8 w-auto object-contain brightness-0 invert"
+            />
           </div>
           <div className="flex flex-wrap justify-center gap-5">
             {NAV_LINKS.map((l) => (
@@ -844,7 +844,7 @@ function Footer() {
             ))}
           </div>
           <div className="flex items-center gap-3">
-            <div className="text-sm" style={{ color: "rgba(255,255,255,0.3)" }}>© 2026 Чистотел</div>
+            <div className="text-sm" style={{ color: "rgba(255,255,255,0.3)" }}>© 2026 Аренда Чистоты</div>
             <a
               href="https://max.ru/u/f9LHodD0cOIhDoRH_6LXfcSUOHBuL1Ox9Kjst5F3mN4736vAC4pXtz-GKzc"
               target="_blank"
