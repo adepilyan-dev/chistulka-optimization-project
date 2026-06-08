@@ -563,10 +563,10 @@ function About() {
             </p>
             <div className={`space-y-3 ${inView ? "animate-fade-up stagger-4" : "opacity-0"}`}>
               {[
-                { icon: "ShieldCheck", text: "Страховая ответственность — возместим ущерб" },
+                { icon: "ShieldCheck", text: "Гарантия результата — перечистим бесплатно" },
                 { icon: "Leaf", text: "Гипоаллергенные средства, безопасны для детей" },
                 { icon: "Clock", text: "Выезд 7 дней в неделю, с 8:00 до 22:00" },
-                { icon: "Award", text: "Лауреат премии «Лучший клининг Краснодара 2025»" },
+                { icon: "Wallet", text: "Оплата после приёмки результата" },
               ].map((item) => (
                 <div key={item.text} className="flex items-center gap-3">
                   <div className="w-9 h-9 rounded-xl flex-shrink-0 flex items-center justify-center" style={{ background: "var(--teal-light)" }}>
