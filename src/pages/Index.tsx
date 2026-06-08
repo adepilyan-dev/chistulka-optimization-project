@@ -19,6 +19,7 @@ const NAV_LINKS = [
   { label: "Цены", href: "#prices" },
   { label: "Отзывы", href: "#reviews" },
   { label: "Блог", href: "#blog" },
+  { label: "Вопросы", href: "#faq" },
   { label: "Контакты", href: "#contacts" },
 ];
 
@@ -652,6 +653,92 @@ function Gallery() {
   );
 }
 
+const FAQ_ITEMS = [
+  {
+    q: "Сколько времени занимает химчистка?",
+    a: "В среднем чистка одного дивана занимает 1–1,5 часа. Мебель высыхает за 2–4 часа в зависимости от типа обивки и влажности в помещении.",
+  },
+  {
+    q: "Вы приезжаете на дом?",
+    a: "Да, мы работаем с выездом на дом по Краснодару и пригороду. Всё оборудование привозим с собой — вам не нужно ничего готовить заранее.",
+  },
+  {
+    q: "Безопасны ли средства для детей и животных?",
+    a: "Мы используем профессиональную гипоаллергенную химию, безопасную для детей, аллергиков и домашних животных. После чистки не остаётся вредных запахов.",
+  },
+  {
+    q: "Сколько стоит химчистка дивана?",
+    a: "Стоимость зависит от размера и типа обивки. Точную цену можно рассчитать в калькуляторе на сайте или уточнить по телефону — мастер назовёт её до начала работ.",
+  },
+  {
+    q: "Удалите ли вы старые и стойкие пятна?",
+    a: "В большинстве случаев да — мы выводим пятна от кофе, вина, жира, мочи и других загрязнений. Результат зависит от давности и природы пятна; мастер оценит это на месте.",
+  },
+  {
+    q: "Как оплатить услугу?",
+    a: "Оплата принимается наличными или переводом после выполнения работ, когда вы убедитесь в результате.",
+  },
+];
+
+function Faq() {
+  const { ref, inView } = useInView();
+  const [open, setOpen] = useState<number | null>(0);
+
+  const faqLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: FAQ_ITEMS.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: item.a },
+    })),
+  };
+
+  return (
+    <section id="faq" className="py-20">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
+      <div ref={ref} className="max-w-3xl mx-auto px-4 sm:px-6">
+        <div className="text-center mb-12">
+          <span className={`section-tag ${inView ? "animate-fade-up" : "opacity-0"}`}>Вопросы</span>
+          <h2 className={`font-oswald font-bold mt-3 ${inView ? "animate-fade-up stagger-1" : "opacity-0"}`} style={{ fontSize: "clamp(2rem, 4vw, 3rem)", color: "var(--dark)" }}>
+            Частые вопросы
+          </h2>
+        </div>
+        <div className="space-y-3">
+          {FAQ_ITEMS.map((item, i) => {
+            const isOpen = open === i;
+            return (
+              <div
+                key={item.q}
+                className={`card-clean overflow-hidden ${inView ? `animate-fade-up stagger-${Math.min(i + 2, 6)}` : "opacity-0"}`}
+              >
+                <button
+                  onClick={() => setOpen(isOpen ? null : i)}
+                  className="w-full flex items-center justify-between gap-4 text-left p-5"
+                >
+                  <span className="font-oswald font-semibold text-base" style={{ color: "var(--dark)" }}>{item.q}</span>
+                  <Icon
+                    name="ChevronDown"
+                    size={20}
+                    className="flex-shrink-0 transition-transform duration-300"
+                    style={{ color: "var(--teal)", transform: isOpen ? "rotate(180deg)" : "none" }}
+                  />
+                </button>
+                <div
+                  className="overflow-hidden transition-all duration-300"
+                  style={{ maxHeight: isOpen ? "240px" : "0" }}
+                >
+                  <p className="px-5 pb-5 text-sm leading-relaxed" style={{ color: "var(--gray)" }}>{item.a}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function Blog() {
   const { ref, inView } = useInView();
   return (
@@ -951,6 +1038,7 @@ export default function Index() {
       <About />
       <Reviews />
       <Blog />
+      <Faq />
       <Contacts />
       <Footer />
       <FloatingActions />
