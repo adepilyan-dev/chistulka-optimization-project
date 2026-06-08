@@ -572,9 +572,7 @@ function About() {
                 </div>
               ))}
             </div>
-            <button className={`btn-primary px-7 py-3 font-oswald font-semibold text-sm ${inView ? "animate-fade-up stagger-5" : "opacity-0"}`}>
-              Познакомиться с командой
-            </button>
+
           </div>
         </div>
       </div>
