@@ -527,10 +527,6 @@ function About() {
                 </div>
               </div>
               <div className="space-y-4 mt-8">
-                <div className="rounded-2xl p-5" style={{ background: "var(--teal)" }}>
-                  <div className="font-oswald font-bold text-3xl text-white">20+</div>
-                  <div className="text-sm font-semibold mt-1 text-white/80">мастеров в штате</div>
-                </div>
                 <div className="rounded-2xl overflow-hidden aspect-[3/4] shadow-lg">
                   <img
                     src="https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/4aefd336-06ed-4dc6-84f8-86b03f8805e9.jpg"
