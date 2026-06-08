@@ -937,6 +937,31 @@ function Footer() {
   );
 }
 
+function FloatingActions() {
+  return (
+    <div className="fixed bottom-20 right-4 sm:bottom-6 z-[90] flex flex-col gap-3">
+      <a
+        href="https://max.ru/u/f9LHodD0cOIhDoRH_6LXfcSUOHBuL1Ox9Kjst5F3mN4736vAC4pXtz-GKzc"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Написать в MAX"
+        className="w-14 h-14 rounded-full flex items-center justify-center shadow-xl transition-transform hover:scale-110"
+        style={{ background: "var(--teal)" }}
+      >
+        <Icon name="MessageCircle" size={26} className="text-white" />
+      </a>
+      <a
+        href="tel:+79189682882"
+        aria-label="Позвонить"
+        className="w-14 h-14 rounded-full flex items-center justify-center shadow-xl transition-transform hover:scale-110 animate-float"
+        style={{ background: "#ffe227" }}
+      >
+        <Icon name="Phone" size={24} style={{ color: "var(--dark)" }} />
+      </a>
+    </div>
+  );
+}
+
 export default function Index() {
   return (
     <div className="min-h-screen">
@@ -950,6 +975,7 @@ export default function Index() {
       <Blog />
       <Contacts />
       <Footer />
+      <FloatingActions />
       <CookieBanner />
     </div>
   );
