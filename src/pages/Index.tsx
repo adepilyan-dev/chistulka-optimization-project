@@ -125,12 +125,12 @@ const BLOG_POSTS = [
 ];
 
 const GALLERY_ITEMS = [
-  { label: "Диван до и после", tag: "Диван", emoji: "🛋️", ratio: "4/3" },
-  { label: "Кресло до и после", tag: "Кресло", emoji: "🪑", ratio: "1/1" },
-  { label: "Матрас до и после", tag: "Матрас", emoji: "🛏️", ratio: "1/1" },
-  { label: "Ковёр до и после", tag: "Ковёр", emoji: "🏡", ratio: "4/3" },
-  { label: "Автомобиль до и после", tag: "Авто", emoji: "🚗", ratio: "1/1" },
-  { label: "Стулья до и после", tag: "Стулья", emoji: "✨", ratio: "1/1" },
+  { label: "Химчистка дивана", tag: "Диван", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/ef795636-fa47-4792-a2ba-5e6e939dfefc.jpg", ratio: "4/3" },
+  { label: "Химчистка кресла", tag: "Кресло", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/8febf3af-8467-46a1-9d03-73be6b008c61.jpg", ratio: "1/1" },
+  { label: "Химчистка матраса", tag: "Матрас", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/91feb1a3-516a-4121-acdd-e7848178d83f.jpg", ratio: "1/1" },
+  { label: "Химчистка ковра", tag: "Ковёр", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/fbe70ba2-6db2-424f-8ba1-648396b7092d.jpg", ratio: "4/3" },
+  { label: "Химчистка автосалона", tag: "Авто", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/08d35f06-6ecd-4c21-a709-42f23a1e4951.jpg", ratio: "1/1" },
+  { label: "Химчистка стульев", tag: "Стулья", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/29030555-9276-4331-9b6c-2191a008deca.jpg", ratio: "1/1" },
 ];
 
 const FURNITURE_ITEMS = [
@@ -636,12 +636,17 @@ function Gallery() {
               className={`relative rounded-2xl overflow-hidden cursor-pointer hover-lift group ${inView ? `animate-fade-up stagger-${Math.min(i + 1, 6)}` : "opacity-0"}`}
               style={{ aspectRatio: item.ratio, background: bgColors[i] }}
             >
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-2">
-                <span className="text-5xl">{item.emoji}</span>
-                <span className="text-xs font-semibold px-3 py-1 rounded-full" style={{ background: "rgba(255,255,255,0.7)", color: "var(--dark)" }}>{item.tag}</span>
+              <img
+                src={item.img}
+                alt={`${item.label} в Краснодаре`}
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                loading="lazy"
+              />
+              <div className="absolute top-3 left-3">
+                <span className="text-xs font-semibold px-3 py-1 rounded-full" style={{ background: "rgba(255,255,255,0.85)", color: "var(--dark)" }}>{item.tag}</span>
               </div>
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-all flex items-end p-4">
-                <span className="text-white font-semibold text-sm opacity-0 group-hover:opacity-100 transition-all">{item.label}</span>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-all flex items-end p-4">
+                <span className="text-white font-semibold text-sm">{item.label}</span>
               </div>
             </div>
           ))}
