@@ -21,6 +21,7 @@ const SERVICES = [
     desc: "Удаляем пятна, запахи и аллергены. Ткань, велюр, замша, кожа — работаем с любым материалом.",
     color: "#0cb8a0",
     badge: "Хит",
+    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/ef795636-fa47-4792-a2ba-5e6e939dfefc.jpg",
   },
   {
     icon: "ArmchairIcon",
@@ -28,6 +29,7 @@ const SERVICES = [
     desc: "Офисные, обеденные, игровые кресла. Глубокая чистка без разборки, сушка за 2–4 часа.",
     color: "#c9a800",
     badge: null,
+    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/8febf3af-8467-46a1-9d03-73be6b008c61.jpg",
   },
   {
     icon: "BedDouble",
@@ -35,6 +37,7 @@ const SERVICES = [
     desc: "Устраняем клещей, грибок, пятна и неприятные запахи. Безопасно для детей и аллергиков.",
     color: "#0cb8a0",
     badge: "Популярно",
+    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/91feb1a3-516a-4121-acdd-e7848178d83f.jpg",
   },
   {
     icon: "LayoutGrid",
@@ -42,6 +45,7 @@ const SERVICES = [
     desc: "Шерсть, синтетика, ковры ручной работы. Выездная чистка на дому или в нашем цеху.",
     color: "#c9a800",
     badge: null,
+    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/fbe70ba2-6db2-424f-8ba1-648396b7092d.jpg",
   },
   {
     icon: "Armchair",
@@ -49,6 +53,7 @@ const SERVICES = [
     desc: "Обеденные группы, барные стулья, пуфики. Быстро — один стул от 15 минут.",
     color: "#0cb8a0",
     badge: null,
+    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/29030555-9276-4331-9b6c-2191a008deca.jpg",
   },
   {
     icon: "Car",
@@ -56,6 +61,7 @@ const SERVICES = [
     desc: "Сиденья, потолок, дверные панели. Профессиональное оборудование и безопасные средства.",
     color: "#c9a800",
     badge: null,
+    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/08d35f06-6ecd-4c21-a709-42f23a1e4951.jpg",
   },
 ];
 
@@ -347,20 +353,30 @@ function Services() {
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {SERVICES.map((s, i) => (
-            <div key={s.title} className={`card-clean p-6 relative cursor-pointer ${inView ? `animate-fade-up stagger-${Math.min(i + 1, 6)}` : "opacity-0"}`}>
-              {s.badge && (
-                <span className="absolute top-4 right-4 text-xs font-bold px-2.5 py-1 rounded-full" style={{ background: s.color === "#c9a800" ? "#ffe227" : "var(--teal)", color: s.color === "#c9a800" ? "var(--dark)" : "white" }}>
-                  {s.badge}
-                </span>
-              )}
-              <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{ background: s.color === "#c9a800" ? "#fffbe0" : "var(--teal-light)" }}>
-                <Icon name={s.icon} size={22} style={{ color: s.color }} />
+            <div key={s.title} className={`card-clean relative cursor-pointer overflow-hidden group ${inView ? `animate-fade-up stagger-${Math.min(i + 1, 6)}` : "opacity-0"}`}>
+              <div className="relative h-44 overflow-hidden">
+                <img
+                  src={s.img}
+                  alt={`${s.title} в Краснодаре`}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                />
+                {s.badge && (
+                  <span className="absolute top-3 right-3 text-xs font-bold px-2.5 py-1 rounded-full" style={{ background: s.color === "#c9a800" ? "#ffe227" : "var(--teal)", color: s.color === "#c9a800" ? "var(--dark)" : "white" }}>
+                    {s.badge}
+                  </span>
+                )}
+                <div className="absolute -bottom-5 left-5 w-11 h-11 rounded-xl flex items-center justify-center shadow-md bg-white">
+                  <Icon name={s.icon} size={22} style={{ color: s.color }} />
+                </div>
               </div>
-              <h3 className="font-oswald font-bold text-lg mb-2" style={{ color: "var(--dark)" }}>{s.title}</h3>
-              <p className="text-sm leading-relaxed" style={{ color: "var(--gray)" }}>{s.desc}</p>
-              <button className="mt-4 flex items-center gap-1.5 text-sm font-semibold transition-all hover:gap-3" style={{ color: "var(--teal)" }}>
-                Подробнее <Icon name="ArrowRight" size={15} />
-              </button>
+              <div className="p-6 pt-7">
+                <h3 className="font-oswald font-bold text-lg mb-2" style={{ color: "var(--dark)" }}>{s.title}</h3>
+                <p className="text-sm leading-relaxed" style={{ color: "var(--gray)" }}>{s.desc}</p>
+                <button className="mt-4 flex items-center gap-1.5 text-sm font-semibold transition-all hover:gap-3" style={{ color: "var(--teal)" }}>
+                  Подробнее <Icon name="ArrowRight" size={15} />
+                </button>
+              </div>
             </div>
           ))}
         </div>
