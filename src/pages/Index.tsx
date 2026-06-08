@@ -109,24 +109,21 @@ const BLOG_POSTS = [
     title: "Как продлить жизнь дивану: 5 простых правил",
     date: "18 мая 2026",
     readTime: "3 мин",
-    emoji: "🛋️",
-    bg: "#e0f7f4",
+    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/732bbc08-719c-44c8-800e-9c68b5d80afa.jpg",
   },
   {
     tag: "Лайфхак",
     title: "Что делать сразу после того, как пролили на диван",
     date: "10 мая 2026",
     readTime: "4 мин",
-    emoji: "💧",
-    bg: "#fffbe0",
+    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/d8dd0c6f-e2d1-4dd0-a43f-71dd963f3e2a.jpg",
   },
   {
     tag: "Рейтинг",
     title: "Велюр, кожа или ткань: какую мебель легче чистить",
     date: "2 мая 2026",
     readTime: "5 мин",
-    emoji: "✨",
-    bg: "#e0f7f4",
+    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/bc199042-d11e-49eb-9a5d-bc128d582074.jpg",
   },
 ];
 
@@ -690,8 +687,15 @@ function Blog() {
         </div>
         <div className="grid md:grid-cols-3 gap-6">
           {BLOG_POSTS.map((post, i) => (
-            <div key={post.title} className={`card-clean overflow-hidden cursor-pointer ${inView ? `animate-fade-up stagger-${i + 3}` : "opacity-0"}`}>
-              <div className="h-40 flex items-center justify-center text-5xl" style={{ background: post.bg }}>{post.emoji}</div>
+            <div key={post.title} className={`card-clean overflow-hidden cursor-pointer group ${inView ? `animate-fade-up stagger-${i + 3}` : "opacity-0"}`}>
+              <div className="h-40 overflow-hidden">
+                <img
+                  src={post.img}
+                  alt={post.title}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                />
+              </div>
               <div className="p-5">
                 <div className="flex items-center gap-2 mb-3">
                   <span className="section-tag text-xs">{post.tag}</span>
