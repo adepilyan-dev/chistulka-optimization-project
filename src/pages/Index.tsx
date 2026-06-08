@@ -10,7 +10,6 @@ const NAV_LINKS = [
   { label: "Цены", href: "#prices" },
   { label: "Отзывы", href: "#reviews" },
   { label: "Блог", href: "#blog" },
-  { label: "Галерея", href: "#gallery" },
   { label: "Контакты", href: "#contacts" },
 ];
 
@@ -942,7 +941,6 @@ export default function Index() {
       <Calculator />
       <About />
       <Reviews />
-      <Gallery />
       <Blog />
       <Contacts />
       <Footer />
