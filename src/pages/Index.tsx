@@ -143,7 +143,7 @@ const FURNITURE_ITEMS = [
   { id: "carpet_s", label: "Ковёр до 6 м²", emoji: "🏡", price: 2800 },
   { id: "carpet_l", label: "Ковёр от 6 м²", emoji: "🏡", price: 3800 },
   { id: "car_seat", label: "Авто (салон)", emoji: "🚗", price: 4500 },
-  { id: "dining_chair", label: "Стул обеденный", emoji: "🪑", price: 1600 },
+  { id: "dining_chair", label: "Стул обеденный", emoji: "🪑", price: 600 },
 ];
 
 const EXTRA_OPTIONS = [
