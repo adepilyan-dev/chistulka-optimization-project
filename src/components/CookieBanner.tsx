@@ -20,19 +20,15 @@ export default function CookieBanner() {
   if (!visible) return null;
 
   return (
-    <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-[100] w-[calc(100%-2rem)] max-w-2xl animate-fade-up">
-      <div className="bg-white rounded-2xl shadow-2xl border p-5 flex flex-col sm:flex-row items-start sm:items-center gap-4" style={{ borderColor: "rgba(12,184,160,0.2)" }}>
-        <div className="flex items-start gap-3 flex-1">
-          <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "var(--teal-light)" }}>
-            <Icon name="Cookie" size={18} style={{ color: "var(--teal)" }} />
-          </div>
-          <p className="text-sm leading-relaxed" style={{ color: "var(--dark)" }}>
-            Мы используем файлы cookie, чтобы сайт работал лучше. Продолжая пользоваться сайтом, вы соглашаетесь с обработкой данных в соответствии с{" "}
-            <a href="/privacy" className="underline font-medium" style={{ color: "var(--teal)" }}>политикой конфиденциальности</a>.
-          </p>
-        </div>
-        <button onClick={accept} className="btn-primary px-6 py-2.5 text-sm font-semibold whitespace-nowrap w-full sm:w-auto">
-          Принять
+    <div className="fixed bottom-3 left-3 right-3 sm:left-auto sm:right-4 z-[100] sm:max-w-xs animate-fade-up">
+      <div className="bg-white rounded-xl shadow-xl border p-3.5 flex items-center gap-3" style={{ borderColor: "rgba(12,184,160,0.2)" }}>
+        <Icon name="Cookie" size={18} style={{ color: "var(--teal)" }} className="flex-shrink-0" />
+        <p className="text-xs leading-snug flex-1" style={{ color: "var(--gray)" }}>
+          Мы используем cookie.{" "}
+          <a href="/privacy" className="underline" style={{ color: "var(--teal)" }}>Подробнее</a>
+        </p>
+        <button onClick={accept} className="btn-primary px-4 py-1.5 text-xs font-semibold whitespace-nowrap flex-shrink-0">
+          Ок
         </button>
       </div>
     </div>
