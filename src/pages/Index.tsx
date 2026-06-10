@@ -165,12 +165,17 @@ function useInView(threshold = 0.12) {
 function Navbar() {
   const [open, setOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const [zonesOpen, setZonesOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", fn);
     return () => window.removeEventListener("scroll", fn);
   }, []);
+
+  const districts = DISTRICTS.filter((d) => d.type === "district");
+  const micros = DISTRICTS.filter((d) => d.type === "micro");
+
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-white/95 backdrop-blur-md shadow-sm py-3" : "bg-transparent py-5"}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between">
@@ -182,7 +187,7 @@ function Navbar() {
           />
         </a>
         <div className="hidden lg:flex items-center gap-6">
-          {/* Выпадающее меню услуг */}
+          {/* Услуги */}
           <div className="relative" onMouseEnter={() => setServicesOpen(true)} onMouseLeave={() => setServicesOpen(false)}>
             <a href="#services" className="flex items-center gap-1 text-sm font-medium transition-colors hover:text-[var(--teal)]" style={{ color: "var(--dark)" }}>
               Услуги
@@ -192,13 +197,9 @@ function Navbar() {
               <div className="absolute top-full left-0 pt-2 z-50">
                 <div className="bg-white rounded-2xl shadow-xl border py-2 min-w-[220px]" style={{ borderColor: "rgba(12,184,160,0.15)" }}>
                   {SERVICES_DATA.map((s) => (
-                    <Link
-                      key={s.slug}
-                      to={`/uslugi/${s.slug}`}
+                    <Link key={s.slug} to={`/uslugi/${s.slug}`}
                       className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium transition-colors hover:bg-gray-50"
-                      style={{ color: "var(--dark)" }}
-                      onClick={() => setServicesOpen(false)}
-                    >
+                      style={{ color: "var(--dark)" }} onClick={() => setServicesOpen(false)}>
                       <Icon name={s.icon} size={16} style={{ color: "var(--teal)" }} />
                       {s.title}
                     </Link>
@@ -207,6 +208,41 @@ function Navbar() {
               </div>
             )}
           </div>
+
+          {/* Районы */}
+          <div className="relative" onMouseEnter={() => setZonesOpen(true)} onMouseLeave={() => setZonesOpen(false)}>
+            <a href="#zones" className="flex items-center gap-1 text-sm font-medium transition-colors hover:text-[var(--teal)]" style={{ color: "var(--dark)" }}>
+              Районы
+              <Icon name="ChevronDown" size={14} className={`transition-transform duration-200 ${zonesOpen ? "rotate-180" : ""}`} />
+            </a>
+            {zonesOpen && (
+              <div className="absolute top-full left-0 pt-2 z-50">
+                <div className="bg-white rounded-2xl shadow-xl border py-3 w-[320px]" style={{ borderColor: "rgba(12,184,160,0.15)" }}>
+                  <p className="px-4 pb-2 text-xs font-semibold uppercase tracking-widest" style={{ color: "var(--gray)" }}>Округа</p>
+                  {districts.map((d) => (
+                    <Link key={d.slug} to={`/himchistka-${d.slug}`}
+                      className="flex items-center gap-3 px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-50"
+                      style={{ color: "var(--dark)" }} onClick={() => setZonesOpen(false)}>
+                      <Icon name="MapPin" size={14} style={{ color: "var(--teal)" }} />
+                      {d.name}
+                    </Link>
+                  ))}
+                  <div className="border-t my-2" style={{ borderColor: "#f0f0f0" }} />
+                  <p className="px-4 pb-2 text-xs font-semibold uppercase tracking-widest" style={{ color: "var(--gray)" }}>Микрорайоны</p>
+                  <div className="px-4 pb-2 flex flex-wrap gap-1.5 max-h-36 overflow-y-auto">
+                    {micros.map((d) => (
+                      <Link key={d.slug} to={`/himchistka-${d.slug}`}
+                        className="text-xs px-2.5 py-1 rounded-full border transition-colors hover:border-[var(--teal)] hover:text-[var(--teal)]"
+                        style={{ borderColor: "#e5e7eb", color: "var(--dark)" }} onClick={() => setZonesOpen(false)}>
+                        {d.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
           {NAV_LINKS.filter((l) => l.label !== "Услуги").map((l) => (
             <a key={l.href} href={l.href} className="text-sm font-medium transition-colors hover:text-[var(--teal)]" style={{ color: "var(--dark)", fontFamily: "'Golos Text', sans-serif" }}>
               {l.label}
@@ -226,18 +262,33 @@ function Navbar() {
       </div>
       {open && (
         <div className="lg:hidden bg-white border-t px-4 py-4 flex flex-col gap-1 animate-fade-in">
+          {/* Услуги моб */}
           <a href="#services" className="py-2 font-medium text-sm" style={{ color: "var(--dark)" }} onClick={() => setOpen(false)}>Услуги</a>
           <div className="pl-3 flex flex-col gap-1 pb-1">
             {SERVICES_DATA.map((s) => (
-              <Link
-                key={s.slug}
-                to={`/uslugi/${s.slug}`}
+              <Link key={s.slug} to={`/uslugi/${s.slug}`}
                 className="py-1.5 text-sm flex items-center gap-2"
-                style={{ color: "var(--teal)" }}
-                onClick={() => setOpen(false)}
-              >
+                style={{ color: "var(--teal)" }} onClick={() => setOpen(false)}>
                 <Icon name={s.icon} size={14} />
                 {s.shortTitle}
+              </Link>
+            ))}
+          </div>
+          {/* Районы моб */}
+          <a href="#zones" className="py-2 font-medium text-sm" style={{ color: "var(--dark)" }} onClick={() => setOpen(false)}>Районы</a>
+          <div className="pl-3 flex flex-wrap gap-1.5 pb-2">
+            {districts.map((d) => (
+              <Link key={d.slug} to={`/himchistka-${d.slug}`}
+                className="text-xs px-2.5 py-1 rounded-full border"
+                style={{ borderColor: "var(--teal)", color: "var(--teal)" }} onClick={() => setOpen(false)}>
+                {d.name}
+              </Link>
+            ))}
+            {micros.slice(0, 8).map((d) => (
+              <Link key={d.slug} to={`/himchistka-${d.slug}`}
+                className="text-xs px-2.5 py-1 rounded-full border"
+                style={{ borderColor: "#e5e7eb", color: "var(--dark)" }} onClick={() => setOpen(false)}>
+                {d.name}
               </Link>
             ))}
           </div>
