@@ -1058,14 +1058,7 @@ function Footer() {
     <footer className="py-10" style={{ background: "var(--dark)" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center">
-            <img
-              src="https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/b6cb14ab-4c2a-4c89-a582-9b46d4e0a360.jpg"
-              alt="Аренда Чистоты"
-              className="h-8 w-auto object-contain"
-              style={{ filter: "brightness(0) invert(1)" }}
-            />
-          </div>
+
           <div className="flex flex-wrap justify-center gap-5">
             {NAV_LINKS.map((l) => (
               <a key={l.href} href={l.href} className="text-sm transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.4)" }}>
