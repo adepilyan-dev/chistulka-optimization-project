@@ -10,6 +10,8 @@ interface SeoProps {
   path: string;
   image?: string;
   type?: "website" | "article";
+  noindex?: boolean;
+  keywords?: string;
   jsonLd?: object;
 }
 
@@ -19,6 +21,8 @@ export default function Seo({
   path,
   image = DEFAULT_IMAGE,
   type = "website",
+  noindex = false,
+  keywords,
   jsonLd,
 }: SeoProps) {
   const url = `${SITE}${path}`;
@@ -27,6 +31,11 @@ export default function Seo({
     <Helmet>
       <title>{title}</title>
       <meta name="description" content={description} />
+      {keywords && <meta name="keywords" content={keywords} />}
+      {noindex
+        ? <meta name="robots" content="noindex, nofollow" />
+        : <meta name="robots" content="index, follow" />
+      }
       <link rel="canonical" href={url} />
 
       <meta property="og:type" content={type} />
@@ -42,6 +51,15 @@ export default function Seo({
       {jsonLd && (
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       )}
+    </Helmet>
+  );
+}
+
+export function SeoNotFound() {
+  return (
+    <Helmet>
+      <title>Страница не найдена | Аренда Чистоты</title>
+      <meta name="robots" content="noindex, nofollow" />
     </Helmet>
   );
 }

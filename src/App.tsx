@@ -11,6 +11,7 @@ import BlogPost from "./pages/BlogPost";
 import CookiePolicy from "./pages/CookiePolicy";
 import NotFound from "./pages/NotFound";
 import { useYandexMetrika } from "./hooks/useYandexMetrika";
+import { SeoNotFound } from "./components/Seo";
 
 const queryClient = new QueryClient();
 
@@ -24,7 +25,7 @@ function AppInner() {
         <Route path="/blog/:slug" element={<BlogPost />} />
         <Route path="/cookie-policy" element={<CookiePolicy />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<><SeoNotFound /><NotFound /></>} />
       </Routes>
     </BrowserRouter>
   );

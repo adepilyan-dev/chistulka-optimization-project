@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 import CookieBanner from "@/components/CookieBanner";
+import Seo from "@/components/Seo";
 import { BLOG_POSTS } from "@/data/blog";
 
 // ============ УТИЛИТЫ ============
@@ -1028,8 +1029,46 @@ function FloatingActions() {
 }
 
 export default function Index() {
+  const seoLd = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    name: "Аренда Чистоты",
+    description: "Профессиональная химчистка диванов, кресел, матрасов, ковров и автомобилей в Краснодаре с выездом на дом.",
+    image: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/a08ceb1c-d0eb-4d93-9fdc-05ba95070e28.jpg",
+    telephone: "+79189682882",
+    url: "https://arenda-chistoty.ru/",
+    priceRange: "₽₽",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Краснодар",
+      addressRegion: "Краснодарский край",
+      addressCountry: "RU",
+    },
+    areaServed: { "@type": "City", name: "Краснодар" },
+    openingHours: "Mo-Su 09:00-22:00",
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "Услуги химчистки",
+      itemListElement: [
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Химчистка диванов в Краснодаре" } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Химчистка кресел в Краснодаре" } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Химчистка матрасов в Краснодаре" } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Химчистка ковров в Краснодаре" } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Химчистка автосалона в Краснодаре" } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Химчистка стульев в Краснодаре" } },
+      ],
+    },
+  };
+
   return (
     <div className="min-h-screen">
+      <Seo
+        title="Химчистка мебели в Краснодаре — диваны, кресла, матрасы | Аренда Чистоты"
+        description="Профессиональная химчистка диванов, кресел, матрасов, ковров и автомобилей в Краснодаре. Выезд на дом, безопасные средства, сушка за 2–4 часа. ☎ 8 918 968-28-82"
+        keywords="химчистка мебели Краснодар, химчистка диванов Краснодар, химчистка диванов на дому, химчистка кресел Краснодар, химчистка матрасов Краснодар, химчистка матраса на дому, чистка ковров Краснодар, химчистка ковра на дому, химчистка стульев Краснодар, химчистка автосалона Краснодар, чистка сидений автомобиля Краснодар, химчистка мебели на дому Краснодар, вывод пятен с дивана, профессиональная химчистка мебели, аренда чистоты Краснодар"
+        path="/"
+        jsonLd={seoLd}
+      />
       <Navbar />
       <Hero />
       <Marquee />
