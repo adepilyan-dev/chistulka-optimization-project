@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import Icon from "@/components/ui/icon";
-import CookieBanner from "@/components/CookieBanner";
 import Seo from "@/components/Seo";
 import { BLOG_POSTS } from "@/data/blog";
 import { SERVICES_DATA } from "@/data/services";
@@ -1240,7 +1239,6 @@ export default function Index() {
       <Contacts />
       <Footer />
       <FloatingActions />
-      <CookieBanner />
     </div>
   );
 }

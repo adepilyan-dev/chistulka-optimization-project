@@ -12,6 +12,7 @@ import CookiePolicy from "./pages/CookiePolicy";
 import ServicePage from "./pages/ServicePage";
 import DistrictPage from "./pages/DistrictPage";
 import NotFound from "./pages/NotFound";
+import CookieBanner from "./components/CookieBanner";
 import { useYandexMetrika } from "./hooks/useYandexMetrika";
 import { SeoNotFound } from "./components/Seo";
 
@@ -31,6 +32,7 @@ function AppInner() {
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<><SeoNotFound /><NotFound /></>} />
       </Routes>
+      <CookieBanner />
     </BrowserRouter>
   );
 }
