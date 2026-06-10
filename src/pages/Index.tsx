@@ -163,6 +163,7 @@ function useInView(threshold = 0.12) {
 
 function Navbar() {
   const [open, setOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 40);
@@ -180,7 +181,32 @@ function Navbar() {
           />
         </a>
         <div className="hidden lg:flex items-center gap-6">
-          {NAV_LINKS.map((l) => (
+          {/* Выпадающее меню услуг */}
+          <div className="relative" onMouseEnter={() => setServicesOpen(true)} onMouseLeave={() => setServicesOpen(false)}>
+            <a href="#services" className="flex items-center gap-1 text-sm font-medium transition-colors hover:text-[var(--teal)]" style={{ color: "var(--dark)" }}>
+              Услуги
+              <Icon name="ChevronDown" size={14} className={`transition-transform duration-200 ${servicesOpen ? "rotate-180" : ""}`} />
+            </a>
+            {servicesOpen && (
+              <div className="absolute top-full left-0 pt-2 z-50">
+                <div className="bg-white rounded-2xl shadow-xl border py-2 min-w-[220px]" style={{ borderColor: "rgba(12,184,160,0.15)" }}>
+                  {SERVICES_DATA.map((s) => (
+                    <Link
+                      key={s.slug}
+                      to={`/uslugi/${s.slug}`}
+                      className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium transition-colors hover:bg-gray-50"
+                      style={{ color: "var(--dark)" }}
+                      onClick={() => setServicesOpen(false)}
+                    >
+                      <Icon name={s.icon} size={16} style={{ color: "var(--teal)" }} />
+                      {s.title}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+          {NAV_LINKS.filter((l) => l.label !== "Услуги").map((l) => (
             <a key={l.href} href={l.href} className="text-sm font-medium transition-colors hover:text-[var(--teal)]" style={{ color: "var(--dark)", fontFamily: "'Golos Text', sans-serif" }}>
               {l.label}
             </a>
@@ -198,8 +224,23 @@ function Navbar() {
         </button>
       </div>
       {open && (
-        <div className="lg:hidden bg-white border-t px-4 py-4 flex flex-col gap-3 animate-fade-in">
-          {NAV_LINKS.map((l) => (
+        <div className="lg:hidden bg-white border-t px-4 py-4 flex flex-col gap-1 animate-fade-in">
+          <a href="#services" className="py-2 font-medium text-sm" style={{ color: "var(--dark)" }} onClick={() => setOpen(false)}>Услуги</a>
+          <div className="pl-3 flex flex-col gap-1 pb-1">
+            {SERVICES_DATA.map((s) => (
+              <Link
+                key={s.slug}
+                to={`/uslugi/${s.slug}`}
+                className="py-1.5 text-sm flex items-center gap-2"
+                style={{ color: "var(--teal)" }}
+                onClick={() => setOpen(false)}
+              >
+                <Icon name={s.icon} size={14} />
+                {s.shortTitle}
+              </Link>
+            ))}
+          </div>
+          {NAV_LINKS.filter((l) => l.label !== "Услуги").map((l) => (
             <a key={l.href} href={l.href} className="py-2 font-medium text-sm" style={{ color: "var(--dark)" }} onClick={() => setOpen(false)}>{l.label}</a>
           ))}
           <button onClick={() => { setOpen(false); scrollToId("contacts"); }} className="btn-primary px-5 py-2.5 mt-2 text-sm">Вызвать мастера</button>
