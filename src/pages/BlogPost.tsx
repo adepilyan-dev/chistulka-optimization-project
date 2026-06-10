@@ -43,7 +43,7 @@ export default function BlogPost() {
         url: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/b6cb14ab-4c2a-4c89-a582-9b46d4e0a360.jpg",
       },
     },
-    mainEntityOfPage: `https://arenda-chistoty.ru/blog/${post.slug}`,
+    mainEntityOfPage: `https://arenda-chistoty.online/blog/${post.slug}`,
   };
 
   return (

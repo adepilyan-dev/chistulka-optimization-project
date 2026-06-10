@@ -77,7 +77,7 @@ export default function DistrictPage() {
     name: "Аренда Чистоты",
     description: seoDescription,
     telephone: "+79189682882",
-    url: `https://arenda-chistoty.ru/himchistka-${d.slug}`,
+    url: `https://arenda-chistoty.online/himchistka-${d.slug}`,
     areaServed: { "@type": "Place", name: `${d.name}, Краснодар` },
     address: {
       "@type": "PostalAddress",

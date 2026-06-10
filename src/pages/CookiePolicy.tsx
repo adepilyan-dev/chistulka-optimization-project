@@ -26,7 +26,7 @@ export default function CookiePolicy() {
     <div className="min-h-screen" style={{ background: "var(--light-bg)" }}>
       <Seo
         title="Политика использования cookie | Аренда Чистоты"
-        description="Как сайт arenda-chistoty.ru использует файлы cookie: типы, назначение и способы управления согласием."
+        description="Как сайт arenda-chistoty.online использует файлы cookie: типы, назначение и способы управления согласием."
         path="/cookie-policy"
       />
 
