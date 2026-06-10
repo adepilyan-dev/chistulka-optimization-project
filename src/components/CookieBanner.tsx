@@ -26,7 +26,7 @@ export default function CookieBanner() {
           <Icon name="Cookie" size={18} style={{ color: "var(--teal)" }} className="flex-shrink-0 mt-0.5" />
           <p className="text-xs leading-snug" style={{ color: "var(--gray)" }}>
             Мы используем cookie, чтобы сайт работал лучше.{" "}
-            <a href="/privacy" className="underline" style={{ color: "var(--teal)" }}>Подробнее</a>
+            <a href="/cookie-policy" className="underline" style={{ color: "var(--teal)" }}>Подробнее</a>
           </p>
         </div>
         <div className="flex gap-2">
