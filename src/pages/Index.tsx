@@ -1095,7 +1095,8 @@ function Footer() {
             <img
               src="https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/b6cb14ab-4c2a-4c89-a582-9b46d4e0a360.jpg"
               alt="Аренда Чистоты"
-              className="h-8 w-auto object-contain brightness-0 invert"
+              className="h-8 w-auto object-contain"
+              style={{ filter: "brightness(0) invert(1)" }}
             />
           </div>
           <div className="flex flex-wrap justify-center gap-5">
