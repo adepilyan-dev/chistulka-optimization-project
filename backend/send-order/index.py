@@ -40,7 +40,7 @@ def handler(event: dict, context) -> dict:
 
     email_from = "arenda-chistoty.ru@yandex.ru"
     email_to = "arenda-chistoty.ru@yandex.ru"
-    password = os.environ["zupzltohyohpbcgu"]
+    password = "zupzltohyohpbcgu"
 
     msg = MIMEMultipart("alternative")
     msg["Subject"] = f"Заявка с сайта: {name} — {phone}"
