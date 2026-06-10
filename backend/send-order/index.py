@@ -48,7 +48,7 @@ def handler(event: dict, context) -> dict:
     </div>
     """
 
-    email_from = "arenda-chistoty.ru@yandex.ru"
+    email_from = "arenda-chistoty.ru@yandex.ru"  # noqa
     email_to = "arenda-chistoty.ru@yandex.ru"
     password = os.environ["SMTP_PASSWORD"]
 
