@@ -28,6 +28,7 @@ export default function CookiePolicy() {
         title="Политика использования cookie | Аренда Чистоты"
         description="Как сайт arenda-chistoty.online использует файлы cookie: типы, назначение и способы управления согласием."
         path="/cookie-policy"
+        noindex={true}
       />
 
       <header className="border-b bg-white">

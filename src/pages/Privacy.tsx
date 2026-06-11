@@ -40,6 +40,7 @@ export default function Privacy() {
         title="Политика конфиденциальности | Аренда Чистоты"
         description="Политика обработки персональных данных сайта arenda-chistoty.online — химчистка мебели в Краснодаре."
         path="/privacy"
+        noindex={true}
       />
       <header className="border-b bg-white">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-5 flex items-center justify-between">
