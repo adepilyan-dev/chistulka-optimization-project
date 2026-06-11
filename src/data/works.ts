@@ -66,6 +66,17 @@ export const WORKS: WorkCase[] = [
     afterImg: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/82cd0d9b-9dc9-4044-a9fb-89e29443c354.jpg",
     result: "Цвет обновлён, ткань свежая и чистая",
   },
+  {
+    id: 6,
+    category: "sofa",
+    categoryLabel: "Диван",
+    title: "Угловой диван голубой велюр",
+    description: "Большой угловой диван из велюра голубого цвета",
+    stain: "Тёмное пятно, общее загрязнение и потемнение велюра",
+    beforeImg: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/beabebe7-a41a-41b7-82f2-3ee10b08b86b.jpg",
+    afterImg: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/beabebe7-a41a-41b7-82f2-3ee10b08b86b.jpg",
+    result: "Велюр восстановлен, цвет стал ярким и равномерным",
+  },
 ];
 
 export const WORK_CATEGORIES = [
