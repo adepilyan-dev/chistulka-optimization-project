@@ -12,6 +12,7 @@ import CookiePolicy from "./pages/CookiePolicy";
 import ServicePage from "./pages/ServicePage";
 import DistrictPage from "./pages/DistrictPage";
 import NotFound from "./pages/NotFound";
+import Works from "./pages/Works";
 import CookieBanner from "./components/CookieBanner";
 import { useYandexMetrika } from "./hooks/useYandexMetrika";
 import { SeoNotFound } from "./components/Seo";
@@ -29,6 +30,7 @@ function AppInner() {
         <Route path="/cookie-policy" element={<CookiePolicy />} />
         <Route path="/uslugi/:slug" element={<ServicePage />} />
         <Route path="/himchistka-:district" element={<DistrictPage />} />
+        <Route path="/nashi-raboty" element={<Works />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<><SeoNotFound /><NotFound /></>} />
       </Routes>
