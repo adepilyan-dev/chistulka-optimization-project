@@ -152,7 +152,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "Как убрать пятно от красного вина с дивана: пошаговое руководство",
     date: "5 июня 2026",
     readTime: "5 мин",
-    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/8febf3af-8467-46a1-9d03-73be6b008c61.jpg",
+    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/ddcd0100-ce5c-4b42-8177-391d0aefe3d2.png",
     excerpt:
       "Красное вино — одно из самых коварных пятен. Разбираем, что работает, а что только усугубляет ситуацию — в зависимости от типа ткани.",
     content: [
@@ -211,7 +211,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "Что делать, если диван пахнет мочой кота: советы профессионала",
     date: "3 июня 2026",
     readTime: "6 мин",
-    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/29030555-9276-4331-9b6c-2191a008deca.jpg",
+    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/f231e7cd-ad5d-434b-9037-3329a8885bf0.jpg",
     excerpt:
       "Запах кошачьей мочи — один из самых стойких. Объясняем, почему обычная уборка не помогает и что реально работает.",
     content: [
@@ -266,7 +266,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "5 признаков, что ваш диван пора чистить",
     date: "1 июня 2026",
     readTime: "3 мин",
-    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/52db93f3-6b44-4461-825a-8f573412e67b.jpg",
+    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/964bdac2-24ee-4587-9685-adc2666249c8.jpg",
     excerpt:
       "Большинство владельцев чистят диван только когда видят пятно. Но есть признаки, которые заметны задолго до этого момента.",
     content: [
