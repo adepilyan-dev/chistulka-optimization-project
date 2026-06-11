@@ -85,7 +85,7 @@ export default function ServicePage() {
         </div>
       </header>
 
-      <main className="max-w-5xl mx-auto px-4 sm:px-6 py-12">
+      <main className="max-w-5xl mx-auto px-4 sm:px-6 py-6 md:py-12">
 
         <Breadcrumbs items={[
           { label: "Услуги", href: "/#services" },
@@ -93,7 +93,7 @@ export default function ServicePage() {
         ]} />
 
         {/* Hero */}
-        <div className="grid md:grid-cols-2 gap-8 mb-12 items-center">
+        <div className="grid md:grid-cols-2 gap-4 md:gap-8 mb-8 md:mb-12 items-center">
           <div>
             <span className="section-tag mb-3 inline-block">Услуга</span>
             <h1 className="font-oswald font-bold mb-4" style={{ fontSize: "clamp(2rem, 5vw, 3rem)", color: "var(--dark)" }}>
@@ -135,7 +135,7 @@ export default function ServicePage() {
           </h2>
           <div className="grid sm:grid-cols-2 gap-4">
             {service.benefits.map((b) => (
-              <div key={b.title} className="bg-white rounded-2xl p-5 shadow-sm flex gap-4 items-start">
+              <div key={b.title} className="bg-white rounded-2xl p-4 sm:p-5 shadow-sm flex gap-3 sm:gap-4 items-start">
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "rgba(12,184,160,0.1)" }}>
                   <Icon name={b.icon} size={20} style={{ color: "var(--teal)" }} />
                 </div>
@@ -186,7 +186,7 @@ export default function ServicePage() {
         </div>
 
         {/* CTA */}
-        <div className="rounded-3xl p-8 md:p-10 mb-12 text-center" style={{ background: "var(--teal)" }}>
+        <div className="rounded-3xl p-5 sm:p-8 md:p-10 mb-8 md:mb-12 text-center" style={{ background: "var(--teal)" }}>
           <h2 className="font-oswald font-bold text-white text-2xl md:text-3xl mb-3">
             Записаться на {service.title.toLowerCase()}
           </h2>

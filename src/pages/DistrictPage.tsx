@@ -121,7 +121,7 @@ export default function DistrictPage() {
         </div>
       </header>
 
-      <main className="max-w-5xl mx-auto px-4 sm:px-6 py-12">
+      <main className="max-w-5xl mx-auto px-4 sm:px-6 py-6 md:py-12">
 
         <Breadcrumbs items={[
           { label: "Химчистка по районам" },
@@ -129,7 +129,7 @@ export default function DistrictPage() {
         ]} />
 
         {/* Hero */}
-        <div className="grid md:grid-cols-2 gap-8 mb-12 items-center">
+        <div className="grid md:grid-cols-2 gap-4 md:gap-8 mb-8 md:mb-12 items-center">
           <div>
             <div className="flex items-center gap-2 mb-3">
               <span className="section-tag">Краснодар</span>
@@ -175,7 +175,7 @@ export default function DistrictPage() {
           </h2>
           <div className="grid sm:grid-cols-2 gap-4">
             {BENEFITS.map((b) => (
-              <div key={b.title} className="bg-white rounded-2xl p-5 shadow-sm flex gap-4 items-start">
+              <div key={b.title} className="bg-white rounded-2xl p-4 sm:p-5 shadow-sm flex gap-3 sm:gap-4 items-start">
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "rgba(12,184,160,0.1)" }}>
                   <Icon name={b.icon} size={20} style={{ color: "var(--teal)" }} />
                 </div>
@@ -205,7 +205,7 @@ export default function DistrictPage() {
                 </div>
                 <div className="p-4 flex items-center justify-between">
                   <p className="font-oswald font-semibold text-sm" style={{ color: "var(--dark)" }}>{s.title}</p>
-                  <Icon name="ArrowRight" size={14} style={{ color: "var(--teal)" }} />
+                  <Icon name="ArrowRight" size={16} style={{ color: "var(--teal)" }} />
                 </div>
               </Link>
             ))}
@@ -213,7 +213,7 @@ export default function DistrictPage() {
         </div>
 
         {/* CTA */}
-        <div className="rounded-3xl p-8 md:p-10 mb-12 text-center" style={{ background: "var(--teal)" }}>
+        <div className="rounded-3xl p-5 sm:p-8 md:p-10 mb-8 md:mb-12 text-center" style={{ background: "var(--teal)" }}>
           <h2 className="font-oswald font-bold text-white text-2xl md:text-3xl mb-3">
             Вызвать мастера {d.nameGen}
           </h2>
@@ -241,7 +241,7 @@ export default function DistrictPage() {
                 className="bg-white rounded-xl px-4 py-3 text-sm font-medium shadow-sm flex items-center gap-2 hover-lift"
                 style={{ color: "var(--dark)" }}
               >
-                <Icon name="MapPin" size={14} style={{ color: "var(--teal)" }} />
+                <Icon name="MapPin" size={16} style={{ color: "var(--teal)" }} />
                 {od.name}
               </Link>
             ))}
