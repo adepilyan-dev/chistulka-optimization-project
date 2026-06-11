@@ -289,6 +289,33 @@ export default function Works() {
             </div>
           )}
 
+          {/* Видео */}
+          <div className="mb-12">
+            <div className="text-center mb-6">
+              <span className="section-tag mb-2">Видео</span>
+              <h2 className="font-oswald font-bold text-2xl sm:text-3xl mt-3" style={{ color: "var(--dark)" }}>
+                Смотрите процесс чистки
+              </h2>
+            </div>
+            <div className="grid sm:grid-cols-2 gap-5">
+              {[
+                "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/a09dded2-1bce-46ac-8780-85fe20b3c779.mp4",
+                "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/8c635586-f22a-4b62-a465-7d9b741cd25c.mp4",
+              ].map((src, i) => (
+                <div key={i} className="card-clean overflow-hidden">
+                  <video
+                    src={src}
+                    controls
+                    playsInline
+                    preload="metadata"
+                    className="w-full"
+                    style={{ aspectRatio: "16/9", objectFit: "cover", display: "block" }}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+
           {/* Блок CTA */}
           <div
             className="rounded-2xl p-8 text-center mb-12"
