@@ -1011,7 +1011,8 @@ function Blog() {
               Советы по чистоте
             </h2>
           </div>
-          <button onClick={() => scrollToId("contacts")} className={`btn-outline px-6 py-2 text-sm font-oswald ${inView ? "animate-fade-up stagger-2" : "opacity-0"}`}>
+          <button onClick={() => scrollToId("contacts")} className={`btn-primary px-6 py-2.5 text-sm font-oswald flex items-center gap-2 ${inView ? "animate-fade-up stagger-2" : "opacity-0"}`}>
+            <Icon name="MessageCircle" size={16} />
             Задать вопрос
           </button>
         </div>
