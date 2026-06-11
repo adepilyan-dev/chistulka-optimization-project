@@ -152,7 +152,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "Как убрать пятно от красного вина с дивана: пошаговое руководство",
     date: "5 июня 2026",
     readTime: "5 мин",
-    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/d8dd0c6f-e2d1-4dd0-a43f-71dd963f3e2a.jpg",
+    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/8febf3af-8467-46a1-9d03-73be6b008c61.jpg",
     excerpt:
       "Красное вино — одно из самых коварных пятен. Разбираем, что работает, а что только усугубляет ситуацию — в зависимости от типа ткани.",
     content: [
@@ -211,7 +211,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "Что делать, если диван пахнет мочой кота: советы профессионала",
     date: "3 июня 2026",
     readTime: "6 мин",
-    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/732bbc08-719c-44c8-800e-9c68b5d80afa.jpg",
+    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/29030555-9276-4331-9b6c-2191a008deca.jpg",
     excerpt:
       "Запах кошачьей мочи — один из самых стойких. Объясняем, почему обычная уборка не помогает и что реально работает.",
     content: [
@@ -266,7 +266,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "5 признаков, что ваш диван пора чистить",
     date: "1 июня 2026",
     readTime: "3 мин",
-    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/bc199042-d11e-49eb-9a5d-bc128d582074.jpg",
+    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/fbe70ba2-6db2-424f-8ba1-648396b7092d.jpg",
     excerpt:
       "Большинство владельцев чистят диван только когда видят пятно. Но есть признаки, которые заметны задолго до этого момента.",
     content: [
@@ -322,7 +322,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "Химчистка матраса в домашних условиях: что работает, а что нет",
     date: "8 июня 2026",
     readTime: "5 мин",
-    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/ef795636-fa47-4792-a2ba-5e6e939dfefc.jpg",
+    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/91feb1a3-516a-4121-acdd-e7848178d83f.jpg",
     excerpt:
       "Матрас — самый интимный предмет в вашей спальне, и при этом самый редко чистящийся. Разбираем, как правильно ухаживать за ним и когда без профессионала не обойтись.",
     content: [
@@ -380,7 +380,7 @@ export const BLOG_POSTS: BlogPost[] = [
     title: "Химчистка детского кресла и автокресла: всё, что нужно знать родителям",
     date: "6 июня 2026",
     readTime: "4 мин",
-    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/d094ad5b-a76b-4a14-ad88-7d73d2d3a774.jpg",
+    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/08d35f06-6ecd-4c21-a709-42f23a1e4951.jpg",
     excerpt:
       "Детское кресло и автокресло — лидеры по загрязнённости среди всей мягкой мебели. Рассказываем, как чистить правильно и безопасно для ребёнка.",
     content: [
