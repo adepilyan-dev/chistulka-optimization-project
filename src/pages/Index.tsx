@@ -1296,6 +1296,15 @@ function Footer() {
               Наши работы
             </Link>
           </div>
+          <div className="flex flex-col items-center md:items-end gap-2">
+            <div className="flex flex-wrap justify-center gap-4">
+              <Link to="/privacy" className="text-xs transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.35)" }}>
+                Политика конфиденциальности
+              </Link>
+              <Link to="/cookie-policy" className="text-xs transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.35)" }}>
+                Политика Cookie
+              </Link>
+            </div>
           <div className="flex items-center gap-3">
             <div className="text-sm" style={{ color: "rgba(255,255,255,0.3)" }}>© 2026 Аренда Чистоты</div>
             <a
@@ -1308,6 +1317,7 @@ function Footer() {
               <Icon name="MessageCircle" size={13} />
               Написать в MAX
             </a>
+          </div>
           </div>
         </div>
       </div>
