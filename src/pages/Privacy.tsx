@@ -80,7 +80,9 @@ export default function Privacy() {
               По всем вопросам, связанным с обработкой персональных данных, обращайтесь:<br />
               Оператор: самозанятый Депилян Артур Ашотович<br />
               Телефон: <a href="tel:+79189682882" style={{ color: "var(--teal)" }} className="font-medium">8 918 968-28-82</a><br />
-              Город: Краснодар
+              Email: <a href="mailto:info@arenda-chistoty.online" style={{ color: "var(--teal)" }} className="font-medium">info@arenda-chistoty.online</a><br />
+              Адрес: г. Краснодар<br />
+              Время работы: ежедневно с 9:00 до 22:00
             </p>
           </section>
         </div>
