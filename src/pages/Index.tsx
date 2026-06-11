@@ -312,14 +312,14 @@ function Hero() {
               />
               <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, rgba(12,184,160,0.12) 0%, transparent 60%)" }} />
             </div>
-            <div className="absolute -bottom-4 -left-4 bg-white rounded-2xl shadow-xl p-4 flex items-center gap-3 animate-float" style={{ animationDelay: "1s" }}>
+            <div className="absolute -bottom-3 -left-3 sm:-bottom-4 sm:-left-4 bg-white rounded-2xl shadow-xl p-3 sm:p-4 flex items-center gap-3 animate-float" style={{ animationDelay: "1s" }}>
               <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl" style={{ background: "var(--teal-light)" }}>⭐</div>
               <div>
                 <div className="font-oswald font-bold text-lg" style={{ color: "var(--dark)" }}>4.98 / 5.0</div>
                 <div className="text-xs" style={{ color: "var(--gray)" }}>1 240 отзывов</div>
               </div>
             </div>
-            <div className="absolute -top-4 -right-4 bg-white rounded-2xl shadow-xl px-4 py-3 animate-float" style={{ animationDelay: "2.5s" }}>
+            <div className="absolute -top-3 -right-3 sm:-top-4 sm:-right-4 bg-white rounded-2xl shadow-xl px-3 py-2 sm:px-4 sm:py-3 animate-float" style={{ animationDelay: "2.5s" }}>
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: "#ffe227" }}>
                   <Icon name="Zap" size={16} style={{ color: "var(--dark)" }} />
@@ -482,9 +482,9 @@ function Calculator() {
                           </div>
                         </div>
                         <div className="flex items-center gap-2 flex-shrink-0">
-                          <button onClick={() => changeCount(item.id, -1)} className="w-7 h-7 rounded-full flex items-center justify-center font-bold text-lg transition-all" style={{ background: count > 0 ? "var(--teal)" : "#e5e7eb", color: count > 0 ? "white" : "#9ca3af" }}>−</button>
+                          <button onClick={() => changeCount(item.id, -1)} className="w-9 h-9 rounded-full flex items-center justify-center font-bold text-lg transition-all" style={{ background: count > 0 ? "var(--teal)" : "#e5e7eb", color: count > 0 ? "white" : "#9ca3af" }}>−</button>
                           <span className="w-5 text-center text-sm font-semibold" style={{ color: "var(--dark)" }}>{count}</span>
-                          <button onClick={() => changeCount(item.id, 1)} className="w-7 h-7 rounded-full flex items-center justify-center font-bold text-lg transition-all" style={{ background: "var(--teal)", color: "white" }}>+</button>
+                          <button onClick={() => changeCount(item.id, 1)} className="w-9 h-9 rounded-full flex items-center justify-center font-bold text-lg transition-all" style={{ background: "var(--teal)", color: "white" }}>+</button>
                         </div>
                       </div>
                     );
@@ -529,7 +529,7 @@ function Calculator() {
                 )}
                 <div className="border-t mt-4 pt-4 text-center">
                   <div className="text-sm mb-1" style={{ color: "var(--gray)" }}>Итого:</div>
-                  <div className="font-oswald font-bold" style={{ fontSize: "2.8rem", color: hasItems ? "var(--teal)" : "#d1d5db", lineHeight: 1 }}>
+                  <div className="font-oswald font-bold" style={{ fontSize: "clamp(2rem, 6vw, 2.8rem)", color: hasItems ? "var(--teal)" : "#d1d5db", lineHeight: 1 }}>
                     {total > 0 ? `${total.toLocaleString("ru")} ₽` : "0 ₽"}
                   </div>
                 </div>
