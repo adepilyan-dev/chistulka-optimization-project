@@ -1250,6 +1250,7 @@ function Contacts() {
               {[
                 { icon: "Phone", label: "Телефон", value: "8 918 968-28-82", sub: "Звоните в любое время", link: "tel:+79189682882" },
                 { icon: "MessageCircle", label: "MAX", value: "Написать в MAX", sub: "Онлайн 9:00–22:00", link: "https://max.ru/u/f9LHodD0cOIhDoRH_6LXfcSUOHBuL1Ox9Kjst5F3mN4736vAC4pXtz-GKzc" },
+                { icon: "Users", label: "ВКонтакте", value: "Группа ВКонтакте", sub: "Отзывы и акции", link: "https://vk.com/club239497134" },
                 { icon: "MapPin", label: "Адрес", value: "Краснодар", sub: "Работаем по всему городу и краю", link: null },
               ].map((c) => {
                 const Tag = c.link ? "a" : "div";
@@ -1315,7 +1316,17 @@ function Footer() {
               style={{ background: "rgba(12,184,160,0.15)", color: "var(--teal)", border: "1px solid rgba(12,184,160,0.3)" }}
             >
               <Icon name="MessageCircle" size={13} />
-              Написать в MAX
+              MAX
+            </a>
+            <a
+              href="https://vk.com/club239497134"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full transition-all hover:opacity-80"
+              style={{ background: "rgba(12,184,160,0.15)", color: "var(--teal)", border: "1px solid rgba(12,184,160,0.3)" }}
+            >
+              <Icon name="Users" size={13} />
+              ВКонтакте
             </a>
           </div>
           </div>
