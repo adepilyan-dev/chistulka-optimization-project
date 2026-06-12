@@ -887,34 +887,27 @@ function Gallery() {
             <Icon name="ArrowRight" size={16} />
           </Link>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
-          {GALLERY_ITEMS.map((item, i) => {
-            const isWide = i === 0;
-            const isTall = i === 3;
-            return (
-              <div
-                key={item.label}
-                className={`relative rounded-2xl overflow-hidden cursor-pointer group ${
-                  isWide ? "col-span-2 md:col-span-2" : ""
-                } ${isTall ? "row-span-2" : ""} ${inView ? `animate-fade-up stagger-${Math.min(i + 1, 6)}` : "opacity-0"}`}
-                style={{ aspectRatio: isWide ? "16/7" : isTall ? "3/4" : "4/3" }}
-              >
-                <img
-                  src={item.img}
-                  alt={`${item.label} в Краснодаре`}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                <div className="absolute top-3 left-3">
-                  <span className="text-xs font-semibold px-3 py-1 rounded-full backdrop-blur-sm" style={{ background: "rgba(255,255,255,0.85)", color: "var(--dark)" }}>{item.tag}</span>
-                </div>
-                <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-1 group-hover:translate-y-0 transition-transform duration-300">
-                  <span className="text-white font-semibold text-sm drop-shadow">{item.label}</span>
-                </div>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          {GALLERY_ITEMS.map((item, i) => (
+            <div
+              key={item.label}
+              className={`relative rounded-2xl overflow-hidden cursor-pointer hover-lift group ${inView ? `animate-fade-up stagger-${Math.min(i + 1, 6)}` : "opacity-0"}`}
+              style={{ aspectRatio: item.ratio, background: bgColors[i] }}
+            >
+              <img
+                src={item.img}
+                alt={`${item.label} в Краснодаре`}
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                loading="lazy"
+              />
+              <div className="absolute top-3 left-3">
+                <span className="text-xs font-semibold px-3 py-1 rounded-full" style={{ background: "rgba(255,255,255,0.85)", color: "var(--dark)" }}>{item.tag}</span>
               </div>
-            );
-          })}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-all flex items-end p-4">
+                <span className="text-white font-semibold text-sm">{item.label}</span>
+              </div>
+            </div>
+          ))}
         </div>
         <div className={`text-center mt-8 ${inView ? "animate-fade-up stagger-6" : "opacity-0"}`}>
           <Link to="/nashi-raboty" className="btn-primary inline-flex items-center gap-2 px-8 py-3 text-sm font-oswald">
