@@ -115,12 +115,12 @@ const REVIEWS = [
 ];
 
 const GALLERY_ITEMS = [
-  { label: "Химчистка дивана", tag: "Диван", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/ef795636-fa47-4792-a2ba-5e6e939dfefc.jpg", ratio: "4/3" },
-  { label: "Химчистка кресла", tag: "Кресло", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/8febf3af-8467-46a1-9d03-73be6b008c61.jpg", ratio: "1/1" },
-  { label: "Химчистка матраса", tag: "Матрас", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/91feb1a3-516a-4121-acdd-e7848178d83f.jpg", ratio: "1/1" },
-  { label: "Химчистка ковра", tag: "Ковёр", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/fbe70ba2-6db2-424f-8ba1-648396b7092d.jpg", ratio: "4/3" },
-  { label: "Химчистка автосалона", tag: "Авто", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/08d35f06-6ecd-4c21-a709-42f23a1e4951.jpg", ratio: "1/1" },
-  { label: "Химчистка стульев", tag: "Стулья", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/29030555-9276-4331-9b6c-2191a008deca.jpg", ratio: "1/1" },
+  { label: "Химчистка дивана", tag: "Диван", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/c2718891-9bd7-4f8a-ac92-acfc09feef9e.png", ratio: "1/1" },
+  { label: "Химчистка кресла", tag: "Кресло", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/0afd214c-0c7a-4540-91db-7c0d68e4e0b7.png", ratio: "1/1" },
+  { label: "Химчистка матраса", tag: "Матрас", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/62526030-2235-4d63-b775-59db14eb60d6.png", ratio: "1/1" },
+  { label: "Химчистка ковра", tag: "Ковёр", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/162a3567-348a-4939-9f38-e0bb5fd2ad1c.png", ratio: "4/3" },
+  { label: "Химчистка кресла (классика)", tag: "Кресло", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/f6c66867-ed54-4baa-a3b0-e449639855ab.png", ratio: "1/1" },
+  { label: "Химчистка дивана (бархат)", tag: "Диван", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/c2718891-9bd7-4f8a-ac92-acfc09feef9e.png", ratio: "4/3" },
 ];
 
 const FURNITURE_ITEMS = [
