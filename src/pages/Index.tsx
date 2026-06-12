@@ -115,12 +115,12 @@ const REVIEWS = [
 ];
 
 const GALLERY_ITEMS = [
-  { label: "Химчистка дивана", tag: "Диван", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/c2718891-9bd7-4f8a-ac92-acfc09feef9e.png", ratio: "1/1" },
-  { label: "Химчистка кресла", tag: "Кресло", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/0afd214c-0c7a-4540-91db-7c0d68e4e0b7.png", ratio: "1/1" },
-  { label: "Химчистка матраса", tag: "Матрас", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/62526030-2235-4d63-b775-59db14eb60d6.png", ratio: "1/1" },
-  { label: "Химчистка ковра", tag: "Ковёр", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/162a3567-348a-4939-9f38-e0bb5fd2ad1c.png", ratio: "4/3" },
-  { label: "Химчистка кресла (классика)", tag: "Кресло", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/f6c66867-ed54-4baa-a3b0-e449639855ab.png", ratio: "1/1" },
-  { label: "Химчистка дивана (бархат)", tag: "Диван", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/c2718891-9bd7-4f8a-ac92-acfc09feef9e.png", ratio: "4/3" },
+  { label: "Угловой диван велюр", tag: "Диван", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/19a85ebd-07f4-41ee-b669-283901cc5d56.jpg", ratio: "4/3" },
+  { label: "Диван на деревянном каркасе", tag: "Диван", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/0d399941-6be9-402b-a9b0-6fdc6aa76976.jpg", ratio: "4/3" },
+  { label: "Угловой диван малиновый", tag: "Диван", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/0795fb22-d0f2-4e07-b371-104be7b65f25.jpg", ratio: "4/3" },
+  { label: "Двуспальный матрас", tag: "Матрас", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/c8083665-fe6c-4b01-a3fd-e72b11ac9161.jpg", ratio: "4/3" },
+  { label: "Диван на деревянных подлокотниках", tag: "Диван", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/de8a7092-f0d1-4176-91fc-8f045dbc7bb0.jpg", ratio: "4/3" },
+  { label: "Угловой диван велюр", tag: "Диван", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/19a85ebd-07f4-41ee-b669-283901cc5d56.jpg", ratio: "1/1" },
 ];
 
 const FURNITURE_ITEMS = [
