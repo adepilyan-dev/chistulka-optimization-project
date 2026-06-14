@@ -1,10 +1,149 @@
+# robots.txt для arenda-chistoty.online
+# Химчистка мебели в Краснодаре
+# Обновлено: 2026-01-14
+
+# ============================================
+# ОСНОВНЫЕ ПРАВИЛА ДЛЯ ВСЕХ РОБОТОВ
+# ============================================
+
 User-agent: *
 Allow: /
+
+# Запрещаем служебные страницы
 Disallow: /cookie-policy
 Disallow: /privacy
+Disallow: /terms-of-use
 Disallow: /hello-world/
 Disallow: /sample-page/
 Disallow: /voprosy-i-otvety-faq.html
+Disallow: /akcii-i-skidki.html
 
+# Запрещаем стандартные WordPress пути
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /wp-content/plugins/
+Disallow: /wp-content/themes/
+Disallow: /xmlrpc.php
+Disallow: /wp-login.php
+Disallow: /wp-register.php
+Disallow: /trackback/
+Disallow: /feed/
+Disallow: /comments/feed/
+Disallow: /?feed=
+
+# Запрещаем дублирующиеся страницы
+Disallow: /*/print/
+Disallow: /*/page/
+Disallow: /*?s=
+Disallow: /*?utm_source=
+Disallow: /*?utm_medium=
+Disallow: /*?utm_campaign=
+Disallow: /*?utm_term=
+Disallow: /*?utm_content=
+
+# Запрещаем поиск
+Disallow: /?s=
+Disallow: /search/
+
+# Временные файлы и архивы
+Disallow: /*.pdf$
+Disallow: /*.zip$
+Disallow: /*.gz$
+Disallow: /*.tmp$
+Disallow: /backup/
+Disallow: /tmp/
+
+# ============================================
+# ПРАВИЛА ДЛЯ GOOGLE
+# ============================================
+
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+# Для Google News
+User-agent: Googlebot-News
+Allow: /
+
+# Для Google Images
+User-agent: Googlebot-Image
+Allow: /wp-content/uploads/
+
+# ============================================
+# ПРАВИЛА ДЛЯ YANDEX
+# ============================================
+
+User-agent: Yandex
+Allow: /
+Crawl-delay: 2
+
+# Для Яндекс.Новостей
+User-agent: YandexNews
+Allow: /
+
+# Для Яндекс.Картинок
+User-agent: YandexImages
+Allow: /wp-content/uploads/
+
+# ============================================
+# ПРАВИЛА ДЛЯ ДРУГИХ ПОИСКОВЫХ СИСТЕМ
+# ============================================
+
+# Bing
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Mail.ru
+User-agent: Mail.Ru
+Allow: /
+Crawl-delay: 2
+
+# Baidu (осторожно - агрессивный краулер)
+User-agent: Baiduspider
+Disallow: /
+Crawl-delay: 5
+
+# Rambler
+User-agent: StackRambler
+Allow: /
+Crawl-delay: 2
+
+# Yahoo
+User-agent: Slurp
+Allow: /
+Crawl-delay: 1
+
+# ============================================
+# СПЕЦИАЛЬНЫЕ РОБОТЫ
+# ============================================
+
+# Адаптивный дизайн (для Google)
+User-agent: Googlebot-Mobile
+Allow: /
+
+# Робот для проверки скорости
+User-agent: PageSpeed
+Allow: /
+
+# ============================================
+# ОСНОВНЫЕ НАСТРОЙКИ
+# ============================================
+
+# Указываем основной домен
 Host: https://arenda-chistoty.online
+
+# Карта сайта
 Sitemap: https://arenda-chistoty.online/sitemap.xml
+Sitemap: https://arenda-chistoty.online/sitemap-news.xml
+Sitemap: https://arenda-chistoty.online/sitemap-images.xml
+
+# Время между запросами (в секундах)
+Crawl-delay: 1
+
+# Запрещаем индексацию в iframe
+X-Robots-Tag: noindex, nofollow
+
+# ============================================
+# КОНЕЦ ФАЙЛА
+# ============================================
