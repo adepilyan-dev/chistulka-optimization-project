@@ -357,7 +357,7 @@ def main():
     if not ADMIN_PASSWORD:
         print_colored("\n⚠️ WARNING: SEO_ADMIN_PASSWORD environment variable is not set!", Colors.YELLOW)
         print_colored("   Some tests will be skipped or will fail.", Colors.YELLOW)
-        print_colored("   Set it with: export SEO_ADMIN_PASSWORD='Magnit2412'", Colors.YELLOW)
+        print_colored("   Set it with: export SEO_ADMIN_PASSWORD='your-password'", Colors.YELLOW)
     
     # Запуск всех тестов
     results = {
