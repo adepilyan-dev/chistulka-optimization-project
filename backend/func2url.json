@@ -9,8 +9,19 @@ from datetime import datetime
 from urllib.parse import urljoin
 
 # Конфигурация
+# Конфигурация
 API_URL = "https://functions.poehali.dev/0cb39cbb-0651-41ab-bd6f-8c9932206449"
-ADMIN_PASSWORD = Magnit2412("SEO_ADMIN_PASSWORD", "")
+ADMIN_PASSWORD = os.environ.get("SEO_ADMIN_PASSWORD", "")  # ← ИСПРАВЛЕНО
+
+# ... остальной код ...
+
+def main():
+    # ...
+    if not ADMIN_PASSWORD:
+        print_colored("\n⚠️ WARNING: SEO_ADMIN_PASSWORD environment variable is not set!", Colors.YELLOW)
+        print_colored("   Some tests will be skipped or will fail.", Colors.YELLOW)
+        print_colored("   Set it with: export SEO_ADMIN_PASSWORD='your-password'", Colors.YELLOW)  # ← ИСПРАВЛЕНО
+    # ...
 
 # Цвета для вывода
 class Colors:
