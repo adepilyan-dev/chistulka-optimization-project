@@ -1,6 +1,7 @@
 import json
 import os
 import psycopg2
+from psycopg2 import sql
 
 SCHEMA = os.environ.get("MAIN_DB_SCHEMA", "public")
 
@@ -21,6 +22,29 @@ def check_auth(event):
     token = event.get("headers", {}).get("X-Authorization", "")
     password = os.environ.get("SEO_ADMIN_PASSWORD", "")
     return token == f"Bearer {password}"
+
+
+def validate_schema_json(value):
+    """Проверяет, что schema_json - валидный JSON"""
+    if value:
+        try:
+            json.loads(value)
+        except json.JSONDecodeError as e:
+            raise ValueError(f"Invalid JSON in schema_json: {str(e)}")
+    return value
+
+
+def validate_page_key(page_key):
+    """Проверяет page_key на допустимые символы"""
+    if not page_key or not page_key.strip():
+        raise ValueError("page_key is required")
+    
+    # Разрешаем только буквы, цифры, дефис и подчеркивание
+    import re
+    if not re.match(r'^[a-zA-Z0-9_-]+$', page_key):
+        raise ValueError("page_key must contain only letters, numbers, hyphens, and underscores")
+    
+    return page_key.strip()
 
 
 def handler(event: dict, context) -> dict:
@@ -45,9 +69,11 @@ def handler(event: dict, context) -> dict:
     try:
         # GET /seo-admin — получить все SEO-настройки и robots
         if method == "GET":
-            cur.execute(
-                f"SELECT page_key, page_label, title, description, keywords, schema_json, updated_at FROM {SCHEMA}.seo_settings ORDER BY id"
-            )
+            # Безопасное выполнение с экранированием схемы
+            query = sql.SQL(
+                "SELECT page_key, page_label, title, description, keywords, schema_json, updated_at FROM {}.seo_settings ORDER BY id"
+            ).format(sql.Identifier(SCHEMA))
+            cur.execute(query)
             rows = cur.fetchall()
             pages = [
                 {
@@ -62,7 +88,10 @@ def handler(event: dict, context) -> dict:
                 for r in rows
             ]
 
-            cur.execute(f"SELECT content FROM {SCHEMA}.seo_robots ORDER BY id DESC LIMIT 1")
+            query = sql.SQL("SELECT content FROM {}.seo_robots ORDER BY id DESC LIMIT 1").format(
+                sql.Identifier(SCHEMA)
+            )
+            cur.execute(query)
             robots_row = cur.fetchone()
             robots = robots_row[0] if robots_row else ""
 
@@ -73,21 +102,34 @@ def handler(event: dict, context) -> dict:
             }
 
         # POST /seo-admin/page — сохранить настройки одной страницы
-        if method == "POST" and "page" in path:
-            body = json.loads(event.get("body") or "{}")
-            page_key = body.get("page_key")
-            title = body.get("title", "")
-            description = body.get("description", "")
-            keywords = body.get("keywords", "")
-            schema_json = body.get("schema_json", "")
-
-            cur.execute(
-                f"""
-                INSERT INTO {SCHEMA}.seo_settings (page_key, page_label, title, description, keywords, schema_json, updated_at)
+        if method == "POST" and path.endswith("/page"):
+            try:
+                body = json.loads(event.get("body") or "{}")
+                
+                # Валидация входных данных
+                page_key = validate_page_key(body.get("page_key", ""))
+                title = body.get("title", "")[:255]  # Ограничение длины
+                description = body.get("description", "")[:500]
+                keywords = body.get("keywords", "")[:500]
+                schema_json = validate_schema_json(body.get("schema_json", ""))
+                
+            except (json.JSONDecodeError, ValueError) as e:
+                return {
+                    "statusCode": 400,
+                    "headers": {**cors_headers(), "Content-Type": "application/json"},
+                    "body": json.dumps({"error": str(e)}),
+                }
+            
+            # Используем параметризованный запрос
+            query = sql.SQL("""
+                INSERT INTO {}.seo_settings (page_key, page_label, title, description, keywords, schema_json, updated_at)
                 VALUES (%s, %s, %s, %s, %s, %s, NOW())
                 ON CONFLICT (page_key) DO UPDATE
                 SET title=%s, description=%s, keywords=%s, schema_json=%s, updated_at=NOW()
-                """,
+            """).format(sql.Identifier(SCHEMA))
+            
+            cur.execute(
+                query,
                 (page_key, page_key, title, description, keywords, schema_json,
                  title, description, keywords, schema_json),
             )
@@ -95,20 +137,38 @@ def handler(event: dict, context) -> dict:
             return {
                 "statusCode": 200,
                 "headers": {**cors_headers(), "Content-Type": "application/json"},
-                "body": json.dumps({"ok": True}),
+                "body": json.dumps({"ok": True, "message": f"Page '{page_key}' updated successfully"}),
             }
 
         # POST /seo-admin/robots — сохранить robots.txt
-        if method == "POST" and "robots" in path:
-            body = json.loads(event.get("body") or "{}")
-            content = body.get("content", "")
-            cur.execute(f"DELETE FROM {SCHEMA}.seo_robots")
-            cur.execute(f"INSERT INTO {SCHEMA}.seo_robots (content) VALUES (%s)", (content,))
+        if method == "POST" and path.endswith("/robots"):
+            try:
+                body = json.loads(event.get("body") or "{}")
+                content = body.get("content", "")
+                
+                # Базовая валидация robots.txt (опционально)
+                if len(content) > 100000:  # Лимит 100KB
+                    raise ValueError("Robots.txt content exceeds maximum size of 100KB")
+                    
+            except (json.JSONDecodeError, ValueError) as e:
+                return {
+                    "statusCode": 400,
+                    "headers": {**cors_headers(), "Content-Type": "application/json"},
+                    "body": json.dumps({"error": str(e)}),
+                }
+            
+            query_delete = sql.SQL("DELETE FROM {}").format(sql.Identifier(f"{SCHEMA}.seo_robots"))
+            query_insert = sql.SQL("INSERT INTO {}.seo_robots (content) VALUES (%s)").format(
+                sql.Identifier(SCHEMA)
+            )
+            
+            cur.execute(query_delete)
+            cur.execute(query_insert, (content,))
             conn.commit()
             return {
                 "statusCode": 200,
                 "headers": {**cors_headers(), "Content-Type": "application/json"},
-                "body": json.dumps({"ok": True}),
+                "body": json.dumps({"ok": True, "message": "Robots.txt updated successfully"}),
             }
 
         return {
@@ -117,6 +177,13 @@ def handler(event: dict, context) -> dict:
             "body": json.dumps({"error": "Not found"}),
         }
 
+    except psycopg2.Error as e:
+        conn.rollback()
+        return {
+            "statusCode": 500,
+            "headers": {**cors_headers(), "Content-Type": "application/json"},
+            "body": json.dumps({"error": f"Database error: {str(e)}"}),
+        }
     finally:
         cur.close()
         conn.close()
