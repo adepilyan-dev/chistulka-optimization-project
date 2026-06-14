@@ -32,7 +32,7 @@ function AppInner() {
         <Route path="/uslugi/:slug" element={<ServicePage />} />
         <Route path="/himchistka-:district" element={<DistrictPage />} />
         <Route path="/nashi-raboty" element={<Works />} />
-        <Route path="/admin/seo" element={<SeoAdmin />} />
+        <Route path="/seo-panel" element={<SeoAdmin />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<><SeoNotFound /><NotFound /></>} />
       </Routes>
