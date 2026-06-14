@@ -1,91 +1,164 @@
 # test_production_api.py
 import json
 import os
+import sys
+import time
 import requests
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, List
 from datetime import datetime
+from urllib.parse import urljoin
 
 # Конфигурация
 API_URL = "https://functions.poehali.dev/0cb39cbb-0651-41ab-bd6f-8c9932206449"
 ADMIN_PASSWORD = os.environ.get("SEO_ADMIN_PASSWORD", "")
 
-def log_response(test_name: str, response: requests.Response, expected_status: int):
-    """Логирование ответа API"""
-    print(f"\n{'='*60}")
-    print(f"📝 {test_name}")
-    print(f"{'='*60}")
-    print(f"Status: {response.status_code} (expected: {expected_status})")
-    
-    if response.status_code != expected_status:
-        print(f"❌ FAILED - Expected {expected_status}, got {response.status_code}")
-    else:
-        print(f"✅ PASSED")
-    
-    try:
-        body = response.json()
-        print(f"Response: {json.dumps(body, indent=2, ensure_ascii=False)[:500]}")
-    except:
-        print(f"Response body: {response.text[:200]}")
-    
-    return response.status_code == expected_status
+# Цвета для вывода
+class Colors:
+    GREEN = '\033[92m'
+    RED = '\033[91m'
+    YELLOW = '\033[93m'
+    BLUE = '\033[94m'
+    CYAN = '\033[96m'
+    RESET = '\033[0m'
+    BOLD = '\033[1m'
 
+def print_colored(text: str, color: str = Colors.RESET):
+    """Цветной вывод в консоль"""
+    print(f"{color}{text}{Colors.RESET}")
+
+def log_response(test_name: str, response: requests.Response, expected_status: int, verbose: bool = True):
+    """Логирование ответа API"""
+    passed = response.status_code == expected_status
+    status_color = Colors.GREEN if passed else Colors.RED
+    status_icon = "✅" if passed else "❌"
+    
+    print(f"\n{Colors.BOLD}{'='*60}{Colors.RESET}")
+    print(f"{Colors.BOLD}📝 {test_name}{Colors.RESET}")
+    print(f"{'='*60}")
+    print(f"{status_icon} Status: {response.status_code} (expected: {expected_status})")
+    
+    if not passed:
+        print_colored(f"❌ FAILED - Expected {expected_status}, got {response.status_code}", Colors.RED)
+    else:
+        print_colored(f"✅ PASSED", Colors.GREEN)
+    
+    if verbose and response.status_code != expected_status:
+        try:
+            body = response.json()
+            print(f"Response: {json.dumps(body, indent=2, ensure_ascii=False)[:300]}")
+        except:
+            print(f"Response body: {response.text[:200]}")
+    
+    return passed
+
+def measure_response_time(func):
+    """Декоратор для измерения времени ответа"""
+    def wrapper(*args, **kwargs):
+        start = time.time()
+        result = func(*args, **kwargs)
+        elapsed = (time.time() - start) * 1000
+        print_colored(f"   ⏱️  Response time: {elapsed:.0f}ms", Colors.CYAN)
+        return result
+    return wrapper
+
+@measure_response_time
 def test_cors():
     """Тест CORS заголовков"""
-    print("\n" + "🔧 TESTING CORS".center(60, "="))
+    print(f"\n{Colors.BOLD}{'🔧 TESTING CORS'.center(60, '=')}{Colors.RESET}")
+    
+    required_headers = [
+        "Access-Control-Allow-Origin",
+        "Access-Control-Allow-Methods",
+        "Access-Control-Allow-Headers"
+    ]
     
     response = requests.options(API_URL, headers={
         "Origin": "https://example.com",
-        "Access-Control-Request-Method": "GET"
+        "Access-Control-Request-Method": "GET",
+        "Access-Control-Request-Headers": "Content-Type,X-Authorization"
     })
     
     print(f"Status: {response.status_code}")
-    print(f"CORS Headers: { {k:v for k,v in response.headers.items() if 'access-control' in k.lower()} }")
     
-    return response.status_code == 200
+    if response.status_code != 200:
+        print_colored(f"❌ CORS preflight failed: {response.status_code}", Colors.RED)
+        return False
+    
+    # Проверяем наличие необходимых заголовков
+    missing_headers = []
+    for header in required_headers:
+        if header not in response.headers:
+            missing_headers.append(header)
+        else:
+            print_colored(f"   ✅ {header}: {response.headers[header]}", Colors.GREEN)
+    
+    if missing_headers:
+        print_colored(f"   ❌ Missing headers: {', '.join(missing_headers)}", Colors.RED)
+        return False
+    
+    # Проверяем значение Allow-Origin
+    if response.headers.get("Access-Control-Allow-Origin") != "*":
+        print_colored(f"   ⚠️  Allow-Origin: {response.headers.get('Access-Control-Allow-Origin')} (not *)", Colors.YELLOW)
+    
+    return True
 
+@measure_response_time
 def test_without_auth():
     """Тесты без авторизации"""
-    print("\n" + "🔐 TESTING WITHOUT AUTH".center(60, "="))
+    print(f"\n{Colors.BOLD}{'🔐 TESTING WITHOUT AUTH'.center(60, '=')}{Colors.RESET}")
     
     results = []
+    test_cases = [
+        ("GET / - No Auth", "GET", "/", None),
+        ("POST /page - No Auth", "POST", "/page", {"page_key": "test", "title": "Test"}),
+        ("POST /robots - No Auth", "POST", "/robots", {"content": "User-agent: *\nDisallow:"}),
+    ]
     
-    # GET request
-    response = requests.get(API_URL)
-    results.append(log_response("GET / - No Auth", response, 401))
-    
-    # POST to page
-    response = requests.post(
-        f"{API_URL}/page",
-        json={"page_key": "test", "title": "Test"}
-    )
-    results.append(log_response("POST /page - No Auth", response, 401))
-    
-    # POST to robots
-    response = requests.post(
-        f"{API_URL}/robots",
-        json={"content": "User-agent: *\nDisallow:"}
-    )
-    results.append(log_response("POST /robots - No Auth", response, 401))
+    for name, method, path, body in test_cases:
+        url = urljoin(API_URL, path)
+        try:
+            if method == "GET":
+                response = requests.get(url)
+            elif method == "POST":
+                response = requests.post(url, json=body)
+            
+            results.append(log_response(name, response, 401, verbose=False))
+        except Exception as e:
+            print_colored(f"❌ {name} - Error: {str(e)}", Colors.RED)
+            results.append(False)
     
     return all(results)
 
+@measure_response_time
 def test_with_wrong_auth():
     """Тесты с неверным паролем"""
-    print("\n" + "🔑 TESTING WRONG AUTH".center(60, "="))
+    print(f"\n{Colors.BOLD}{'🔑 TESTING WRONG AUTH'.center(60, '=')}{Colors.RESET}")
     
-    headers = {"X-Authorization": "Bearer wrong-password-123"}
+    wrong_tokens = [
+        "Bearer wrong-password-123",
+        "Basic token",
+        "Bearer",
+        "WrongFormat"
+    ]
     
-    response = requests.get(API_URL, headers=headers)
-    return log_response("GET / - Wrong Password", response, 401)
+    results = []
+    for token in wrong_tokens:
+        headers = {"X-Authorization": token}
+        response = requests.get(API_URL, headers=headers)
+        name = f"GET / - Token: '{token[:20]}...'"
+        results.append(log_response(name, response, 401, verbose=False))
+    
+    return all(results)
 
+@measure_response_time
 def test_with_correct_auth():
     """Тесты с правильной авторизацией"""
     if not ADMIN_PASSWORD:
-        print("\n⚠️ SKIPPING AUTH TESTS - SEO_ADMIN_PASSWORD not set")
-        print("   Set it with: export SEO_ADMIN_PASSWORD='your-password'")
+        print_colored("\n⚠️ SKIPPING AUTH TESTS - SEO_ADMIN_PASSWORD not set", Colors.YELLOW)
+        print_colored("   Set it with: export SEO_ADMIN_PASSWORD='your-password'", Colors.YELLOW)
         return True
     
-    print("\n" + "✅ TESTING WITH CORRECT AUTH".center(60, "="))
+    print(f"\n{Colors.BOLD}{'✅ TESTING WITH CORRECT AUTH'.center(60, '=')}{Colors.RESET}")
     
     headers = {"X-Authorization": f"Bearer {ADMIN_PASSWORD}"}
     results = []
@@ -96,35 +169,47 @@ def test_with_correct_auth():
     
     if response.status_code == 200:
         data = response.json()
-        print(f"📊 Pages count: {len(data.get('pages', []))}")
+        print_colored(f"   📊 Pages count: {len(data.get('pages', []))}", Colors.CYAN)
         if data.get('pages'):
-            print(f"   First page: {data['pages'][0].get('page_key')}")
-        print(f"🤖 Robots.txt length: {len(data.get('robots', ''))}")
+            print_colored(f"   📄 First page: {data['pages'][0].get('page_key')}", Colors.CYAN)
+            print_colored(f"   📝 First title: {data['pages'][0].get('title', '')[:50]}", Colors.CYAN)
+        print_colored(f"   🤖 Robots.txt length: {len(data.get('robots', ''))}", Colors.CYAN)
+        
+        # Проверка структуры данных
+        if 'pages' in data and 'robots' in data:
+            print_colored("   ✅ Response structure valid", Colors.GREEN)
+        else:
+            print_colored("   ⚠️  Response missing 'pages' or 'robots' fields", Colors.YELLOW)
     
     # POST update page
+    timestamp = int(time.time())
     test_page = {
-        "page_key": "test-api-page",
-        "title": "Test Page from API",
-        "description": "This is a test description",
-        "keywords": "test,api,seo",
+        "page_key": f"test-api-page-{timestamp}",
+        "page_label": "Test API Page",
+        "title": f"Test Page from API ({timestamp})",
+        "description": "This is a test description for API testing",
+        "keywords": "test,api,seo,automation",
         "schema_json": '{"@context":"https://schema.org","@type":"WebPage"}'
     }
     
-    response = requests.post(
-        f"{API_URL}/page",
-        headers=headers,
-        json=test_page
-    )
+    response = requests.post(f"{API_URL}/page", headers=headers, json=test_page)
     results.append(log_response("POST /page - Create/update page", response, 200))
     
-    # POST update robots
-    test_robots = "User-agent: *\nAllow: /\nSitemap: https://example.com/sitemap.xml"
+    if response.status_code == 200:
+        print_colored(f"   ✅ Page '{test_page['page_key']}' created/updated", Colors.GREEN)
     
-    response = requests.post(
-        f"{API_URL}/robots",
-        headers=headers,
-        json={"content": test_robots}
-    )
+    # POST update robots
+    test_robots = f"""# Robots.txt - Updated by API test at {datetime.now().isoformat()}
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /private/
+
+Sitemap: https://example.com/sitemap.xml
+Host: https://arenda-chistoty.online
+"""
+    
+    response = requests.post(f"{API_URL}/robots", headers=headers, json={"content": test_robots})
     results.append(log_response("POST /robots - Update robots.txt", response, 200))
     
     # GET again to verify changes
@@ -133,129 +218,174 @@ def test_with_correct_auth():
     
     if response.status_code == 200:
         data = response.json()
-        # Find our test page
         test_page_found = next(
-            (p for p in data.get('pages', []) if p['page_key'] == 'test-api-page'),
+            (p for p in data.get('pages', []) if p['page_key'] == test_page['page_key']),
             None
         )
         if test_page_found:
-            print(f"✅ Test page found: {test_page_found['title']}")
+            print_colored(f"   ✅ Test page found with title: {test_page_found['title']}", Colors.GREEN)
         else:
-            print("⚠️ Test page not found in response")
+            print_colored(f"   ⚠️  Test page not found in response", Colors.YELLOW)
     
     return all(results)
 
+@measure_response_time
 def test_invalid_data():
     """Тесты с неверными данными"""
     if not ADMIN_PASSWORD:
-        print("\n⚠️ SKIPPING invalid data tests - need auth")
+        print_colored("\n⚠️ SKIPPING invalid data tests - need auth", Colors.YELLOW)
         return True
     
-    print("\n" + "⚠️ TESTING INVALID DATA".center(60, "="))
+    print(f"\n{Colors.BOLD}{'⚠️ TESTING INVALID DATA'.center(60, '=')}{Colors.RESET}")
     
     headers = {"X-Authorization": f"Bearer {ADMIN_PASSWORD}"}
     results = []
     
-    # Missing page_key
-    response = requests.post(
-        f"{API_URL}/page",
-        headers=headers,
-        json={"title": "No Page Key"}
-    )
-    results.append(log_response("POST /page - Missing page_key", response, 400))
+    invalid_cases = [
+        ("Missing page_key", {"title": "No Page Key"}, 400),
+        ("Empty page_key", {"page_key": "", "title": "Empty Key"}, 400),
+        ("Invalid schema_json", {"page_key": "test-invalid", "schema_json": "{invalid json}"}, 400),
+        ("Very long title", {"page_key": "test-long", "title": "A" * 1000}, 200),  # Должен обрезаться
+        ("Special chars in page_key", {"page_key": "test-page@#$%", "title": "Test"}, 400),
+    ]
     
-    # Invalid JSON in schema_json
-    response = requests.post(
-        f"{API_URL}/page",
-        headers=headers,
-        json={
-            "page_key": "test-invalid",
-            "schema_json": "{invalid json}"
-        }
-    )
-    results.append(log_response("POST /page - Invalid schema_json", response, 400))
+    for name, body, expected in invalid_cases:
+        response = requests.post(f"{API_URL}/page", headers=headers, json=body)
+        results.append(log_response(f"POST /page - {name}", response, expected, verbose=False))
     
-    # Empty page_key
-    response = requests.post(
-        f"{API_URL}/page",
-        headers=headers,
-        json={"page_key": "", "title": "Empty Key"}
-    )
-    results.append(log_response("POST /page - Empty page_key", response, 400))
+    # Тест с очень большим robots.txt
+    large_robots = "User-agent: *\nDisallow: /\n" * 10000
+    response = requests.post(f"{API_URL}/robots", headers=headers, json={"content": large_robots})
+    results.append(log_response("POST /robots - Large content (>100KB)", response, 400, verbose=False))
     
     return all(results)
 
-def test_robots_endpoint():
-    """Специальные тесты для robots.txt"""
+@measure_response_time
+def test_edge_cases():
+    """Тесты граничных случаев"""
     if not ADMIN_PASSWORD:
         return True
     
-    print("\n" + "🤖 TESTING ROBOTS.TXT".center(60, "="))
+    print(f"\n{Colors.BOLD}{'🔍 TESTING EDGE CASES'.center(60, '=')}{Colors.RESET}")
     
     headers = {"X-Authorization": f"Bearer {ADMIN_PASSWORD}"}
+    results = []
     
-    # Test different robots.txt content
-    robots_variants = [
-        "User-agent: *\nDisallow: /admin/\nDisallow: /private/",
-        "# Block all\nUser-agent: *\nDisallow: /",
-        "User-agent: Googlebot\nAllow: /\nUser-agent: *\nDisallow:",
-        "Sitemap: https://example.com/sitemap.xml\nUser-agent: *\nAllow: /"
-    ]
+    # Кириллица в названиях
+    cyrillic_page = {
+        "page_key": "test-cyrillic",
+        "title": "Тестовая страница с кириллицей",
+        "description": "Проверка поддержки русского языка в SEO полях"
+    }
+    response = requests.post(f"{API_URL}/page", headers=headers, json=cyrillic_page)
+    results.append(log_response("POST /page - Cyrillic characters", response, 200, verbose=False))
     
-    for i, content in enumerate(robots_variants, 1):
-        response = requests.post(
-            f"{API_URL}/robots",
-            headers=headers,
-            json={"content": content}
-        )
-        success = response.status_code == 200
-        print(f"\n  Variant {i}: {'✅' if success else '❌'}")
-        if success:
-            print(f"    Content length: {len(content)} chars")
+    # Эмодзи в названиях
+    emoji_page = {
+        "page_key": "test-emoji",
+        "title": "Test Page 🚀 with Emojis ✨",
+        "description": "Testing emoji support in SEO fields 🎉"
+    }
+    response = requests.post(f"{API_URL}/page", headers=headers, json=emoji_page)
+    results.append(log_response("POST /page - Emoji characters", response, 200, verbose=False))
     
-    return True
+    # HTML теги в полях (должны экранироваться)
+    html_page = {
+        "page_key": "test-html",
+        "title": "<script>alert('XSS')</script> Test Title",
+        "description": "<b>Bold</b> and <i>italic</i> tags"
+    }
+    response = requests.post(f"{API_URL}/page", headers=headers, json=html_page)
+    results.append(log_response("POST /page - HTML tags in fields", response, 200, verbose=False))
+    
+    # Пустой robots.txt
+    response = requests.post(f"{API_URL}/robots", headers=headers, json={"content": ""})
+    results.append(log_response("POST /robots - Empty content", response, 200, verbose=False))
+    
+    return all(results)
+
+def test_performance():
+    """Тест производительности"""
+    if not ADMIN_PASSWORD:
+        return True
+    
+    print(f"\n{Colors.BOLD}{'⚡ TESTING PERFORMANCE'.center(60, '=')}{Colors.RESET}")
+    
+    headers = {"X-Authorization": f"Bearer {ADMIN_PASSWORD}"}
+    response_times = []
+    
+    # Выполняем 5 запросов для замера
+    for i in range(5):
+        start = time.time()
+        response = requests.get(API_URL, headers=headers)
+        elapsed = (time.time() - start) * 1000
+        response_times.append(elapsed)
+        print_colored(f"   Request {i+1}: {elapsed:.0f}ms", Colors.CYAN)
+        
+        if response.status_code != 200:
+            print_colored(f"   ❌ Failed request", Colors.RED)
+            return False
+    
+    avg_time = sum(response_times) / len(response_times)
+    max_time = max(response_times)
+    min_time = min(response_times)
+    
+    print_colored(f"\n   📊 Performance Stats:", Colors.BOLD)
+    print_colored(f"   Average: {avg_time:.0f}ms", Colors.GREEN if avg_time < 500 else Colors.YELLOW)
+    print_colored(f"   Min: {min_time:.0f}ms", Colors.CYAN)
+    print_colored(f"   Max: {max_time:.0f}ms", Colors.CYAN)
+    
+    return avg_time < 1000  # Должно быть меньше 1 секунды
 
 def main():
     """Запуск всех тестов"""
-    print("\n" + "🚀 SEO ADMIN API TESTS".center(60, "="))
-    print(f"📍 URL: {API_URL}")
-    print(f"⏰ Time: {datetime.now().isoformat()}")
+    print(f"\n{Colors.BOLD}{'🚀 SEO ADMIN API TESTS'.center(60, '=')}{Colors.RESET}")
+    print_colored(f"📍 URL: {API_URL}", Colors.CYAN)
+    print_colored(f"⏰ Time: {datetime.now().isoformat()}", Colors.CYAN)
     
     if not ADMIN_PASSWORD:
-        print("\n⚠️ WARNING: SEO_ADMIN_PASSWORD environment variable is not set!")
-        print("   Some tests will be skipped or will fail.")
-        print("   Set it with: export SEO_ADMIN_PASSWORD='your-password'")
+        print_colored("\n⚠️ WARNING: SEO_ADMIN_PASSWORD environment variable is not set!", Colors.YELLOW)
+        print_colored("   Some tests will be skipped or will fail.", Colors.YELLOW)
+        print_colored("   Set it with: export SEO_ADMIN_PASSWORD='your-password'", Colors.YELLOW)
     
+    # Запуск всех тестов
     results = {
         "CORS": test_cors(),
         "Without Auth": test_without_auth(),
         "Wrong Auth": test_with_wrong_auth(),
         "Correct Auth": test_with_correct_auth(),
         "Invalid Data": test_invalid_data(),
-        "Robots Endpoint": test_robots_endpoint()
+        "Edge Cases": test_edge_cases(),
+        "Performance": test_performance()
     }
     
     # Итоговый отчет
-    print("\n" + "📊 FINAL RESULTS".center(60, "="))
+    print(f"\n{Colors.BOLD}{'📊 FINAL RESULTS'.center(60, '=')}{Colors.RESET}")
+    
     passed = sum(1 for v in results.values() if v)
     total = len(results)
     
     for test_name, result in results.items():
         status = "✅ PASSED" if result else "❌ FAILED"
-        print(f"{status} - {test_name}")
+        color = Colors.GREEN if result else Colors.RED
+        print_colored(f"{status} - {test_name}", color)
     
-    print("\n" + "="*60)
-    print(f"TOTAL: {passed}/{total} tests passed")
+    print(f"\n{Colors.BOLD}{'='*60}{Colors.RESET}")
+    print_colored(f"TOTAL: {passed}/{total} tests passed", Colors.BOLD)
     
     if passed == total:
-        print("\n🎉 ALL TESTS PASSED! API is working correctly.")
+        print_colored("\n🎉 ALL TESTS PASSED! API is working correctly.", Colors.GREEN)
+        return 0
     else:
-        print(f"\n⚠️ {total - passed} test(s) failed. Please check the output above.")
-    
-    return passed == total
+        print_colored(f"\n⚠️ {total - passed} test(s) failed. Please check the output above.", Colors.YELLOW)
+        return 1
 
 if __name__ == "__main__":
-    # Установите пароль перед запуском
-    # export SEO_ADMIN_PASSWORD='your-actual-password'
-    success = main()
-    exit(0 if success else 1)
+    # Проверка наличия пароля
+    if not ADMIN_PASSWORD:
+        print_colored("\n💡 Tip: Set password with:", Colors.CYAN)
+        print_colored("   export SEO_ADMIN_PASSWORD='your-actual-password'", Colors.CYAN)
+        print_colored("   python test_production_api.py", Colors.CYAN)
+    
+    exit_code = main()
+    sys.exit(exit_code)
