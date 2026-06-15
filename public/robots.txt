@@ -1,7 +1,6 @@
 User-agent: *
 Allow: /
-Disallow: /cookie-policy
-Disallow: /privacy
+
 Disallow: /hello-world/
 Disallow: /sample-page/
 Disallow: /voprosy-i-otvety-faq.html
