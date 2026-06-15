@@ -8,6 +8,10 @@ declare global {
   }
 }
 
+export function ymGoal(goal: string) {
+  window.ym?.(YM_ID, "reachGoal", goal);
+}
+
 export function useYandexMetrika() {
   useEffect(() => {
     if (localStorage.getItem("cookie_consent") === "yes") initMetrika();

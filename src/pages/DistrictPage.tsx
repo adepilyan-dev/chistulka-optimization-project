@@ -5,6 +5,7 @@ import Seo from "@/components/Seo";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { getDistrictBySlug, DISTRICTS } from "@/data/districts";
 import { SERVICES_DATA } from "@/data/services";
+import { ymGoal } from "@/hooks/useYandexMetrika";
 
 const HERO_IMG = "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/1f8a12d2-02a6-452c-a1cb-4fa8f342c646.jpg";
 
@@ -138,6 +139,7 @@ export default function DistrictPage() {
             <div className="flex flex-col sm:flex-row gap-3">
               <a
                 href="tel:+79189682882"
+                onClick={() => ymGoal("phone_click")}
                 className="btn-primary flex items-center justify-center gap-2 px-6 py-3 font-semibold"
               >
                 <Icon name="Phone" size={18} />
@@ -209,6 +211,7 @@ export default function DistrictPage() {
           <p className="text-white/80 text-sm mb-6">Бесплатный выезд и оценка стоимости — без обязательств</p>
           <a
             href="tel:+79189682882"
+            onClick={() => ymGoal("phone_click")}
             className="inline-flex items-center gap-2 bg-white font-bold px-8 py-3 rounded-full text-base transition-all hover:opacity-90"
             style={{ color: "var(--teal)" }}
           >

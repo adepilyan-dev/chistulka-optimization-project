@@ -4,6 +4,7 @@ import Icon from "@/components/ui/icon";
 import { BLOG_POSTS } from "@/data/blog";
 import { DISTRICTS } from "@/data/districts";
 import { SERVICES_DATA } from "@/data/services";
+import { ymGoal } from "@/hooks/useYandexMetrika";
 import {
   scrollToId,
   useInView,
@@ -281,6 +282,7 @@ function ContactForm({ inView }: { inView: boolean }) {
       });
       if (res.ok) {
         setSent(true);
+        ymGoal("form_submit");
       } else {
         setError(true);
       }
@@ -365,17 +367,18 @@ export function Contacts() {
             </p>
             <div className={`space-y-4 ${inView ? "animate-fade-up stagger-3" : "opacity-0"}`}>
               {[
-                { icon: "Phone", label: "Телефон", value: "8 918 968-28-82", sub: "Звоните в любое время", link: "tel:+79189682882" },
-                { icon: "MessageSquare", label: "WhatsApp", value: "Написать в WhatsApp", sub: "Онлайн 9:00–22:00", link: "https://wa.me/79189682882" },
-                { icon: "MessageCircle", label: "MAX", value: "Написать в MAX", sub: "Онлайн 9:00–22:00", link: "https://max.ru/u/f9LHodD0cOIhDoRH_6LXfcSUOHBuL1Ox9Kjst5F3mN4736vAC4pXtz-GKzc" },
-                { icon: "Users", label: "ВКонтакте", value: "Группа ВКонтакте", sub: "Отзывы и акции", link: "https://vk.com/club239497134" },
-                { icon: "MapPin", label: "Адрес", value: "Краснодар", sub: "Работаем по всему городу и краю", link: null },
+                { icon: "Phone", label: "Телефон", value: "8 918 968-28-82", sub: "Звоните в любое время", link: "tel:+79189682882", goal: "phone_click" },
+                { icon: "MessageSquare", label: "WhatsApp", value: "Написать в WhatsApp", sub: "Онлайн 9:00–22:00", link: "https://wa.me/79189682882", goal: "whatsapp_click" },
+                { icon: "MessageCircle", label: "MAX", value: "Написать в MAX", sub: "Онлайн 9:00–22:00", link: "https://max.ru/u/f9LHodD0cOIhDoRH_6LXfcSUOHBuL1Ox9Kjst5F3mN4736vAC4pXtz-GKzc", goal: "max_click" },
+                { icon: "Users", label: "ВКонтакте", value: "Группа ВКонтакте", sub: "Отзывы и акции", link: "https://vk.com/club239497134", goal: "vk_click" },
+                { icon: "MapPin", label: "Адрес", value: "Краснодар", sub: "Работаем по всему городу и краю", link: null, goal: null },
               ].map((c) => {
                 const Tag = c.link ? "a" : "div";
                 return (
                   <Tag
                     key={c.label}
                     {...(c.link ? { href: c.link, target: c.link.startsWith("http") ? "_blank" : undefined, rel: "noopener noreferrer" } : {})}
+                    onClick={() => c.goal && ymGoal(c.goal)}
                     className="flex items-center gap-4 p-4 rounded-2xl hover-lift cursor-pointer" style={{ border: "1px solid var(--border)" }}
                   >
                     <div className="w-11 h-11 rounded-xl flex items-center justify-center" style={{ background: "var(--teal-light)" }}>
@@ -460,6 +463,7 @@ export function FloatingActions() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="WhatsApp"
+        onClick={() => ymGoal("whatsapp_click")}
         className="w-14 h-14 rounded-full flex items-center justify-center shadow-xl transition-transform hover:scale-110"
         style={{ background: "#25d366" }}
       >
@@ -470,6 +474,7 @@ export function FloatingActions() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="ВКонтакте"
+        onClick={() => ymGoal("vk_click")}
         className="w-14 h-14 rounded-full flex items-center justify-center shadow-xl transition-transform hover:scale-110"
         style={{ background: "#0077ff" }}
       >
@@ -480,6 +485,7 @@ export function FloatingActions() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Написать в MAX"
+        onClick={() => ymGoal("max_click")}
         className="w-14 h-14 rounded-full flex items-center justify-center shadow-xl transition-transform hover:scale-110"
         style={{ background: "var(--teal)" }}
       >
@@ -488,6 +494,7 @@ export function FloatingActions() {
       <a
         href="tel:+79189682882"
         aria-label="Позвонить"
+        onClick={() => ymGoal("phone_click")}
         className="w-14 h-14 rounded-full flex items-center justify-center shadow-xl transition-transform hover:scale-110 animate-float"
         style={{ background: "#ffe227" }}
       >

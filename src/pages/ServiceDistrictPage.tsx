@@ -5,6 +5,7 @@ import Seo from "@/components/Seo";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { getServiceBySlug, SERVICES_DATA } from "@/data/services";
 import { getDistrictBySlug, DISTRICTS } from "@/data/districts";
+import { ymGoal } from "@/hooks/useYandexMetrika";
 
 export default function ServiceDistrictPage() {
   const { slug, district } = useParams();
@@ -119,6 +120,7 @@ export default function ServiceDistrictPage() {
             <div className="flex flex-col sm:flex-row gap-3">
               <a
                 href="tel:+79189682882"
+                onClick={() => ymGoal("phone_click")}
                 className="btn-primary flex items-center justify-center gap-2 px-6 py-3 font-semibold"
               >
                 <Icon name="Phone" size={18} />
@@ -218,6 +220,7 @@ export default function ServiceDistrictPage() {
           <p className="text-white/80 text-sm mb-6">Бесплатный выезд мастера и оценка объёма работ</p>
           <a
             href="tel:+79189682882"
+            onClick={() => ymGoal("phone_click")}
             className="inline-flex items-center gap-2 bg-white font-bold px-8 py-3 rounded-full text-base transition-all hover:opacity-90"
             style={{ color: "var(--teal)" }}
           >
