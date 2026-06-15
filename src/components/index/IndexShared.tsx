@@ -42,7 +42,7 @@ export const SERVICES = [
     desc: "Удаляем пятна, запахи и аллергены. Ткань, велюр, замша, кожа — работаем с любым материалом.",
     color: "#0cb8a0",
     badge: "Хит",
-    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/c2718891-9bd7-4f8a-ac92-acfc09feef9e.png",
+    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/bcb4a8aa-0dfd-4cad-bef1-70049379a194.jpg",
   },
   {
     icon: "ArmchairIcon",
@@ -50,7 +50,7 @@ export const SERVICES = [
     desc: "Офисные, обеденные, игровые кресла. Глубокая чистка без разборки, сушка за 2–4 часа.",
     color: "#c9a800",
     badge: null,
-    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/f6c66867-ed54-4baa-a3b0-e449639855ab.png",
+    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/32dbcd93-9d05-4cd0-97be-b92950779a37.jpg",
   },
   {
     icon: "BedDouble",
@@ -58,7 +58,7 @@ export const SERVICES = [
     desc: "Устраняем клещей, грибок, пятна и неприятные запахи. Безопасно для детей и аллергиков.",
     color: "#0cb8a0",
     badge: "Популярно",
-    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/62526030-2235-4d63-b775-59db14eb60d6.png",
+    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/157e0325-e980-40bb-ad12-0ac0666b29c4.jpg",
   },
   {
     icon: "LayoutGrid",
@@ -66,7 +66,7 @@ export const SERVICES = [
     desc: "Шерсть, синтетика, ковры ручной работы. Выездная чистка на дому или в нашем цеху.",
     color: "#c9a800",
     badge: null,
-    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/162a3567-348a-4939-9f38-e0bb5fd2ad1c.png",
+    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/6892c9d8-2c73-4645-9fd6-399caee62037.jpg",
   },
   {
     icon: "Armchair",
@@ -74,7 +74,7 @@ export const SERVICES = [
     desc: "Обеденные группы, барные стулья, пуфики. Быстро — один стул от 15 минут.",
     color: "#0cb8a0",
     badge: null,
-    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/edfa8b98-97c9-4c09-84ef-f3e710460ee9.png",
+    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/e34f7bce-a582-4425-a8e4-da241d6b65e3.jpg",
   },
   {
     icon: "Car",
@@ -82,7 +82,7 @@ export const SERVICES = [
     desc: "Сиденья, потолок, дверные панели. Профессиональное оборудование и безопасные средства.",
     color: "#c9a800",
     badge: null,
-    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/08d35f06-6ecd-4c21-a709-42f23a1e4951.jpg",
+    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/bcb5b240-69f5-4098-908b-011a606d4c63.jpg",
   },
 ];
 
