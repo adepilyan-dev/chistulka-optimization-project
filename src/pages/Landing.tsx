@@ -373,11 +373,14 @@ export default function Landing() {
       </section>
 
       {/* Футер */}
-      <footer className="py-6 text-center text-xs" style={{ background: "#0a1918", color: "rgba(255,255,255,0.3)" }}>
-        © 2026 Аренда Чистоты · Краснодар ·{" "}
-        <a href="/privacy" className="underline hover:text-white transition-colors">Политика конфиденциальности</a>
-        {" · "}
-        <a href="/" className="underline hover:text-white transition-colors">На главный сайт</a>
+      <footer className="py-6 text-center text-xs space-y-1.5" style={{ background: "#0a1918", color: "rgba(255,255,255,0.3)" }}>
+        <div>© 2026 Аренда Чистоты · Краснодар</div>
+        <div>Самозанятый Депилян Артур Ашотович · ИНН 232506771920 · 350075, Краснодарский край, г. Краснодар, ул. им. Селезнёва, д. 4Б</div>
+        <div>
+          <a href="/privacy" className="underline hover:text-white transition-colors">Политика конфиденциальности</a>
+          {" · "}
+          <a href="/" className="underline hover:text-white transition-colors">На главный сайт</a>
+        </div>
       </footer>
 
       {/* Плавающая кнопка звонка */}
