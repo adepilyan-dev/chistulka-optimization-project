@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, Navigate } from "react-router-dom";
 import { useEffect } from "react";
 import Icon from "@/components/ui/icon";
 import Seo from "@/components/Seo";
@@ -15,18 +15,7 @@ export default function ServiceDistrictPage() {
     window.scrollTo(0, 0);
   }, [slug, district]);
 
-  if (!service || !d) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center px-4" style={{ background: "var(--light-bg)" }}>
-        <Icon name="FileQuestion" size={48} style={{ color: "var(--teal)" }} />
-        <h1 className="font-oswald font-bold text-2xl mt-4 mb-2" style={{ color: "var(--dark)" }}>Страница не найдена</h1>
-        <Link to="/" className="flex items-center gap-2 text-sm font-semibold mt-2" style={{ color: "var(--teal)" }}>
-          <Icon name="ArrowLeft" size={16} />
-          На главную
-        </Link>
-      </div>
-    );
-  }
+  if (!service || !d) return <Navigate to="/" replace />;
 
   const seoTitle = `${service.title} ${d.nameGen} Краснодара — выезд на дом | Аренда Чистоты`;
   const seoDescription = `★4.98 из 5 (1240 отзывов) ${service.title} ${d.nameGen} Краснодара с выездом на дом. ${service.seoDescription.split(".")[1] ?? "Быстро, качественно, без предоплаты."} ☎ 8 918 968-28-82`;

@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, Navigate } from "react-router-dom";
 import { useEffect } from "react";
 import Icon from "@/components/ui/icon";
 import Seo from "@/components/Seo";
@@ -23,18 +23,7 @@ export default function DistrictPage() {
     window.scrollTo(0, 0);
   }, [district]);
 
-  if (!d) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center px-4" style={{ background: "var(--light-bg)" }}>
-        <Icon name="FileQuestion" size={48} style={{ color: "var(--teal)" }} />
-        <h1 className="font-oswald font-bold text-2xl mt-4 mb-2" style={{ color: "var(--dark)" }}>Район не найден</h1>
-        <Link to="/" className="flex items-center gap-2 text-sm font-semibold mt-2" style={{ color: "var(--teal)" }}>
-          <Icon name="ArrowLeft" size={16} />
-          На главную
-        </Link>
-      </div>
-    );
-  }
+  if (!d) return <Navigate to="/" replace />;
 
   const seoTitle = `Химчистка мебели ${d.nameGen} Краснодара — выезд на дом | Аренда Чистоты`;
   const seoDescription = `★4.98 из 5 (1240 отзывов) Химчистка мебели ${d.nameGen} Краснодара с выездом на дом. Диваны, кресла, матрасы, ковры. Сушка 2–4 часа. Недорого. ☎ 8 918 968-28-82`;

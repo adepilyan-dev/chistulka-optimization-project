@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, Navigate } from "react-router-dom";
 import { useEffect } from "react";
 import Icon from "@/components/ui/icon";
 import Seo from "@/components/Seo";
@@ -14,18 +14,7 @@ export default function ServicePage() {
     window.scrollTo(0, 0);
   }, [slug]);
 
-  if (!service) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center px-4" style={{ background: "var(--light-bg)" }}>
-        <Icon name="FileQuestion" size={48} style={{ color: "var(--teal)" }} />
-        <h1 className="font-oswald font-bold text-2xl mt-4 mb-2" style={{ color: "var(--dark)" }}>Услуга не найдена</h1>
-        <Link to="/" className="flex items-center gap-2 text-sm font-semibold mt-2" style={{ color: "var(--teal)" }}>
-          <Icon name="ArrowLeft" size={16} />
-          На главную
-        </Link>
-      </div>
-    );
-  }
+  if (!service) return <Navigate to="/" replace />;
 
   const jsonLd = {
     "@context": "https://schema.org",
