@@ -30,7 +30,7 @@ export default function BlogPost() {
       name: "Аренда Чистоты",
       logo: {
         "@type": "ImageObject",
-        url: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/b6cb14ab-4c2a-4c89-a582-9b46d4e0a360.jpg",
+        url: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/11571f12-8820-4684-967e-430f28b0c7da.jpg",
       },
     },
     mainEntityOfPage: `https://arenda-chistoty.online/blog/${post.slug}`,
@@ -55,7 +55,7 @@ export default function BlogPost() {
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-5 flex items-center justify-between">
           <Link to="/" className="flex items-center">
             <img
-              src="https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/b6cb14ab-4c2a-4c89-a582-9b46d4e0a360.jpg"
+              src="https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/11571f12-8820-4684-967e-430f28b0c7da.jpg"
               alt="Аренда Чистоты"
               className="h-9 w-auto object-contain"
             />
