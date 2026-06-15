@@ -160,7 +160,7 @@ export const DISTRICTS: DistrictData[] = [
     description: "Микрорайон 40 лет Победы — один из крупных жилых кварталов в центральной части Краснодара.",
   },
   {
-    slug: "aviagородок",
+    slug: "aviagorodok",
     name: "Авиагородок",
     nameGen: "Авиагородка",
     type: "micro",

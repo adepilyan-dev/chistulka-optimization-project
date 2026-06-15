@@ -18,6 +18,7 @@ import SeoAdmin from "./pages/SeoAdmin";
 import CookieBanner from "./components/CookieBanner";
 import { useYandexMetrika } from "./hooks/useYandexMetrika";
 import { SeoNotFound } from "./components/Seo";
+import NotFoundContent from "./components/NotFoundContent";
 
 const queryClient = new QueryClient();
 
@@ -36,7 +37,7 @@ function AppInner() {
         <Route path="/nashi-raboty" element={<Works />} />
         <Route path="/seo-panel" element={<SeoAdmin />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-        <Route path="*" element={<><SeoNotFound /><NotFound /></>} />
+        <Route path="*" element={<><SeoNotFound /><NotFoundContent /></>} />
       </Routes>
       <CookieBanner />
     </BrowserRouter>

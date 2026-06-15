@@ -197,6 +197,18 @@ export default function Works() {
         keywords="химчистка мебели фото до после, примеры работ химчистки краснодар, портфолио химчистка диванов, до и после химчистка диван, результаты химчистки краснодар"
         path="/nashi-raboty"
         breadcrumbs={[{ label: "Наши работы" }]}
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "LocalBusiness",
+          name: "Аренда Чистоты",
+          description: "Профессиональная химчистка мебели с выездом на дом в Краснодаре",
+          telephone: "+79189682882",
+          url: "https://arenda-chistoty.online",
+          image: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/1f8a12d2-02a6-452c-a1cb-4fa8f342c646.jpg",
+          address: { "@type": "PostalAddress", addressLocality: "Краснодар", addressCountry: "RU" },
+          aggregateRating: { "@type": "AggregateRating", ratingValue: "4.98", reviewCount: "1240", bestRating: "5" },
+          hasMap: "https://arenda-chistoty.online/nashi-raboty",
+        }}
       />
 
       <div style={{ background: "var(--light-bg)", minHeight: "100vh" }}>
