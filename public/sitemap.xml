@@ -213,25 +213,7 @@
     <priority>0.7</priority>
   </url>
 
-  <!-- Комбинации Услуга + Район -->
-  <url>
-    <loc>https://arenda-chistoty.online/uslugi/himchistka-divanov/tsentralnyy-okrug</loc>
-    <lastmod>2026-06-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://arenda-chistoty.online/uslugi/himchistka-kovrov/zapadnyy-okrug</loc>
-    <lastmod>2026-06-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://arenda-chistoty.online/uslugi/himchistka-matrasov/prikubanskiy-okrug</loc>
-    <lastmod>2026-06-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
+  <!-- Комбинации Услуга + Район — см. sitemap-service-district.xml (156 URL) -->
 
   <!-- Блог -->
   <url>
