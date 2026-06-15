@@ -4,6 +4,7 @@ import Icon from "@/components/ui/icon";
 import Seo from "@/components/Seo";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { getServiceBySlug, SERVICES_DATA } from "@/data/services";
+import { DISTRICTS } from "@/data/districts";
 
 export default function ServicePage() {
   const { slug } = useParams();
@@ -52,6 +53,7 @@ export default function ServicePage() {
   };
 
   const other = SERVICES_DATA.filter((s) => s.slug !== service.slug).slice(0, 3);
+  const districts = DISTRICTS.slice(0, 8);
 
   return (
     <div className="min-h-screen" style={{ background: "var(--light-bg)" }}>
@@ -199,6 +201,27 @@ export default function ServicePage() {
             <Icon name="Phone" size={18} />
             8 918 968-28-82
           </a>
+        </div>
+
+        {/* По районам */}
+        <div className="mb-12">
+          <h2 className="font-oswald font-bold text-2xl mb-2" style={{ color: "var(--dark)" }}>
+            {service.title} по районам Краснодара
+          </h2>
+          <p className="text-sm mb-6" style={{ color: "var(--gray)" }}>Выезжаем в любой район города — без доплат</p>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            {districts.map((od) => (
+              <Link
+                key={od.slug}
+                to={`/uslugi/${service.slug}/${od.slug}`}
+                className="bg-white rounded-xl px-4 py-3 text-sm font-medium shadow-sm flex items-center gap-2 hover-lift"
+                style={{ color: "var(--dark)" }}
+              >
+                <Icon name="MapPin" size={14} style={{ color: "var(--teal)" }} />
+                {od.name}
+              </Link>
+            ))}
+          </div>
         </div>
 
         {/* Другие услуги */}

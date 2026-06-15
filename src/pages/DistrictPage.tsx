@@ -197,7 +197,7 @@ export default function DistrictPage() {
             {SERVICES_DATA.map((s) => (
               <Link
                 key={s.slug}
-                to={`/uslugi/${s.slug}`}
+                to={`/uslugi/${s.slug}/${d.slug}`}
                 className="bg-white rounded-2xl overflow-hidden shadow-sm hover-lift group"
               >
                 <div className="aspect-[4/3] overflow-hidden">
