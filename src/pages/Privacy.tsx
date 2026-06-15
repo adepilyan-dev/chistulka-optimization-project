@@ -79,9 +79,10 @@ export default function Privacy() {
             <p className="text-sm leading-relaxed" style={{ color: "var(--gray)" }}>
               По всем вопросам, связанным с обработкой персональных данных, обращайтесь:<br />
               Оператор: самозанятый Депилян Артур Ашотович<br />
+              ИНН: 232506771920<br />
+              Юридический адрес: 350075, Краснодарский край, г. Краснодар, ул. им. Селезнёва, д. 4Б<br />
               Телефон: <a href="tel:+79189682882" style={{ color: "var(--teal)" }} className="font-medium">8 918 968-28-82</a><br />
               Email: <a href="mailto:arenda-chistoty.ru@yandex.ru" style={{ color: "var(--teal)" }} className="font-medium">arenda-chistoty.ru@yandex.ru</a><br />
-              Адрес: г. Краснодар<br />
               Время работы: ежедневно с 9:00 до 22:00
             </p>
           </section>

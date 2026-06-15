@@ -425,6 +425,9 @@ export function Footer() {
                 Политика Cookie
               </Link>
             </div>
+            <div className="text-xs text-center md:text-right mb-1" style={{ color: "rgba(255,255,255,0.25)" }}>
+              Самозанятый Депилян Артур Ашотович · ИНН 232506771920 · 350075, Краснодарский край, г. Краснодар, ул. им. Селезнёва, д. 4Б
+            </div>
             <div className="flex items-center gap-3">
               <div className="text-sm" style={{ color: "rgba(255,255,255,0.3)" }}>© 2026 Аренда Чистоты</div>
               <a
