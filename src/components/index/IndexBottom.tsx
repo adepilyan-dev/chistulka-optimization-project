@@ -28,7 +28,8 @@ export function Gallery() {
           </div>
           <Link
             to="/nashi-raboty"
-            className={`btn-outline px-6 py-2.5 text-sm font-oswald flex items-center gap-2 whitespace-nowrap ${inView ? "animate-fade-up stagger-2" : "opacity-0"}`}
+            className={`px-6 py-2.5 text-sm font-oswald font-semibold flex items-center gap-2 whitespace-nowrap rounded-full ${inView ? "animate-fade-up stagger-2" : "opacity-0"}`}
+            style={{ background: "var(--yellow)", color: "var(--dark)" }}
           >
             Смотреть все работы
             <Icon name="ArrowRight" size={16} />
