@@ -230,8 +230,8 @@ export function Services() {
           {SERVICES.map((s, i) => {
             const sd = SERVICES_DATA.find((d) => d.title === s.title);
             return (
-              <div key={s.title} className={`card-clean relative overflow-hidden group ${inView ? `animate-fade-up stagger-${Math.min(i + 1, 6)}` : "opacity-0"}`}>
-                <div className="relative h-44 overflow-hidden">
+              <div key={s.title} className={`card-clean relative overflow-hidden group flex flex-col ${inView ? `animate-fade-up stagger-${Math.min(i + 1, 6)}` : "opacity-0"}`}>
+                <div className="relative h-48 overflow-hidden flex-shrink-0">
                   <img
                     src={s.img}
                     alt={`${s.title} в Краснодаре`}
@@ -247,9 +247,9 @@ export function Services() {
                     <Icon name={s.icon} size={22} style={{ color: s.color }} />
                   </div>
                 </div>
-                <div className="p-6 pt-7">
+                <div className="p-6 pt-7 flex flex-col flex-1">
                   <h3 className="font-oswald font-bold text-lg mb-2" style={{ color: "var(--dark)" }}>{s.title}</h3>
-                  <p className="text-sm leading-relaxed" style={{ color: "var(--gray)" }}>{s.desc}</p>
+                  <p className="text-sm leading-relaxed flex-1" style={{ color: "var(--gray)" }}>{s.desc}</p>
                   {sd ? (
                     <>
                       <Link to={`/uslugi/${sd.slug}`} className="mt-4 flex items-center gap-1.5 text-sm font-semibold transition-all hover:gap-3" style={{ color: "var(--teal)" }}>
