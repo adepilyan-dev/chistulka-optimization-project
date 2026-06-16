@@ -1,454 +1,219 @@
 -- ============================================
--- 14. БЫСТРОЕ ОБНОВЛЕНИЕ (ОДНА КОМАНДА)
+-- ОБНОВЛЕНИЕ ROBOTS.TXT С ДВУМЯ SITEMAP
 -- ============================================
 
-CREATE OR REPLACE FUNCTION update_robots(
-    p_content TEXT DEFAULT NULL,
-    p_created_by TEXT DEFAULT 'api'
-)
-RETURNS TABLE (
-    status TEXT,
-    message TEXT,
-    robot_id INTEGER,
-    content_preview TEXT
-) AS $$
-DECLARE
-    v_robot_id INTEGER;
-    v_new_content TEXT;
-    v_backup_id INTEGER;
-BEGIN
-    -- Используем переданный контент или дефолтный
-    IF p_content IS NULL THEN
-        v_new_content := 'User-agent: *
+-- Обновляем robots.txt через функцию
+SELECT * FROM update_robots(
+    'User-agent: *
 Allow: /
 Allow: /uslugi/
 Allow: /nashi-raboty
+Allow: /blog/
+Allow: /akcii
+Allow: /kontakty
+Allow: /price
+Allow: /otzyvy
+Allow: /images/
+Allow: /wp-content/uploads/
 
 Disallow: /cookie-policy
 Disallow: /privacy
 Disallow: /hello-world/
 Disallow: /sample-page/
 Disallow: /voprosy-i-otvety-faq.html
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /tag/
+Disallow: /feed/
 
 Host: https://arenda-chistoty.ru
-Sitemap: https://arenda-chistoty.ru/sitemap.xml';
-    ELSE
-        v_new_content := p_content;
-    END IF;
-    
-    -- Валидация
-    IF NOT EXISTS (SELECT 1 FROM validate_robots_advanced(v_new_content) WHERE is_valid = FALSE) THEN
-        -- Получаем текущий ID
-        SELECT id INTO v_robot_id FROM seo_robots WHERE is_active = TRUE ORDER BY id DESC LIMIT 1;
-        
-        -- Бэкап
-        IF v_robot_id IS NOT NULL THEN
-            INSERT INTO seo_robots_backup (id, content, is_active, created_by, created_at, updated_at)
-            SELECT id, content, is_active, created_by, created_at, updated_at
-            FROM seo_robots 
-            WHERE id = v_robot_id
-            RETURNING id INTO v_backup_id;
-        END IF;
-        
-        -- Обновление
-        IF v_robot_id IS NOT NULL THEN
-            UPDATE seo_robots 
-            SET 
-                content = v_new_content,
-                updated_at = NOW(),
-                created_by = p_created_by
-            WHERE id = v_robot_id
-            RETURNING id INTO v_robot_id;
-        ELSE
-            INSERT INTO seo_robots (content, is_active, created_by)
-            VALUES (v_new_content, TRUE, p_created_by)
-            RETURNING id INTO v_robot_id;
-        END IF;
-        
-        RETURN QUERY SELECT 
-            'SUCCESS'::TEXT,
-            'Robots.txt updated successfully'::TEXT,
-            v_robot_id,
-            LEFT(v_new_content, 100) || '...'::TEXT;
-    ELSE
-        RETURN QUERY SELECT 
-            'ERROR'::TEXT,
-            'Validation failed'::TEXT,
-            NULL::INTEGER,
-            NULL::TEXT;
-    END IF;
-EXCEPTION WHEN OTHERS THEN
-    RETURN QUERY SELECT 
-        'ERROR'::TEXT,
-        SQLERRM::TEXT,
-        NULL::INTEGER,
-        NULL::TEXT;
-END;
-$$ LANGUAGE plpgsql;
+Sitemap: https://arenda-chistoty.ru/sitemap.xml
+Sitemap: https://arenda-chistoty.ru/sitemap-index.xml
 
--- Использование:
-SELECT * FROM update_robots();
-
--- ============================================
--- 15. ВАЛИДАЦИЯ ЧЕРЕЗ API (JSON ФОРМАТ)
--- ============================================
-
-CREATE OR REPLACE FUNCTION validate_robots_json(content_text TEXT)
-RETURNS JSONB AS $$
-DECLARE
-    v_result JSONB;
-BEGIN
-    SELECT jsonb_agg(
-        jsonb_build_object(
-            'line', line_number,
-            'content', line_content,
-            'valid', is_valid,
-            'error', error_message,
-            'suggestion', suggestion
-        )
-    ) INTO v_result
-    FROM validate_robots_advanced(content_text);
-    
-    RETURN jsonb_build_object(
-        'valid', NOT EXISTS (
-            SELECT 1 FROM validate_robots_advanced(content_text) WHERE is_valid = FALSE
-        ),
-        'lines', COALESCE(v_result, '[]'::JSONB),
-        'total_lines', (SELECT COUNT(*) FROM validate_robots_advanced(content_text))
-    );
-END;
-$$ LANGUAGE plpgsql;
-
--- Использование:
-SELECT validate_robots_json(
-    'User-agent: *
+# Yandex
+User-agent: Yandex
 Allow: /
-Disallow: /admin'
+Allow: /uslugi/
+Allow: /nashi-raboty
+Allow: /blog/
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Crawl-delay: 2
+
+# Google
+User-agent: Googlebot
+Allow: /
+Allow: /uslugi/
+Allow: /nashi-raboty
+Allow: /blog/
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+
+# Мобильные боты
+User-agent: YandexMobileBot
+Allow: /
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Crawl-delay: 3
+
+User-agent: Googlebot-Mobile
+Allow: /
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+
+# Медиа боты
+User-agent: Googlebot-Image
+Allow: /images/
+Allow: /wp-content/uploads/
+Disallow: /wp-admin/
+
+User-agent: YandexImages
+Allow: /images/
+Allow: /wp-content/uploads/
+Disallow: /wp-admin/
+
+# Социальные сети
+User-agent: FacebookBot
+Allow: /
+Allow: /blog/
+Allow: /nashi-raboty
+
+User-agent: TelegramBot
+Allow: /
+Allow: /blog/
+
+# Новостные боты
+User-agent: YandexNews
+Allow: /
+Allow: /blog/
+Crawl-delay: 1
+
+User-agent: Googlebot-News
+Allow: /
+Allow: /blog/',
+    'admin_sitemap_update'
 );
 
 -- ============================================
--- 16. API ФУНКЦИЯ ДЛЯ ROBOTS.TXT
+-- ПРОВЕРКА ОБНОВЛЕНИЯ
 -- ============================================
 
-CREATE OR REPLACE FUNCTION api_get_robots(
-    p_include_history BOOLEAN DEFAULT FALSE
-)
-RETURNS JSONB AS $$
-DECLARE
-    v_robots TEXT;
-    v_history JSONB;
-    v_stats JSONB;
-BEGIN
-    -- Получаем текущий robots
-    SELECT content INTO v_robots 
-    FROM seo_robots 
-    WHERE is_active = TRUE 
-    ORDER BY id DESC LIMIT 1;
-    
-    -- История (если нужно)
-    IF p_include_history THEN
-        SELECT jsonb_agg(
-            jsonb_build_object(
-                'id', id,
-                'changed_at', changed_at,
-                'changed_by', changed_by,
-                'preview', LEFT(content, 200)
-            )
-        ) INTO v_history
-        FROM seo_robots_history
-        ORDER BY changed_at DESC
-        LIMIT 50;
-    END IF;
-    
-    -- Статистика
-    SELECT jsonb_build_object(
-        'total_versions', (SELECT COUNT(*) FROM seo_robots_history),
-        'last_update', (SELECT MAX(updated_at) FROM seo_robots WHERE is_active = TRUE),
-        'content_length', LENGTH(v_robots)
-    ) INTO v_stats;
-    
-    RETURN jsonb_build_object(
-        'success', TRUE,
-        'data', jsonb_build_object(
-            'content', v_robots,
-            'stats', v_stats,
-            'history', COALESCE(v_history, '[]'::JSONB)
-        )
-    );
-END;
-$$ LANGUAGE plpgsql;
-
--- Использование:
-SELECT api_get_robots(true);
-
--- ============================================
--- 17. ОЧИСТКА СТАРЫХ ВЕРСИЙ
--- ============================================
-
-CREATE OR REPLACE FUNCTION cleanup_old_robots_versions(
-    p_keep_count INTEGER DEFAULT 30
-)
-RETURNS TABLE (
-    deleted_count INTEGER,
-    kept_count INTEGER,
-    message TEXT
-) AS $$
-DECLARE
-    v_deleted INTEGER;
-    v_kept INTEGER;
-BEGIN
-    -- Считаем общее количество
-    SELECT COUNT(*) INTO v_kept FROM seo_robots_history;
-    
-    -- Удаляем старые версии, оставляя только последние p_keep_count
-    WITH to_delete AS (
-        SELECT id
-        FROM seo_robots_history
-        ORDER BY changed_at DESC
-        OFFSET p_keep_count
-    )
-    DELETE FROM seo_robots_history
-    WHERE id IN (SELECT id FROM to_delete);
-    
-    GET DIAGNOSTICS v_deleted = ROW_COUNT;
-    v_kept := v_kept - v_deleted;
-    
-    RETURN QUERY SELECT 
-        v_deleted,
-        v_kept,
-        format('Deleted %s old versions, kept %s', v_deleted, v_kept)::TEXT;
-END;
-$$ LANGUAGE plpgsql;
-
--- Использование:
-SELECT * FROM cleanup_old_robots_versions(30);
-
--- ============================================
--- 18. ПОЛУЧИТЬ РАЗНИЦУ МЕЖДУ ВЕРСИЯМИ
--- ============================================
-
-CREATE OR REPLACE FUNCTION diff_robots_versions(
-    version1_id INTEGER,
-    version2_id INTEGER
-)
-RETURNS TABLE (
-    line_number INTEGER,
-    version1_line TEXT,
-    version2_line TEXT,
-    status TEXT
-) AS $$
-DECLARE
-    v_content1 TEXT;
-    v_content2 TEXT;
-    lines1 TEXT[];
-    lines2 TEXT[];
-    max_lines INTEGER;
-BEGIN
-    -- Получаем контент версий
-    SELECT content INTO v_content1 FROM seo_robots_history WHERE id = version1_id;
-    SELECT content INTO v_content2 FROM seo_robots_history WHERE id = version2_id;
-    
-    IF v_content1 IS NULL OR v_content2 IS NULL THEN
-        RETURN;
-    END IF;
-    
-    -- Разбиваем на строки
-    lines1 := string_to_array(v_content1, E'\n');
-    lines2 := string_to_array(v_content2, E'\n');
-    max_lines := GREATEST(array_length(lines1, 1), array_length(lines2, 1));
-    
-    FOR i IN 1..max_lines LOOP
-        RETURN QUERY SELECT 
-            i,
-            COALESCE(lines1[i], ''),
-            COALESCE(lines2[i], ''),
-            CASE 
-                WHEN lines1[i] IS NULL THEN 'ADDED'
-                WHEN lines2[i] IS NULL THEN 'REMOVED'
-                WHEN lines1[i] = lines2[i] THEN 'SAME'
-                ELSE 'CHANGED'
-            END;
-    END LOOP;
-END;
-$$ LANGUAGE plpgsql;
-
--- Использование:
-SELECT * FROM diff_robots_versions(1, 2) LIMIT 20;
-
--- ============================================
--- 19. ЕЖЕДНЕВНЫЙ ОТЧЕТ (EMAIL/LOG)
--- ============================================
-
-CREATE OR REPLACE FUNCTION daily_robots_report()
-RETURNS JSONB AS $$
-DECLARE
-    v_report JSONB;
-BEGIN
-    SELECT jsonb_build_object(
-        'date', CURRENT_DATE,
-        'current_version', (
-            SELECT jsonb_build_object(
-                'id', id,
-                'length', LENGTH(content),
-                'updated_at', updated_at,
-                'by', created_by
-            )
-            FROM seo_robots 
-            WHERE is_active = TRUE 
-            ORDER BY id DESC LIMIT 1
-        ),
-        'total_versions', (SELECT COUNT(*) FROM seo_robots_history),
-        'changes_today', (SELECT COUNT(*) FROM seo_robots_history WHERE DATE(changed_at) = CURRENT_DATE),
-        'validation', validate_robots_json(
-            (SELECT content FROM seo_robots WHERE is_active = TRUE ORDER BY id DESC LIMIT 1)
-        ),
-        'stats', (
-            SELECT jsonb_build_object(
-                'avg_length', AVG(LENGTH(content))::INTEGER,
-                'min_length', MIN(LENGTH(content)),
-                'max_length', MAX(LENGTH(content))
-            )
-            FROM seo_robots_history
-            WHERE DATE(changed_at) = CURRENT_DATE
-        )
-    ) INTO v_report;
-    
-    RETURN v_report;
-END;
-$$ LANGUAGE plpgsql;
-
--- Использование:
-SELECT daily_robots_report();
-
--- ============================================
--- 20. ИНТЕГРАЦИЯ С API (ПОЛНЫЙ МАРШРУТ)
--- ============================================
-
--- Создаем представление для API
-CREATE OR REPLACE VIEW api_robots_current AS
+-- Проверяем актуальную версию
 SELECT 
     id,
-    content,
     created_by,
     created_at,
     updated_at,
     LENGTH(content) as content_length,
-    (SELECT COUNT(*) FROM seo_robots_history WHERE robot_id = seo_robots.id) as version_count,
-    (SELECT COUNT(*) FROM seo_robots_backup WHERE id = seo_robots.id) as backup_exists
-FROM seo_robots
-WHERE is_active = TRUE
-ORDER BY id DESC
+    CASE 
+        WHEN content LIKE '%sitemap.xml%' AND content LIKE '%sitemap-index.xml%' THEN '✅ Both sitemaps present'
+        WHEN content LIKE '%sitemap.xml%' THEN '⚠️ Only main sitemap'
+        WHEN content LIKE '%sitemap-index.xml%' THEN '⚠️ Only index sitemap'
+        ELSE '❌ No sitemap found'
+    END as sitemap_status,
+    LEFT(content, 200) || '...' as preview
+FROM seo_robots 
+WHERE is_active = TRUE 
+ORDER BY id DESC 
 LIMIT 1;
 
 -- ============================================
--- 21. ЗАЩИТА ОТ ОШИБОК (ТРИГГЕР НА ВСТАВКУ)
+-- ВАЛИДАЦИЯ ROBOTS.TXT
 -- ============================================
 
-CREATE OR REPLACE FUNCTION prevent_invalid_robots()
-RETURNS TRIGGER AS $$
-BEGIN
-    -- Проверяем валидность перед вставкой/обновлением
-    IF EXISTS (
-        SELECT 1 
-        FROM validate_robots_advanced(NEW.content) 
-        WHERE is_valid = FALSE
-    ) THEN
-        RAISE EXCEPTION 'Invalid robots.txt content';
-    END IF;
-    
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
--- Включаем защиту (опционально)
--- CREATE TRIGGER trigger_prevent_invalid_robots
--- BEFORE INSERT OR UPDATE ON seo_robots
--- FOR EACH ROW
--- EXECUTE FUNCTION prevent_invalid_robots();
+SELECT * FROM validate_robots_advanced(
+    (SELECT content FROM seo_robots WHERE is_active = TRUE ORDER BY id DESC LIMIT 1)
+)
+WHERE is_valid = FALSE;
 
 -- ============================================
--- 22. ЭКСПОРТ ВСЕХ ДАННЫХ
--- ============================================
-
-CREATE OR REPLACE FUNCTION export_all_robots_data()
-RETURNS JSONB AS $$
-DECLARE
-    v_result JSONB;
-BEGIN
-    SELECT jsonb_build_object(
-        'exported_at', NOW(),
-        'current', (
-            SELECT row_to_json(r)
-            FROM (
-                SELECT id, content, created_by, created_at, updated_at
-                FROM seo_robots
-                WHERE is_active = TRUE
-                ORDER BY id DESC LIMIT 1
-            ) r
-        ),
-        'history', (
-            SELECT jsonb_agg(row_to_json(h))
-            FROM (
-                SELECT id, changed_by, changed_at, LENGTH(content) as content_length
-                FROM seo_robots_history
-                ORDER BY changed_at DESC
-                LIMIT 100
-            ) h
-        ),
-        'backups', (
-            SELECT jsonb_agg(row_to_json(b))
-            FROM (
-                SELECT id, created_by, created_at, LENGTH(content) as content_length
-                FROM seo_robots_backup
-                ORDER BY created_at DESC
-                LIMIT 10
-            ) b
-        ),
-        'stats', (
-            SELECT jsonb_build_object(
-                'total_history', COUNT(*),
-                'total_backups', (SELECT COUNT(*) FROM seo_robots_backup),
-                'last_change', MAX(changed_at)
-            )
-            FROM seo_robots_history
-        )
-    ) INTO v_result;
-    
-    RETURN v_result;
-END;
-$$ LANGUAGE plpgsql;
-
--- ============================================
--- 23. ИТОГОВАЯ ПРОВЕРКА
+-- ПРОВЕРКА НАЛИЧИЯ SITEMAP
 -- ============================================
 
 DO $$ 
 DECLARE
-    v_result JSONB;
+    v_content TEXT;
+    v_has_main BOOLEAN;
+    v_has_index BOOLEAN;
 BEGIN
+    SELECT content INTO v_content 
+    FROM seo_robots 
+    WHERE is_active = TRUE 
+    ORDER BY id DESC LIMIT 1;
+    
+    v_has_main := v_content LIKE '%sitemap.xml%';
+    v_has_index := v_content LIKE '%sitemap-index.xml%';
+    
     RAISE NOTICE '========================================';
-    RAISE NOTICE '🚀 ROBOTS.TXT SYSTEM STATUS';
+    RAISE NOTICE '📋 SITEMAP CHECK';
     RAISE NOTICE '========================================';
+    RAISE NOTICE 'Main sitemap: %', CASE WHEN v_has_main THEN '✅ Present' ELSE '❌ Missing' END;
+    RAISE NOTICE 'Index sitemap: %', CASE WHEN v_has_index THEN '✅ Present' ELSE '❌ Missing' END;
     
-    -- Проверяем все функции
-    PERFORM update_robots(NULL, 'test');
-    PERFORM validate_robots_json('User-agent: *');
-    PERFORM api_get_robots(false);
-    
-    RAISE NOTICE '✅ All functions working correctly';
-    
-    -- Показываем текущий статус
-    SELECT row_to_json(r) INTO v_result
-    FROM (
-        SELECT 
-            (SELECT COUNT(*) FROM seo_robots) as robots_count,
-            (SELECT COUNT(*) FROM seo_robots_history) as history_count,
-            (SELECT COUNT(*) FROM seo_robots_backup) as backup_count,
-            (SELECT created_by FROM seo_robots WHERE is_active = TRUE ORDER BY id DESC LIMIT 1) as last_author,
-            (SELECT updated_at FROM seo_robots WHERE is_active = TRUE ORDER BY id DESC LIMIT 1) as last_update
-    ) r;
-    
-    RAISE NOTICE '📊 Status: %', v_result;
+    IF v_has_main AND v_has_index THEN
+        RAISE NOTICE '✅ Both sitemaps configured correctly!';
+    ELSE
+        RAISE NOTICE '⚠️ Some sitemaps are missing!';
+    END IF;
     RAISE NOTICE '========================================';
-    RAISE NOTICE '✅ System ready!';
 END $$;
+
+-- ============================================
+-- ПОЛНЫЙ ТЕКСТ ROBOTS.TXT
+-- ============================================
+
+SELECT content FROM seo_robots WHERE is_active = TRUE ORDER BY id DESC LIMIT 1;
+
+-- ============================================
+-- СРАВНЕНИЕ С ПРЕДЫДУЩЕЙ ВЕРСИЕЙ
+-- ============================================
+
+WITH current AS (
+    SELECT content, updated_at 
+    FROM seo_robots 
+    WHERE is_active = TRUE 
+    ORDER BY id DESC LIMIT 1
+),
+previous AS (
+    SELECT content, updated_at 
+    FROM seo_robots_history 
+    ORDER BY changed_at DESC LIMIT 1
+)
+SELECT 
+    '📊 Version comparison' as info,
+    current.updated_at as current_version,
+    previous.changed_at as previous_version,
+    LENGTH(current.content) as current_length,
+    LENGTH(previous.content) as previous_length,
+    CASE 
+        WHEN current.content LIKE '%sitemap-index.xml%' AND NOT previous.content LIKE '%sitemap-index.xml%' 
+        THEN '🆕 Added sitemap-index.xml'
+        WHEN LENGTH(current.content) > LENGTH(previous.content) THEN '📈 Larger'
+        WHEN LENGTH(current.content) < LENGTH(previous.content) THEN '📉 Smaller'
+        ELSE '➡️ Same size'
+    END as changes
+FROM current, previous;
+
+-- ============================================
+-- СОЗДАНИЕ БЭКАПА ПЕРЕД ОБНОВЛЕНИЕМ
+-- ============================================
+
+INSERT INTO seo_robots_backup (id, content, is_active, created_by, created_at, updated_at)
+SELECT id, content, is_active, created_by, created_at, updated_at
+FROM seo_robots 
+WHERE is_active = TRUE 
+ORDER BY id DESC LIMIT 1;
+
+-- ============================================
+-- ЕСЛИ НУЖНО ВОССТАНОВИТЬ ПРЕДЫДУЩУЮ ВЕРСИЮ
+-- ============================================
+
+/*
+-- Восстановление из бэкапа
+UPDATE seo_robots 
+SET 
+    content = (SELECT content FROM seo_robots_backup WHERE id = (SELECT MAX(id) FROM seo_robots_backup)),
+    updated_at = NOW(),
+    created_by = 'restored_from_backup'
+WHERE id = (SELECT id FROM seo_robots WHERE is_active = TRUE ORDER BY id DESC LIMIT 1);
+*/
