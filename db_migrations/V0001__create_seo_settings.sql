@@ -1,4 +1,7 @@
-CREATE TABLE seo_settings (
+-- ============================================
+-- ТАБЛИЦА: seo_settings
+-- ============================================
+CREATE TABLE IF NOT EXISTS seo_settings (
   id SERIAL PRIMARY KEY,
   page_key VARCHAR(100) NOT NULL UNIQUE,
   page_label VARCHAR(200) NOT NULL,
@@ -8,6 +11,9 @@ CREATE TABLE seo_settings (
   schema_json TEXT,
   updated_at TIMESTAMP DEFAULT NOW()
 );
+
+-- Очищаем и вставляем данные
+TRUNCATE TABLE seo_settings RESTART IDENTITY;
 
 INSERT INTO seo_settings (page_key, page_label, title, description, keywords) VALUES
   ('/', 'Главная', 'Химчистка мебели в Краснодаре с выездом | Аренда Чистоты', '★4.98/5 (1240 отзывов) Химчистка диванов, кресел, матрасов и ковров в Краснодаре. Выезд на дом, сушка 2–4 часа, безопасные средства. ☎ 8 918 968-28-82', 'химчистка мебели, химчистка мебели краснодар, химчистка диванов краснодар'),
@@ -19,26 +25,47 @@ INSERT INTO seo_settings (page_key, page_label, title, description, keywords) VA
   ('/uslugi/himchistka-stulev', 'Услуга: Стулья', 'Химчистка стульев в Краснодаре | Аренда Чистоты', 'Химчистка стульев в Краснодаре. Обеденные группы, барные стулья, пуфики. Быстро и недорого.', 'химчистка стульев краснодар'),
   ('/uslugi/himchistka-avtosalona', 'Услуга: Автосалон', 'Химчистка автосалона в Краснодаре | Аренда Чистоты', 'Химчистка автосалона в Краснодаре. Сиденья, потолок, дверные панели. Профессиональное оборудование.', 'химчистка автосалона краснодар, химчистка авто');
 
-CREATE TABLE seo_robots (
+
+-- ============================================
+-- ТАБЛИЦА: seo_robots
+-- ============================================
+CREATE TABLE IF NOT EXISTS seo_robots (
   id SERIAL PRIMARY KEY,
   content TEXT NOT NULL,
   updated_at TIMESTAMP DEFAULT NOW()
 );
 
+-- Очищаем и вставляем данные
+TRUNCATE TABLE seo_robots RESTART IDENTITY;
+
 INSERT INTO seo_robots (content) VALUES (
-'User-agent: *
+'User-agent: Yandex
 Allow: /
+Allow: /uslugi/
+Allow: /nashi-raboty
 Disallow: /cookie-policy
 Disallow: /privacy
 Disallow: /hello-world/
 Disallow: /sample-page/
 Disallow: /voprosy-i-otvety-faq.html
-Disallow: /uslugi/khimchistka-divanov.html
-Disallow: /uslugi/khimchistka-matrasov.html
-Disallow: /akcii-i-skidki.html
-Disallow: /uslugi/khimchistka-kovrov.html
-Disallow: /uslugi/khimchistka-salona-avto.html
+Host: https://arenda-chistoty.ru
+Sitemap: https://arenda-chistoty.ru/sitemap.xml
 
-Host: https://arenda-chistoty.online
-Sitemap: https://arenda-chistoty.online/sitemap.xml'
+User-agent: Googlebot
+Allow: /
+Allow: /uslugi/
+Allow: /nashi-raboty
+Disallow: /cookie-policy
+Disallow: /privacy
+Disallow: /hello-world/
+Disallow: /sample-page/
+Sitemap: https://arenda-chistoty.ru/sitemap.xml
+
+User-agent: *
+Allow: /
+Disallow: /cookie-policy
+Disallow: /privacy
+Disallow: /hello-world/
+Disallow: /sample-page/
+Sitemap: https://arenda-chistoty.ru/sitemap.xml'
 );
