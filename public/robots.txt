@@ -1,20 +1,10 @@
 User-agent: *
 Allow: /
-Allow: /uslugi/
-Allow: /nashi-raboty
-Allow: /blog/
-Allow: /akcii
-Allow: /kontakty
-Allow: /price
-Allow: /otzyvy
-
+Disallow: /wp-admin/
+Disallow: /wp-includes/
 Disallow: /cookie-policy
 Disallow: /privacy
 Disallow: /hello-world/
 Disallow: /sample-page/
-Disallow: /voprosy-i-otvety-faq.html
-Disallow: /wp-admin/
-Disallow: /wp-includes/
 
 Sitemap: https://arenda-chistoty.ru/sitemap.xml
-Sitemap: https://arenda-chistoty.ru/sitemap-index.xml
