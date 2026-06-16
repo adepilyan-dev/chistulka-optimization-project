@@ -76,6 +76,7 @@ def handler(event: dict, context) -> dict:
         if method == "POST" and "page" in path:
             body = json.loads(event.get("body") or "{}")
             page_key = body.get("page_key")
+            page_label = body.get("page_label", page_key)  # ✅ Добавлена поддержка page_label
             title = body.get("title", "")
             description = body.get("description", "")
             keywords = body.get("keywords", "")
@@ -86,10 +87,10 @@ def handler(event: dict, context) -> dict:
                 INSERT INTO {SCHEMA}.seo_settings (page_key, page_label, title, description, keywords, schema_json, updated_at)
                 VALUES (%s, %s, %s, %s, %s, %s, NOW())
                 ON CONFLICT (page_key) DO UPDATE
-                SET title=%s, description=%s, keywords=%s, schema_json=%s, updated_at=NOW()
+                SET page_label=%s, title=%s, description=%s, keywords=%s, schema_json=%s, updated_at=NOW()
                 """,
-                (page_key, page_key, title, description, keywords, schema_json,
-                 title, description, keywords, schema_json),
+                (page_key, page_label, title, description, keywords, schema_json,
+                 page_label, title, description, keywords, schema_json),
             )
             conn.commit()
             return {
@@ -115,6 +116,14 @@ def handler(event: dict, context) -> dict:
             "statusCode": 404,
             "headers": {**cors_headers(), "Content-Type": "application/json"},
             "body": json.dumps({"error": "Not found"}),
+        }
+
+    except Exception as e:
+        conn.rollback()
+        return {
+            "statusCode": 500,
+            "headers": {**cors_headers(), "Content-Type": "application/json"},
+            "body": json.dumps({"error": str(e)}),
         }
 
     finally:
