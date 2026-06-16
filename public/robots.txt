@@ -1,7 +1,11 @@
-User-agent: *
-Allow: /
-
-Disallow: /hello-world/
-Disallow: /sample-page/
-Host: https://arenda-chistoty.ru
-Sitemap: https://arenda-chistoty.ru/sitemap-index.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>https://arenda-chistoty.ru/sitemap-main.xml</loc>
+    <lastmod>2026-06-16</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://arenda-chistoty.ru/sitemap-service-district.xml</loc>
+    <lastmod>2026-06-16</lastmod>
+  </sitemap>
+</sitemapindex>
