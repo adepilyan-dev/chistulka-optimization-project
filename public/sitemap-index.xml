@@ -1,28 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  
-  <!-- Основной sitemap -->
+
+  <!-- Основные страницы, услуги, районы, блог -->
   <sitemap>
-    <loc>https://arenda-chistoty.ru/sitemap-main.xml</loc>
-    <lastmod>2026-06-16</lastmod>
+    <loc>https://arenda-chistoty.online/sitemap.xml</loc>
+    <lastmod>2026-06-15</lastmod>
   </sitemap>
-  
-  <!-- Услуги -->
+
+  <!-- Комбинации Услуга × Район (156 URL) -->
   <sitemap>
-    <loc>https://arenda-chistoty.ru/sitemap-services.xml</loc>
-    <lastmod>2026-06-16</lastmod>
-  </sitemap>
-  
-  <!-- Районы -->
-  <sitemap>
-    <loc>https://arenda-chistoty.ru/sitemap-locations.xml</loc>
-    <lastmod>2026-06-16</lastmod>
-  </sitemap>
-  
-  <!-- Блог -->
-  <sitemap>
-    <loc>https://arenda-chistoty.ru/sitemap-blog.xml</loc>
-    <lastmod>2026-06-16</lastmod>
+    <loc>https://arenda-chistoty.online/sitemap-service-district.xml</loc>
+    <lastmod>2026-06-15</lastmod>
   </sitemap>
 
 </sitemapindex>
