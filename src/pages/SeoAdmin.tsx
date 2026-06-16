@@ -21,7 +21,9 @@ interface SeoData {
 
 type Tab = "pages" | "robots" | "sitemap";
 
-// Компонент: Анализ мета-тегов
+// ============================================
+// КОМПОНЕНТ: Анализ мета-тегов
+// ============================================
 const SeoAnalysis = ({
   title,
   description,
@@ -43,11 +45,14 @@ const SeoAnalysis = ({
 
   return (
     <div
-      className="mt-4 p-3 rounded-lg"
+      className="mt-4 p-3 rounded-lg transition-all duration-300"
       style={{
         background: issues.length
           ? "rgba(239,68,68,0.1)"
           : "rgba(12,184,160,0.1)",
+        border: issues.length
+          ? "1px solid rgba(239,68,68,0.2)"
+          : "1px solid rgba(12,184,160,0.2)",
       }}
     >
       <p
@@ -59,7 +64,11 @@ const SeoAnalysis = ({
       {issues.length > 0 && (
         <ul className="mt-1 space-y-0.5">
           {issues.map((issue, i) => (
-            <li key={i} className="text-xs" style={{ color: "#ef4444" }}>
+            <li
+              key={i}
+              className="text-xs animate-fade-in"
+              style={{ color: "#ef4444" }}
+            >
               • {issue}
             </li>
           ))}
@@ -69,7 +78,9 @@ const SeoAnalysis = ({
   );
 };
 
-// Компонент: Статистика Sitemap
+// ============================================
+// КОМПОНЕНТ: Статистика Sitemap
+// ============================================
 const SitemapStats = () => {
   const [stats, setStats] = useState({
     total: 0,
@@ -128,10 +139,10 @@ const SitemapStats = () => {
       ].map((s) => (
         <div
           key={s.label}
-          className="text-center p-3 rounded-lg"
+          className="text-center p-3 rounded-lg transition-all duration-300 hover:scale-105"
           style={{ background: "#0f172a" }}
         >
-          <div className="font-bold text-xl" style={{ color: "var(--teal)" }}>
+          <div className="font-bold text-2xl" style={{ color: "var(--teal)" }}>
             {s.value}
           </div>
           <div
@@ -146,7 +157,9 @@ const SitemapStats = () => {
   );
 };
 
-// Компонент: Проверка индексации
+// ============================================
+// КОМПОНЕНТ: Проверка индексации
+// ============================================
 const CheckIndexing = () => {
   const [checking, setChecking] = useState(false);
 
@@ -163,7 +176,7 @@ const CheckIndexing = () => {
     <button
       onClick={checkIndex}
       disabled={checking}
-      className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm transition-all hover:opacity-80"
+      className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm transition-all hover:opacity-80 hover:scale-105 disabled:opacity-50"
       style={{ background: "rgba(255,68,51,0.15)", color: "#FF4433" }}
     >
       <Icon
@@ -176,10 +189,16 @@ const CheckIndexing = () => {
   );
 };
 
-// Компонент: Экспорт SEO
+// ============================================
+// КОМПОНЕНТ: Экспорт SEO
+// ============================================
 const ExportSeo = ({ data }: { data: SeoData | null }) => {
+  const [exporting, setExporting] = useState(false);
+
   const exportCSV = () => {
     if (!data) return;
+    setExporting(true);
+
     const csv = data.pages
       .map(
         (p) =>
@@ -187,7 +206,7 @@ const ExportSeo = ({ data }: { data: SeoData | null }) => {
       )
       .join("\n");
 
-    const blob = new Blob(["page,title,description,keywords\n" + csv], {
+    const blob = new Blob(["\uFEFFpage,title,description,keywords\n" + csv], {
       type: "text/csv;charset=utf-8;",
     });
     const url = URL.createObjectURL(blob);
@@ -198,23 +217,33 @@ const ExportSeo = ({ data }: { data: SeoData | null }) => {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+
+    setTimeout(() => setExporting(false), 1000);
   };
 
   return (
     <button
       onClick={exportCSV}
-      className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm transition-all hover:opacity-80"
+      disabled={exporting}
+      className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm transition-all hover:opacity-80 hover:scale-105 disabled:opacity-50"
       style={{
         background: "rgba(255,255,255,0.06)",
         color: "rgba(255,255,255,0.5)",
       }}
     >
-      <Icon name="Download" size={14} />
-      Экспорт CSV
+      <Icon
+        name={exporting ? "Loader" : "Download"}
+        size={14}
+        className={exporting ? "animate-spin" : ""}
+      />
+      {exporting ? "Экспорт..." : "Экспорт CSV"}
     </button>
   );
 };
 
+// ============================================
+// ОСНОВНОЙ КОМПОНЕНТ
+// ============================================
 export default function SeoAdmin() {
   const [password, setPassword] = useState("");
   const [authed, setAuthed] = useState(false);
@@ -239,6 +268,9 @@ export default function SeoAdmin() {
     Authorization: `Bearer ${password}`,
   };
 
+  // ============================================
+  // API ФУНКЦИИ
+  // ============================================
   async function login() {
     setLoading(true);
     setAuthError(false);
@@ -308,7 +340,9 @@ export default function SeoAdmin() {
   const titleLen = form.title.length;
   const descLen = form.description.length;
 
-  // Страница входа
+  // ============================================
+  // СТРАНИЦА ВХОДА
+  // ============================================
   if (!authed) {
     return (
       <div
@@ -316,7 +350,7 @@ export default function SeoAdmin() {
         style={{ background: "#0f172a" }}
       >
         <div
-          className="w-full max-w-sm mx-4 rounded-2xl p-8"
+          className="w-full max-w-sm mx-4 rounded-2xl p-8 animate-fade-in"
           style={{
             background: "#1e293b",
             border: "1px solid rgba(255,255,255,0.08)",
@@ -346,7 +380,7 @@ export default function SeoAdmin() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && login()}
-              className="w-full px-4 py-3 rounded-xl text-sm outline-none"
+              className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all focus:ring-2 focus:ring-teal-500"
               style={{
                 background: "#0f172a",
                 border: authError
@@ -356,14 +390,17 @@ export default function SeoAdmin() {
               }}
             />
             {authError && (
-              <p className="text-xs" style={{ color: "#ef4444" }}>
+              <p
+                className="text-xs animate-fade-in"
+                style={{ color: "#ef4444" }}
+              >
                 Неверный пароль
               </p>
             )}
             <button
               onClick={login}
               disabled={!password || loading}
-              className="w-full py-3 rounded-xl text-sm font-semibold transition-all disabled:opacity-40"
+              className="w-full py-3 rounded-xl text-sm font-semibold transition-all hover:scale-[1.02] disabled:opacity-40"
               style={{ background: "var(--teal)", color: "white" }}
             >
               {loading ? "Вход..." : "Войти"}
@@ -374,7 +411,9 @@ export default function SeoAdmin() {
     );
   }
 
-  // Основная панель
+  // ============================================
+  // ОСНОВНАЯ ПАНЕЛЬ
+  // ============================================
   return (
     <div
       className="min-h-screen"
@@ -410,7 +449,7 @@ export default function SeoAdmin() {
             setPassword("");
             setData(null);
           }}
-          className="text-xs flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all hover:bg-white/5"
+          className="text-xs flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all hover:bg-white/10 hover:scale-105"
           style={{ color: "rgba(255,255,255,0.4)" }}
         >
           <Icon name="LogOut" size={13} />
@@ -434,7 +473,7 @@ export default function SeoAdmin() {
             <button
               key={t.key}
               onClick={() => setTab(t.key)}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all hover:scale-105"
               style={{
                 background: tab === t.key ? "var(--teal)" : "transparent",
                 color: tab === t.key ? "white" : "rgba(255,255,255,0.5)",
@@ -446,7 +485,9 @@ export default function SeoAdmin() {
           ))}
         </div>
 
-        {/* Вкладка: Страницы */}
+        {/* ========================================== */}
+        {/* ВКЛАДКА: СТРАНИЦЫ */}
+        {/* ========================================== */}
         {tab === "pages" && (
           <div className="grid lg:grid-cols-3 gap-6">
             {/* Список страниц */}
@@ -474,7 +515,7 @@ export default function SeoAdmin() {
                   <button
                     key={page.page_key}
                     onClick={() => selectPage(page)}
-                    className="w-full text-left px-4 py-3 rounded-xl transition-all"
+                    className="w-full text-left px-4 py-3 rounded-xl transition-all hover:scale-[1.02]"
                     style={{
                       background:
                         selectedPage?.page_key === page.page_key
@@ -543,7 +584,7 @@ export default function SeoAdmin() {
             <div className="lg:col-span-2">
               {!selectedPage ? (
                 <div
-                  className="rounded-2xl flex flex-col items-center justify-center gap-3 py-20"
+                  className="rounded-2xl flex flex-col items-center justify-center gap-3 py-20 animate-fade-in"
                   style={{
                     background: "#1e293b",
                     border: "1px dashed rgba(255,255,255,0.1)",
@@ -563,7 +604,7 @@ export default function SeoAdmin() {
                 </div>
               ) : (
                 <div
-                  className="rounded-2xl p-6 space-y-5"
+                  className="rounded-2xl p-6 space-y-5 animate-fade-in"
                   style={{
                     background: "#1e293b",
                     border: "1px solid rgba(255,255,255,0.06)",
@@ -597,7 +638,7 @@ export default function SeoAdmin() {
                         href={`https://arenda-chistoty.online${selectedPage.page_key}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg transition-all hover:bg-white/10"
+                        className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg transition-all hover:bg-white/10 hover:scale-105"
                         style={{
                           background: "rgba(255,255,255,0.06)",
                           color: "rgba(255,255,255,0.5)",
@@ -644,7 +685,7 @@ export default function SeoAdmin() {
                       onChange={(e) =>
                         setForm({ ...form, title: e.target.value })
                       }
-                      className="w-full px-4 py-3 rounded-xl text-sm outline-none focus:ring-2 focus:ring-teal-500 transition-all"
+                      className="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all focus:ring-2 focus:ring-teal-500"
                       style={{
                         background: "#0f172a",
                         border: "1px solid rgba(255,255,255,0.1)",
@@ -654,7 +695,7 @@ export default function SeoAdmin() {
                     />
                     {form.title && (
                       <div
-                        className="mt-2 p-3 rounded-lg"
+                        className="mt-2 p-3 rounded-lg animate-fade-in"
                         style={{
                           background: "rgba(255,255,255,0.03)",
                           border: "1px solid rgba(255,255,255,0.06)",
@@ -717,7 +758,7 @@ export default function SeoAdmin() {
                         setForm({ ...form, description: e.target.value })
                       }
                       rows={3}
-                      className="w-full px-4 py-3 rounded-xl text-sm outline-none resize-none focus:ring-2 focus:ring-teal-500 transition-all"
+                      className="w-full px-4 py-3 rounded-xl text-sm outline-none resize-none transition-all focus:ring-2 focus:ring-teal-500"
                       style={{
                         background: "#0f172a",
                         border: "1px solid rgba(255,255,255,0.1)",
@@ -741,7 +782,7 @@ export default function SeoAdmin() {
                         setForm({ ...form, keywords: e.target.value })
                       }
                       rows={2}
-                      className="w-full px-4 py-3 rounded-xl text-sm outline-none resize-none focus:ring-2 focus:ring-teal-500 transition-all"
+                      className="w-full px-4 py-3 rounded-xl text-sm outline-none resize-none transition-all focus:ring-2 focus:ring-teal-500"
                       style={{
                         background: "#0f172a",
                         border: "1px solid rgba(255,255,255,0.1)",
@@ -765,7 +806,7 @@ export default function SeoAdmin() {
                         setForm({ ...form, schema_json: e.target.value })
                       }
                       rows={6}
-                      className="w-full px-4 py-3 rounded-xl text-sm outline-none resize-none font-mono focus:ring-2 focus:ring-teal-500 transition-all"
+                      className="w-full px-4 py-3 rounded-xl text-sm outline-none resize-none font-mono transition-all focus:ring-2 focus:ring-teal-500"
                       style={{
                         background: "#0f172a",
                         border: "1px solid rgba(255,255,255,0.1)",
@@ -808,11 +849,13 @@ export default function SeoAdmin() {
           </div>
         )}
 
-        {/* Вкладка: Robots.txt */}
+        {/* ========================================== */}
+        {/* ВКЛАДКА: ROBOTS.TXT */}
+        {/* ========================================== */}
         {tab === "robots" && (
           <div className="max-w-2xl">
             <div
-              className="rounded-2xl p-6"
+              className="rounded-2xl p-6 animate-fade-in"
               style={{
                 background: "#1e293b",
                 border: "1px solid rgba(255,255,255,0.06)",
@@ -849,7 +892,7 @@ export default function SeoAdmin() {
                   value={robots}
                   onChange={(e) => setRobots(e.target.value)}
                   rows={18}
-                  className="w-full px-4 py-3 rounded-xl text-sm outline-none resize-none font-mono focus:ring-2 focus:ring-teal-500 transition-all"
+                  className="w-full px-4 py-3 rounded-xl text-sm outline-none resize-none font-mono transition-all focus:ring-2 focus:ring-teal-500"
                   style={{
                     background: "#0f172a",
                     border: "1px solid rgba(255,255,255,0.1)",
@@ -892,7 +935,7 @@ export default function SeoAdmin() {
                   href="https://arenda-chistoty.online/robots.txt"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg transition-all hover:bg-white/5"
+                  className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg transition-all hover:bg-white/5 hover:scale-105"
                   style={{ color: "rgba(255,255,255,0.4)" }}
                 >
                   <Icon name="ExternalLink" size={12} />
@@ -903,11 +946,13 @@ export default function SeoAdmin() {
           </div>
         )}
 
-        {/* Вкладка: Sitemap */}
+        {/* ========================================== */}
+        {/* ВКЛАДКА: SITEMAP */}
+        {/* ========================================== */}
         {tab === "sitemap" && (
           <div className="max-w-2xl">
             <div
-              className="rounded-2xl p-6"
+              className="rounded-2xl p-6 animate-fade-in"
               style={{
                 background: "#1e293b",
                 border: "1px solid rgba(255,255,255,0.06)",
@@ -942,7 +987,7 @@ export default function SeoAdmin() {
                   href="https://arenda-chistoty.online/sitemap.xml"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-between px-4 py-3 rounded-xl transition-all hover:opacity-80"
+                  className="flex items-center justify-between px-4 py-3 rounded-xl transition-all hover:opacity-80 hover:scale-[1.02]"
                   style={{
                     background: "rgba(12,184,160,0.1)",
                     border: "1px solid rgba(12,184,160,0.3)",
@@ -966,7 +1011,7 @@ export default function SeoAdmin() {
                   href="https://arenda-chistoty.online/robots.txt"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-between px-4 py-3 rounded-xl transition-all hover:opacity-80"
+                  className="flex items-center justify-between px-4 py-3 rounded-xl transition-all hover:opacity-80 hover:scale-[1.02]"
                   style={{
                     background: "rgba(255,255,255,0.04)",
                     border: "1px solid rgba(255,255,255,0.08)",
@@ -1008,7 +1053,7 @@ export default function SeoAdmin() {
                     href="https://webmaster.yandex.ru"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-xs transition-all hover:opacity-80"
+                    className="flex items-center gap-2 text-xs transition-all hover:opacity-80 hover:scale-[1.02]"
                     style={{ color: "rgba(255,255,255,0.4)" }}
                   >
                     <Icon name="Globe" size={12} style={{ color: "#FF4433" }} />
@@ -1018,7 +1063,7 @@ export default function SeoAdmin() {
                     href="https://search.google.com/search-console"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-xs transition-all hover:opacity-80"
+                    className="flex items-center gap-2 text-xs transition-all hover:opacity-80 hover:scale-[1.02]"
                     style={{ color: "rgba(255,255,255,0.4)" }}
                   >
                     <Icon name="Globe" size={12} style={{ color: "#4285f4" }} />
@@ -1028,7 +1073,7 @@ export default function SeoAdmin() {
                     href="https://yandex.ru/search/?text=site:arenda-chistoty.online"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-xs transition-all hover:opacity-80"
+                    className="flex items-center gap-2 text-xs transition-all hover:opacity-80 hover:scale-[1.02]"
                     style={{ color: "rgba(255,255,255,0.4)" }}
                   >
                     <Icon
