@@ -1,9 +1,4 @@
--- ============================================
--- ИСПРАВЛЕННЫЙ ROBOTS.TXT (БЕЗ НЕИЗВЕСТНЫХ ДИРЕКТИВ)
--- ============================================
-
-SELECT * FROM update_robots(
-    'User-agent: *
+User-agent: *
 Allow: /
 Allow: /uslugi/
 Allow: /nashi-raboty
@@ -59,21 +54,4 @@ Disallow: /wp-admin/
 User-agent: YandexImages
 Allow: /images/
 Allow: /wp-content/uploads/
-Disallow: /wp-admin/',
-    'admin_fixed'
-);
-
--- ============================================
--- ПРОВЕРКА НА НЕИЗВЕСТНЫЕ ДИРЕКТИВЫ
--- ============================================
-
-SELECT * FROM validate_robots_advanced(
-    (SELECT content FROM seo_robots WHERE is_active = TRUE ORDER BY id DESC LIMIT 1)
-)
-WHERE is_valid = FALSE;
-
--- ============================================
--- ПОЛУЧИТЬ ИСПРАВЛЕННУЮ ВЕРСИЮ
--- ============================================
-
-SELECT content FROM seo_robots WHERE is_active = TRUE ORDER BY id DESC LIMIT 1;
+Disallow: /wp-admin/
