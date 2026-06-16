@@ -3,5 +3,5 @@ Allow: /
 
 Disallow: /hello-world/
 Disallow: /sample-page/
-Host: https://arenda-chistoty.online
-Sitemap: https://arenda-chistoty.online/sitemap-index.xml
+Host: https://arenda-chistoty.ru
+Sitemap: https://arenda-chistoty.ru/sitemap-index.xml
