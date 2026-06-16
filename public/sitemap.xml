@@ -3,302 +3,300 @@
 
   <!-- Главная -->
   <url>
-    <loc>https://arenda-chistoty.online/</loc>
-    <lastmod>2026-06-11</lastmod>
+    <loc>https://arenda-chistoty.ru/</loc>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <!-- Наши работы -->
   <url>
-    <loc>https://arenda-chistoty.online/nashi-raboty</loc>
-    <lastmod>2026-06-11</lastmod>
+    <loc>https://arenda-chistoty.ru/nashi-raboty</loc>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <!-- Услуги -->
   <url>
-    <loc>https://arenda-chistoty.online/uslugi/himchistka-divanov</loc>
-    <lastmod>2026-06-11</lastmod>
+    <loc>https://arenda-chistoty.ru/uslugi/himchistka-divanov</loc>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://arenda-chistoty.online/uslugi/himchistka-kresel</loc>
-    <lastmod>2026-06-11</lastmod>
+    <loc>https://arenda-chistoty.ru/uslugi/himchistka-kresel</loc>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://arenda-chistoty.online/uslugi/himchistka-matrasov</loc>
-    <lastmod>2026-06-11</lastmod>
+    <loc>https://arenda-chistoty.ru/uslugi/himchistka-matrasov</loc>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://arenda-chistoty.online/uslugi/himchistka-kovrov</loc>
-    <lastmod>2026-06-11</lastmod>
+    <loc>https://arenda-chistoty.ru/uslugi/himchistka-kovrov</loc>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://arenda-chistoty.online/uslugi/himchistka-stulev</loc>
-    <lastmod>2026-06-11</lastmod>
+    <loc>https://arenda-chistoty.ru/uslugi/himchistka-stulev</loc>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://arenda-chistoty.online/uslugi/himchistka-avtosalona</loc>
-    <lastmod>2026-06-11</lastmod>
+    <loc>https://arenda-chistoty.ru/uslugi/himchistka-avtosalona</loc>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <!-- Районы Краснодара -->
   <url>
-    <loc>https://arenda-chistoty.online/himchistka-tsentralnyy-okrug</loc>
-    <lastmod>2026-06-11</lastmod>
+    <loc>https://arenda-chistoty.ru/himchistka-tsentralnyy-okrug</loc>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://arenda-chistoty.online/himchistka-prikubanskiy-okrug</loc>
-    <lastmod>2026-06-11</lastmod>
+    <loc>https://arenda-chistoty.ru/himchistka-prikubanskiy-okrug</loc>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://arenda-chistoty.online/himchistka-karasunsky-okrug</loc>
-    <lastmod>2026-06-11</lastmod>
+    <loc>https://arenda-chistoty.ru/himchistka-karasunsky-okrug</loc>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://arenda-chistoty.online/himchistka-zapadnyy-okrug</loc>
-    <lastmod>2026-06-11</lastmod>
+    <loc>https://arenda-chistoty.ru/himchistka-zapadnyy-okrug</loc>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://arenda-chistoty.online/himchistka-yubileynyy</loc>
-    <lastmod>2026-06-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://arenda-chistoty.online/himchistka-gidrostroiteley</loc>
-    <lastmod>2026-06-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://arenda-chistoty.online/himchistka-cheremushki</loc>
-    <lastmod>2026-06-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://arenda-chistoty.online/himchistka-festivalnyy</loc>
-    <lastmod>2026-06-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://arenda-chistoty.online/himchistka-pashkovskiy</loc>
-    <lastmod>2026-06-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://arenda-chistoty.online/himchistka-komsomolskiy</loc>
-    <lastmod>2026-06-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://arenda-chistoty.online/himchistka-rossiyskiy</loc>
-    <lastmod>2026-06-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://arenda-chistoty.online/himchistka-enka</loc>
-    <lastmod>2026-06-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://arenda-chistoty.online/himchistka-9y-kilometr</loc>
-    <lastmod>2026-06-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://arenda-chistoty.online/himchistka-hbk</loc>
-    <lastmod>2026-06-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://arenda-chistoty.online/himchistka-vitaminkombnat</loc>
-    <lastmod>2026-06-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://arenda-chistoty.online/himchistka-molodezhnyy</loc>
-    <lastmod>2026-06-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://arenda-chistoty.online/himchistka-slavyanskiy</loc>
-    <lastmod>2026-06-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://arenda-chistoty.online/himchistka-dubinka</loc>
-    <lastmod>2026-06-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://arenda-chistoty.online/himchistka-40-let-pobedy</loc>
-    <lastmod>2026-06-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://arenda-chistoty.online/himchistka-aviagorodok</loc>
+    <loc>https://arenda-chistoty.ru/himchistka-yubileynyy</loc>
     <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://arenda-chistoty.online/himchistka-krasnaya-ploshchad</loc>
-    <lastmod>2026-06-11</lastmod>
+    <loc>https://arenda-chistoty.ru/himchistka-gidrostroiteley</loc>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://arenda-chistoty.online/himchistka-geroev</loc>
-    <lastmod>2026-06-11</lastmod>
+    <loc>https://arenda-chistoty.ru/himchistka-cheremushki</loc>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://arenda-chistoty.online/himchistka-solnechnyy</loc>
-    <lastmod>2026-06-11</lastmod>
+    <loc>https://arenda-chistoty.ru/himchistka-festivalnyy</loc>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://arenda-chistoty.online/himchistka-kolosistyy</loc>
-    <lastmod>2026-06-11</lastmod>
+    <loc>https://arenda-chistoty.ru/himchistka-pashkovskiy</loc>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://arenda-chistoty.online/himchistka-kalinino</loc>
-    <lastmod>2026-06-11</lastmod>
+    <loc>https://arenda-chistoty.ru/himchistka-komsomolskiy</loc>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://arenda-chistoty.online/himchistka-starokorsunska</loc>
-    <lastmod>2026-06-11</lastmod>
+    <loc>https://arenda-chistoty.ru/himchistka-rossiyskiy</loc>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://arenda-chistoty.online/himchistka-lenina-poselok</loc>
-    <lastmod>2026-06-11</lastmod>
+    <loc>https://arenda-chistoty.ru/himchistka-enka</loc>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-
-  <!-- Комбинации Услуга + Район — см. sitemap-service-district.xml (156 URL) -->
+  <url>
+    <loc>https://arenda-chistoty.ru/himchistka-9y-kilometr</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://arenda-chistoty.ru/himchistka-hbk</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://arenda-chistoty.ru/himchistka-vitaminkombnat</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://arenda-chistoty.ru/himchistka-molodezhnyy</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://arenda-chistoty.ru/himchistka-slavyanskiy</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://arenda-chistoty.ru/himchistka-dubinka</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://arenda-chistoty.ru/himchistka-40-let-pobedy</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://arenda-chistoty.ru/himchistka-aviagorodok</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://arenda-chistoty.ru/himchistka-krasnaya-ploshchad</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://arenda-chistoty.ru/himchistka-geroev</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://arenda-chistoty.ru/himchistka-solnechnyy</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://arenda-chistoty.ru/himchistka-kolosistyy</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://arenda-chistoty.ru/himchistka-kalinino</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://arenda-chistoty.ru/himchistka-starokorsunska</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://arenda-chistoty.ru/himchistka-lenina-poselok</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
 
   <!-- Блог -->
   <url>
-    <loc>https://arenda-chistoty.online/blog/kak-prodlit-zhizn-divanu</loc>
-    <lastmod>2026-06-11</lastmod>
+    <loc>https://arenda-chistoty.ru/blog/kak-prodlit-zhizn-divanu</loc>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://arenda-chistoty.online/blog/chto-delat-prolili-na-divan</loc>
-    <lastmod>2026-06-11</lastmod>
+    <loc>https://arenda-chistoty.ru/blog/chto-delat-prolili-na-divan</loc>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://arenda-chistoty.online/blog/velur-kozha-ili-tkan</loc>
-    <lastmod>2026-06-11</lastmod>
+    <loc>https://arenda-chistoty.ru/blog/velur-kozha-ili-tkan</loc>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://arenda-chistoty.online/blog/kak-ubrat-pyatno-krasnogo-vina-s-divana</loc>
-    <lastmod>2026-06-11</lastmod>
+    <loc>https://arenda-chistoty.ru/blog/kak-ubrat-pyatno-krasnogo-vina-s-divana</loc>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://arenda-chistoty.online/blog/divan-pahnet-mochoy-kota</loc>
-    <lastmod>2026-06-11</lastmod>
+    <loc>https://arenda-chistoty.ru/blog/divan-pahnet-mochoy-kota</loc>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://arenda-chistoty.online/blog/5-priznakov-divan-pora-chistit</loc>
-    <lastmod>2026-06-11</lastmod>
+    <loc>https://arenda-chistoty.ru/blog/5-priznakov-divan-pora-chistit</loc>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://arenda-chistoty.online/blog/himchistka-matrasa-doma</loc>
-    <lastmod>2026-06-11</lastmod>
+    <loc>https://arenda-chistoty.ru/blog/himchistka-matrasa-doma</loc>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://arenda-chistoty.online/blog/himchistka-detskogo-kresla-avtokresla</loc>
-    <lastmod>2026-06-11</lastmod>
+    <loc>https://arenda-chistoty.ru/blog/himchistka-detskogo-kresla-avtokresla</loc>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://arenda-chistoty.online/blog/himchistka-kovra-v-kvartire</loc>
-    <lastmod>2026-06-11</lastmod>
+    <loc>https://arenda-chistoty.ru/blog/himchistka-kovra-v-kvartire</loc>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <!-- Дополнительные страницы -->
   <url>
-    <loc>https://arenda-chistoty.online/kontakty</loc>
-    <lastmod>2026-06-11</lastmod>
+    <loc>https://arenda-chistoty.ru/kontakty</loc>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://arenda-chistoty.online/akcii</loc>
-    <lastmod>2026-06-11</lastmod>
+    <loc>https://arenda-chistoty.ru/akcii</loc>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://arenda-chistoty.online/price</loc>
-    <lastmod>2026-06-11</lastmod>
+    <loc>https://arenda-chistoty.ru/price</loc>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://arenda-chistoty.online/otzyvy</loc>
-    <lastmod>2026-06-11</lastmod>
+    <loc>https://arenda-chistoty.ru/otzyvy</loc>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
