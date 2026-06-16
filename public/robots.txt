@@ -1,7 +1,5 @@
 User-agent: *
 Allow: /
 
-Disallow: /hello-world/
-Disallow: /sample-page/
 Host: https://arenda-chistoty.ru
 Sitemap: https://arenda-chistoty.ru/sitemap-index.xml
