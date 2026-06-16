@@ -16,42 +16,5 @@ Disallow: /voprosy-i-otvety-faq.html
 Disallow: /wp-admin/
 Disallow: /wp-includes/
 
-Host: https://arenda-chistoty.ru
 Sitemap: https://arenda-chistoty.ru/sitemap.xml
 Sitemap: https://arenda-chistoty.ru/sitemap-index.xml
-
-User-agent: Yandex
-Allow: /
-Allow: /uslugi/
-Allow: /nashi-raboty
-Allow: /blog/
-Disallow: /wp-admin/
-Disallow: /wp-includes/
-
-User-agent: Googlebot
-Allow: /
-Allow: /uslugi/
-Allow: /nashi-raboty
-Allow: /blog/
-Disallow: /wp-admin/
-Disallow: /wp-includes/
-
-User-agent: YandexMobileBot
-Allow: /
-Disallow: /wp-admin/
-Disallow: /wp-includes/
-
-User-agent: Googlebot-Mobile
-Allow: /
-Disallow: /wp-admin/
-Disallow: /wp-includes/
-
-User-agent: Googlebot-Image
-Allow: /images/
-Allow: /wp-content/uploads/
-Disallow: /wp-admin/
-
-User-agent: YandexImages
-Allow: /images/
-Allow: /wp-content/uploads/
-Disallow: /wp-admin/
