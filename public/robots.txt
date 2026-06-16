@@ -1,5 +1,9 @@
 -- ============================================
--- ОБНОВЛЕНИЕ ROBOTS.TXT С ПРОВЕРКАМИ
+-- 🚀 ПОЛНЫЙ НАБОР УТИЛИТ ДЛЯ ROBOTS.TXT
+-- ============================================
+
+-- ============================================
+-- 1. ОСНОВНОЕ ОБНОВЛЕНИЕ (РАБОЧАЯ ВЕРСИЯ)
 -- ============================================
 
 DO $$ 
@@ -7,16 +11,11 @@ DECLARE
     v_robot_id INTEGER;
     v_old_content TEXT;
     v_new_content TEXT;
+    v_backup_id INTEGER;
 BEGIN
-    -- Получаем текущий ID последнего robots.txt
+    -- Получаем текущий ID
     SELECT id INTO v_robot_id FROM seo_robots ORDER BY id DESC LIMIT 1;
     
-    -- Сохраняем старую версию для лога (опционально)
-    IF v_robot_id IS NOT NULL THEN
-        SELECT content INTO v_old_content FROM seo_robots WHERE id = v_robot_id;
-        RAISE NOTICE 'Old robots.txt content length: %', LENGTH(v_old_content);
-    END IF;
-
     -- Новое содержимое
     v_new_content := 'User-agent: *
 Allow: /
@@ -31,90 +30,78 @@ Disallow: /voprosy-i-otvety-faq.html
 
 Host: https://arenda-chistoty.ru
 Sitemap: https://arenda-chistoty.ru/sitemap.xml';
-
+    
+    -- Создаём бэкап перед обновлением
+    IF v_robot_id IS NOT NULL THEN
+        INSERT INTO seo_robots_backup (id, content, is_active, created_by, created_at, updated_at)
+        SELECT id, content, is_active, created_by, created_at, updated_at
+        FROM seo_robots 
+        WHERE id = v_robot_id
+        RETURNING id INTO v_backup_id;
+        
+        RAISE NOTICE '📦 Backup created (ID: %)', v_backup_id;
+    END IF;
+    
     -- Обновляем или вставляем
     IF v_robot_id IS NOT NULL THEN
         UPDATE seo_robots 
         SET 
             content = v_new_content,
-            updated_at = NOW()
-        WHERE id = v_robot_id;
+            updated_at = NOW(),
+            created_by = 'admin_manual'
+        WHERE id = v_robot_id
+        RETURNING id INTO v_robot_id;
         
-        RAISE NOTICE 'Updated robots.txt (ID: %)', v_robot_id;
+        RAISE NOTICE '✅ Robots.txt updated (ID: %)', v_robot_id;
     ELSE
         INSERT INTO seo_robots (content, is_active, created_by)
-        VALUES (v_new_content, TRUE, 'system');
+        VALUES (v_new_content, TRUE, 'admin_manual')
+        RETURNING id INTO v_robot_id;
         
-        RAISE NOTICE 'Created new robots.txt';
+        RAISE NOTICE '✅ New robots.txt created (ID: %)', v_robot_id;
     END IF;
     
-    -- Проверка результата
-    PERFORM pg_sleep(0.1); -- небольшая задержка для синхронизации
+    -- Проверка
+    RAISE NOTICE '📋 Content length: % chars', LENGTH(v_new_content);
+    RAISE NOTICE '📋 Content preview: %', LEFT(v_new_content, 60) || '...';
     
-    RAISE NOTICE 'Robots.txt updated successfully!';
+EXCEPTION WHEN OTHERS THEN
+    RAISE EXCEPTION '❌ Error: %', SQLERRM;
 END $$;
 
 -- ============================================
--- ПРОВЕРКА ОБНОВЛЕНИЯ
+-- 2. ПРОВЕРКА РЕЗУЛЬТАТА
 -- ============================================
+
 SELECT 
+    '✅ Robots.txt status' as check_type,
     id,
-    LEFT(content, 100) || '...' AS content_preview,
-    is_active,
     created_by,
     created_at,
-    updated_at
+    updated_at,
+    LENGTH(content) as content_length,
+    CASE 
+        WHEN LENGTH(content) < 50 THEN '⚠️ Too short'
+        WHEN LENGTH(content) > 10000 THEN '⚠️ Too long'
+        ELSE '✅ Normal'
+    END as size_check,
+    (SELECT COUNT(*) FROM seo_robots_history WHERE robot_id = seo_robots.id) as version_count
 FROM seo_robots 
+WHERE is_active = TRUE
 ORDER BY id DESC 
 LIMIT 1;
 
 -- ============================================
--- ДОПОЛНИТЕЛЬНЫЕ УТИЛИТЫ
+-- 3. ПРОВЕРКА СИНТАКСИСА (УЛУЧШЕННАЯ)
 -- ============================================
 
--- 1. Создать историю изменений robots.txt (если ещё нет)
-CREATE TABLE IF NOT EXISTS seo_robots_history (
-    id SERIAL PRIMARY KEY,
-    robot_id INTEGER REFERENCES seo_robots(id) ON DELETE CASCADE,
-    content TEXT NOT NULL,
-    changed_by VARCHAR(100),
-    changed_at TIMESTAMP DEFAULT NOW()
-);
-
--- 2. Триггер для автоматического сохранения истории
-CREATE OR REPLACE FUNCTION log_robots_changes()
-RETURNS TRIGGER AS $$
-BEGIN
-    IF TG_OP = 'UPDATE' AND OLD.content IS DISTINCT FROM NEW.content THEN
-        INSERT INTO seo_robots_history (robot_id, content, changed_by, changed_at)
-        VALUES (OLD.id, OLD.content, COALESCE(NEW.created_by, 'system'), NOW());
-    END IF;
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-DROP TRIGGER IF EXISTS trigger_log_robots_changes ON seo_robots;
-CREATE TRIGGER trigger_log_robots_changes
-BEFORE UPDATE ON seo_robots
-FOR EACH ROW
-EXECUTE FUNCTION log_robots_changes();
-
--- 3. Получить историю изменений
-SELECT 
-    h.id,
-    h.changed_at,
-    h.changed_by,
-    LENGTH(h.content) as content_length,
-    LEFT(h.content, 50) || '...' as content_preview
-FROM seo_robots_history h
-ORDER BY h.changed_at DESC
-LIMIT 10;
-
--- 4. Валидация robots.txt (проверка синтаксиса)
-CREATE OR REPLACE FUNCTION validate_robots_content(content_text TEXT)
+CREATE OR REPLACE FUNCTION validate_robots_advanced(content_text TEXT)
 RETURNS TABLE (
+    line_number INTEGER,
+    line_content TEXT,
     is_valid BOOLEAN,
-    error_message TEXT
+    error_message TEXT,
+    suggestion TEXT
 ) AS $$
 DECLARE
     line TEXT;
@@ -122,8 +109,10 @@ DECLARE
     allowed_directives TEXT[] := ARRAY[
         'User-agent', 'Disallow', 'Allow', 
         'Sitemap', 'Crawl-delay', 'Host',
-        'Clean-param', 'Noindex'
+        'Clean-param', 'Noindex', 'User-agent'
     ];
+    has_user_agent BOOLEAN := FALSE;
+    has_sitemap BOOLEAN := FALSE;
 BEGIN
     -- Разбиваем на строки
     FOR line IN SELECT unnest(string_to_array(content_text, E'\n'))
@@ -133,18 +122,30 @@ BEGIN
         
         -- Пропускаем пустые строки и комментарии
         IF line = '' OR line LIKE '#%' THEN
+            RETURN QUERY SELECT 
+                line_num, 
+                line, 
+                TRUE, 
+                'Comment/empty line'::TEXT,
+                NULL::TEXT;
             CONTINUE;
         END IF;
         
-        -- Проверяем формат: директива: значение
+        -- Проверяем формат
         IF POSITION(':' IN line) = 0 THEN
-            RETURN QUERY SELECT FALSE, format('Line %s: Missing colon separator', line_num);
+            RETURN QUERY SELECT 
+                line_num, 
+                line, 
+                FALSE, 
+                'Missing colon separator'::TEXT,
+                'Add colon after directive name'::TEXT;
             RETURN;
         END IF;
         
         -- Проверяем директиву
         DECLARE
             directive TEXT := TRIM(SPLIT_PART(line, ':', 1));
+            value TEXT := TRIM(SUBSTRING(line FROM POSITION(':' IN line) + 1));
             allowed BOOLEAN := FALSE;
         BEGIN
             FOREACH allowed IN ARRAY allowed_directives
@@ -156,118 +157,311 @@ BEGIN
             END LOOP;
             
             IF NOT allowed THEN
-                RETURN QUERY SELECT FALSE, format('Line %s: Unknown directive "%s"', line_num, directive);
+                RETURN QUERY SELECT 
+                    line_num, 
+                    line, 
+                    FALSE, 
+                    format('Unknown directive "%s"', directive)::TEXT,
+                    format('Use one of: %s', array_to_string(allowed_directives, ', '))::TEXT;
                 RETURN;
             END IF;
+            
+            -- Специальные проверки
+            IF directive = 'User-agent' THEN
+                has_user_agent := TRUE;
+                IF value = '' OR value = '*' THEN
+                    -- OK
+                ELSIF value !~ '^[a-zA-Z0-9\-_]+$' THEN
+                    RETURN QUERY SELECT 
+                        line_num, 
+                        line, 
+                        FALSE, 
+                        'Invalid User-agent format'::TEXT,
+                        'Use "*" or a valid bot name (e.g., Googlebot)'::TEXT;
+                    RETURN;
+                END IF;
+            END IF;
+            
+            IF directive = 'Sitemap' THEN
+                has_sitemap := TRUE;
+                IF value !~ '^https?://' THEN
+                    RETURN QUERY SELECT 
+                        line_num, 
+                        line, 
+                        FALSE, 
+                        'Sitemap URL must start with http:// or https://'::TEXT,
+                        'Use full URL: https://example.com/sitemap.xml'::TEXT;
+                    RETURN;
+                END IF;
+            END IF;
+            
+            IF directive = 'Host' THEN
+                IF value !~ '^https?://' THEN
+                    RETURN QUERY SELECT 
+                        line_num, 
+                        line, 
+                        FALSE, 
+                        'Host URL must start with http:// or https://'::TEXT,
+                        'Use full URL: https://example.com'::TEXT;
+                    RETURN;
+                END IF;
+            END IF;
+            
+            RETURN QUERY SELECT 
+                line_num, 
+                line, 
+                TRUE, 
+                format('Directive "%s" OK', directive)::TEXT,
+                NULL::TEXT;
         END;
     END LOOP;
     
-    RETURN QUERY SELECT TRUE, 'Valid robots.txt';
+    -- Финальные проверки
+    IF NOT has_user_agent THEN
+        RETURN QUERY SELECT 
+            0, 
+            'No User-agent found'::TEXT, 
+            FALSE, 
+            'Missing User-agent directive'::TEXT,
+            'Add "User-agent: *" at the beginning'::TEXT;
+        RETURN;
+    END IF;
+    
+    IF NOT has_sitemap THEN
+        RETURN QUERY SELECT 
+            0, 
+            'No Sitemap found'::TEXT, 
+            TRUE, 
+            'Warning: No Sitemap directive found'::TEXT,
+            'Consider adding: Sitemap: https://arenda-chistoty.ru/sitemap.xml'::TEXT;
+        -- Не возвращаем, только предупреждение
+    END IF;
 END;
 $$ LANGUAGE plpgsql;
 
--- 5. Проверить текущий robots.txt
-SELECT * FROM validate_robots_content(
+-- ============================================
+-- 4. ЗАПУСК ВАЛИДАЦИИ
+-- ============================================
+
+SELECT * FROM validate_robots_advanced(
     (SELECT content FROM seo_robots WHERE is_active = TRUE ORDER BY id DESC LIMIT 1)
+)
+ORDER BY line_number;
+
+-- ============================================
+-- 5. СРАВНЕНИЕ С ПРЕДЫДУЩЕЙ ВЕРСИЕЙ
+-- ============================================
+
+WITH current AS (
+    SELECT content, updated_at 
+    FROM seo_robots 
+    WHERE is_active = TRUE 
+    ORDER BY id DESC LIMIT 1
+),
+previous AS (
+    SELECT content, updated_at 
+    FROM seo_robots_history 
+    ORDER BY changed_at DESC LIMIT 1
+)
+SELECT 
+    '📊 Version comparison' as info,
+    current.updated_at as current_version,
+    previous.changed_at as previous_version,
+    LENGTH(current.content) as current_length,
+    LENGTH(previous.content) as previous_length,
+    CASE 
+        WHEN LENGTH(current.content) > LENGTH(previous.content) THEN '➕ Larger'
+        WHEN LENGTH(current.content) < LENGTH(previous.content) THEN '➖ Smaller'
+        ELSE '➡️ Same size'
+    END as size_change
+FROM current, previous;
+
+-- ============================================
+-- 6. АВТОМАТИЧЕСКОЕ СОХРАНЕНИЕ ВЕРСИЙ
+-- ============================================
+
+-- Функция для создания снапшота
+CREATE OR REPLACE FUNCTION create_robots_snapshot()
+RETURNS INTEGER AS $$
+DECLARE
+    v_current_id INTEGER;
+BEGIN
+    -- Получаем текущий активный robots
+    SELECT id INTO v_current_id 
+    FROM seo_robots 
+    WHERE is_active = TRUE 
+    ORDER BY id DESC LIMIT 1;
+    
+    IF v_current_id IS NOT NULL THEN
+        INSERT INTO seo_robots_history (robot_id, content, changed_by, changed_at)
+        SELECT 
+            id, 
+            content, 
+            'auto_snapshot', 
+            NOW()
+        FROM seo_robots 
+        WHERE id = v_current_id;
+        
+        RETURN v_current_id;
+    END IF;
+    
+    RETURN NULL;
+END;
+$$ LANGUAGE plpgsql;
+
+-- ============================================
+-- 7. ЕЖЕДНЕВНЫЙ СНАПШОТ (ДЛЯ CRON)
+-- ============================================
+
+-- Создать расширение для планировщика (если доступно)
+CREATE EXTENSION IF NOT EXISTS pg_cron;
+
+-- Ежедневный снапшот в 03:00
+SELECT cron.schedule(
+    'daily-robots-snapshot',  -- имя задачи
+    '0 3 * * *',             -- каждый день в 3:00
+    'SELECT create_robots_snapshot();'
 );
 
 -- ============================================
--- БЭКАП ТЕКУЩЕГО ROBOTS.TXT
+-- 8. СТАТИСТИКА ИЗМЕНЕНИЙ
 -- ============================================
-CREATE TABLE IF NOT EXISTS seo_robots_backup AS 
-SELECT * FROM seo_robots WHERE 1=0;
 
-INSERT INTO seo_robots_backup 
-SELECT * FROM seo_robots 
-WHERE id = (SELECT id FROM seo_robots ORDER BY id DESC LIMIT 1);
+SELECT 
+    DATE(changed_at) as date,
+    COUNT(*) as changes_count,
+    AVG(LENGTH(content))::INTEGER as avg_length,
+    MIN(LENGTH(content)) as min_length,
+    MAX(LENGTH(content)) as max_length
+FROM seo_robots_history
+GROUP BY DATE(changed_at)
+ORDER BY date DESC
+LIMIT 30;
 
 -- ============================================
--- ОБНОВЛЕНИЕ С ПРОВЕРКОЙ (БЕЗОПАСНАЯ ВЕРСИЯ)
+-- 9. ПОИСК КОНКРЕТНЫХ ДИРЕКТИВ
 -- ============================================
-DO $$ 
+
+CREATE OR REPLACE FUNCTION search_robots_directive(directive_name TEXT)
+RETURNS TABLE (
+    version_date TIMESTAMP,
+    directive_value TEXT,
+    is_active BOOLEAN
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT 
+        updated_at as version_date,
+        TRIM(SUBSTRING(
+            content,
+            POSITION(directive_name || ':' IN content) + LENGTH(directive_name) + 1,
+            COALESCE(
+                POSITION(E'\n' IN SUBSTRING(content, POSITION(directive_name || ':' IN content) + LENGTH(directive_name) + 1)) - 1,
+                LENGTH(content)
+            )
+        )) as directive_value,
+        is_active
+    FROM seo_robots
+    WHERE content LIKE '%' || directive_name || ':%'
+    ORDER BY updated_at DESC
+    LIMIT 10;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Пример: найти все Sitemap
+SELECT * FROM search_robots_directive('Sitemap');
+
+-- ============================================
+-- 10. БЫСТРОЕ ВОССТАНОВЛЕНИЕ
+-- ============================================
+
+CREATE OR REPLACE FUNCTION restore_robots_version(version_id INTEGER)
+RETURNS TEXT AS $$
 DECLARE
     v_content TEXT;
-    v_is_valid BOOLEAN;
-    v_error_msg TEXT;
-    v_robot_id INTEGER;
+    v_current_id INTEGER;
 BEGIN
-    -- Получаем ID последней записи
-    SELECT id INTO v_robot_id FROM seo_robots ORDER BY id DESC LIMIT 1;
+    -- Получаем контент указанной версии
+    SELECT content INTO v_content 
+    FROM seo_robots_history 
+    WHERE id = version_id;
     
-    -- Новое содержимое
-    v_content := 'User-agent: *
-Allow: /
-Allow: /uslugi/
-Allow: /nashi-raboty
-
-Disallow: /cookie-policy
-Disallow: /privacy
-Disallow: /hello-world/
-Disallow: /sample-page/
-Disallow: /voprosy-i-otvety-faq.html
-
-Host: https://arenda-chistoty.ru
-Sitemap: https://arenda-chistoty.ru/sitemap.xml';
-    
-    -- Проверяем валидность
-    SELECT is_valid, error_message INTO v_is_valid, v_error_msg
-    FROM validate_robots_content(v_content);
-    
-    IF NOT v_is_valid THEN
-        RAISE EXCEPTION 'Invalid robots.txt: %', v_error_msg;
+    IF v_content IS NULL THEN
+        RETURN '❌ Version not found';
     END IF;
     
-    -- Если есть существующая запись - обновляем
-    IF v_robot_id IS NOT NULL THEN
-        UPDATE seo_robots 
-        SET 
-            content = v_content,
-            updated_at = NOW(),
-            created_by = 'admin_manual'
-        WHERE id = v_robot_id;
-        
-        RAISE NOTICE '✅ Robots.txt updated (ID: %)', v_robot_id;
+    -- Получаем текущий ID
+    SELECT id INTO v_current_id 
+    FROM seo_robots 
+    WHERE is_active = TRUE 
+    ORDER BY id DESC LIMIT 1;
+    
+    -- Восстанавливаем
+    UPDATE seo_robots 
+    SET 
+        content = v_content,
+        updated_at = NOW(),
+        created_by = 'restored_from_version_' || version_id
+    WHERE id = v_current_id;
+    
+    RETURN '✅ Restored to version ' || version_id;
+END;
+$$ LANGUAGE plpgsql;
+
+-- ============================================
+-- 11. ФИНАЛЬНАЯ ПРОВЕРКА ВСЕХ СИСТЕМ
+-- ============================================
+
+DO $$ 
+DECLARE
+    v_count INTEGER;
+    v_has_history BOOLEAN;
+BEGIN
+    -- Проверка наличия таблиц
+    SELECT COUNT(*) INTO v_count 
+    FROM information_schema.tables 
+    WHERE table_name IN ('seo_robots', 'seo_robots_history', 'seo_robots_backup');
+    
+    RAISE NOTICE '📊 Tables found: %', v_count;
+    
+    -- Проверка триггеров
+    SELECT COUNT(*) > 0 INTO v_has_history
+    FROM information_schema.triggers 
+    WHERE trigger_name = 'trigger_log_robots_changes';
+    
+    IF v_has_history THEN
+        RAISE NOTICE '✅ History trigger is active';
     ELSE
-        -- Иначе создаём новую
-        INSERT INTO seo_robots (content, is_active, created_by)
-        VALUES (v_content, TRUE, 'admin_manual');
-        
-        RAISE NOTICE '✅ New robots.txt created (ID: %)', 
-            (SELECT id FROM seo_robots ORDER BY id DESC LIMIT 1);
+        RAISE NOTICE '⚠️ History trigger is not active';
     END IF;
     
-    -- Показываем обновлённую запись
-    RAISE NOTICE '📋 Content preview: %', 
-        (SELECT LEFT(content, 50) || '...' FROM seo_robots WHERE id = v_robot_id);
-        
-EXCEPTION WHEN OTHERS THEN
-    RAISE EXCEPTION '❌ Error: %', SQLERRM;
+    -- Статистика
+    SELECT COUNT(*) INTO v_count FROM seo_robots_history;
+    RAISE NOTICE '📚 History entries: %', v_count;
+    
+    RAISE NOTICE '✅ System check complete!';
 END $$;
 
 -- ============================================
--- ФИНАЛЬНАЯ ПРОВЕРКА
+-- 12. ЭКСПОРТ ТЕКУЩЕГО ROBOTS.TXT
 -- ============================================
-SELECT 
-    '✅ Robots.txt updated successfully!' as status,
-    id,
-    created_by,
-    created_at,
-    updated_at,
-    LENGTH(content) as content_length,
-    (SELECT COUNT(*) FROM seo_robots_history WHERE robot_id = seo_robots.id) as version_count
-FROM seo_robots 
-WHERE is_active = TRUE
-ORDER BY id DESC 
-LIMIT 1;
+
+COPY (
+    SELECT content 
+    FROM seo_robots 
+    WHERE is_active = TRUE 
+    ORDER BY id DESC LIMIT 1
+) TO '/tmp/robots_current.txt' WITH (FORMAT TEXT, HEADER FALSE);
 
 -- ============================================
--- ЕСЛИ НУЖНО ВОССТАНОВИТЬ ПРЕДЫДУЩУЮ ВЕРСИЮ
+-- 13. СБОРКА ВСЕХ ДАННЫХ ДЛЯ ОТЧЕТА
 -- ============================================
-/*
--- Восстановление из бэкапа
-UPDATE seo_robots 
-SET 
-    content = (SELECT content FROM seo_robots_backup ORDER BY id DESC LIMIT 1),
-    updated_at = NOW()
-WHERE id = (SELECT id FROM seo_robots ORDER BY id DESC LIMIT 1);
-*/
+
+SELECT 
+    '📋 ROBOTS.TXT FULL REPORT' as report_type,
+    NOW() as generated_at,
+    (SELECT content FROM seo_robots WHERE is_active = TRUE ORDER BY id DESC LIMIT 1) as current_content,
+    (SELECT COUNT(*) FROM seo_robots_history) as total_versions,
+    (SELECT COUNT(*) FROM seo_robots_backup) as total_backups,
+    (SELECT MAX(changed_at) FROM seo_robots_history) as last_change,
+    (SELECT COUNT(*) FROM seo_robots WHERE is_active = TRUE) as active_versions;
