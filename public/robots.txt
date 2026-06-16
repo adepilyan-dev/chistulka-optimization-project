@@ -1,48 +1,35 @@
-User-agent: Yandex
-Allow: /
-Allow: /uslugi/
-Allow: /nashi-raboty
-Allow: /blog/
-Allow: /akcii
-Allow: /kontakty
-Allow: /price
-Allow: /otzyvy
-
-Disallow: /wp-admin/
-Disallow: /wp-includes/
-Disallow: /cookie-policy
-Disallow: /privacy
-Disallow: /hello-world/
-Disallow: /sample-page/
-Disallow: /voprosy-i-otvety-faq.html
-
-User-agent: Googlebot
-Allow: /
-Allow: /uslugi/
-Allow: /nashi-raboty
-Allow: /blog/
-Allow: /akcii
-Allow: /kontakty
-Allow: /price
-Allow: /otzyvy
-
-Disallow: /wp-admin/
-Disallow: /wp-includes/
-Disallow: /cookie-policy
-Disallow: /privacy
-Disallow: /hello-world/
-Disallow: /sample-page/
-
-User-agent: *
-Allow: /
-Allow: /uslugi/
-Allow: /nashi-raboty
-Allow: /blog/
-
-Disallow: /wp-admin/
-Disallow: /wp-includes/
-Disallow: /cookie-policy
-Disallow: /privacy
-
-Sitemap: https://arenda-chistoty.ru/sitemap.xml
-Sitemap: https://arenda-chistoty.ru/sitemap-index.xml
+-- Проверяем структуру
+WITH robots_content AS (
+    SELECT content FROM seo_robots WHERE is_active = TRUE ORDER BY id DESC LIMIT 1
+)
+SELECT 
+    'Yandex' as bot,
+    CASE 
+        WHEN content LIKE '%User-agent: Yandex%' THEN '✅ Found'
+        ELSE '❌ Missing'
+    END as status
+FROM robots_content
+UNION ALL
+SELECT 
+    'Googlebot',
+    CASE 
+        WHEN content LIKE '%User-agent: Googlebot%' THEN '✅ Found'
+        ELSE '❌ Missing'
+    END
+FROM robots_content
+UNION ALL
+SELECT 
+    'Default (*)',
+    CASE 
+        WHEN content LIKE '%User-agent: *%' THEN '✅ Found'
+        ELSE '❌ Missing'
+    END
+FROM robots_content
+UNION ALL
+SELECT 
+    'Sitemap',
+    CASE 
+        WHEN content LIKE '%Sitemap:%' THEN '✅ Found'
+        ELSE '❌ Missing'
+    END
+FROM robots_content;
