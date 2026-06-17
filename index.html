@@ -23,10 +23,10 @@
     
     <meta name="author" content="Аренда Чистоты"/>
     
-    <!-- Новый фавикон (SVG) -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <!-- Фавикон с версией (для обновления кеша) -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=1.0.0">
     
-    <!-- Open Graph с новым доменом -->
+    <!-- Open Graph -->
     <meta property="og:type" content="website"/>
     <meta property="og:locale" content="ru_RU"/>
     <meta property="og:url" content="https://arenda-chistoty.ru/"/>
@@ -57,21 +57,16 @@
     <noscript><div><img src="https://mc.yandex.ru/watch/109765159" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
     <!-- /Yandex.Metrika counter -->
 
-    <!-- Основные скрипты платформы с defer (загрузка после HTML) -->
-    <script src="https://cdn.poehali.dev/intertnal/js/pp-min-2.js" defer></script>
-    <script src="https://cdn.poehali.dev/intertnal/js/route-min.js" defer></script>
+    <!-- Основные скрипты с версиями и defer -->
+    <script src="https://cdn.poehali.dev/intertnal/js/pp-min-2.js?v=1.0.0" defer></script>
+    <script src="https://cdn.poehali.dev/intertnal/js/route-min.js?v=1.0.0" defer></script>
 </head>
 
 <body>
-    <!-- 
-        🔥 ИНДИКАТОР ЗАГРУЗКИ 
-        Показывается, пока React-приложение не подгрузится.
-        После загрузки React заменит содержимое #root на своё.
-    -->
+    <!-- Индикатор загрузки -->
     <div id="root">
         <div style="display:flex; justify-content:center; align-items:center; min-height:100vh; font-family:'Golos Text',sans-serif; color:#666; font-size:18px; background:#f9f9f9; margin:0; padding:0;">
             <div style="text-align:center;">
-                <!-- Спиннер -->
                 <svg width="50" height="50" viewBox="0 0 50 50" style="margin-bottom:20px; display:block; margin-left:auto; margin-right:auto;">
                     <circle cx="25" cy="25" r="20" stroke="#ddd" stroke-width="4" fill="none"/>
                     <circle cx="25" cy="25" r="20" stroke="#e74c3c" stroke-width="4" fill="none" stroke-dasharray="100" stroke-linecap="round" style="animation: spin 1s linear infinite;"/>
@@ -87,7 +82,7 @@
         </div>
     </div>
 
-    <!-- Основной бандл React – грузим асинхронно после всего -->
+    <!-- Основной бандл React -->
     <script type="module" src="/src/main.tsx" defer></script>
 </body>
 </html>
