@@ -1,80 +1,52 @@
-import { useState, useEffect, useRef } from 'react';
-import dynamic from 'next/dynamic';
+import { useState, useEffect, useRef, lazy, Suspense } from 'react';
 
-// 1️⃣ Ленивая загрузка компонентов (заменяем HeavyChart на ваш реальный компонент)
-const HeavyChart = dynamic(
-  () => import('@/components/HeavyChart'), // 🔄 ЗАМЕНИТЕ на путь к вашему компоненту
-  { 
-    ssr: false,
-    loading: () => <div className="p-4 text-center">Загрузка графика...</div>
-  }
-);
-
-const ChatWidget = dynamic(
-  () => import('@/components/ChatWidget'), // 🔄 ЗАМЕНИТЕ на путь к вашему виджету
-  { ssr: false }
-);
+const HeavyChart = lazy(() => import('@/components/HeavyChart'));
+const ChatWidget = lazy(() => import('@/components/ChatWidget'));
 
 export default function Home() {
   const [showChat, setShowChat] = useState(false);
   const [shouldLoadChart, setShouldLoadChart] = useState(false);
-  const chartRef = useRef<HTMLDivElement>(null);
+  const chartRef = useRef(null);
 
-  // 2️⃣ Отслеживаем, когда блок с графиком появляется в зоне видимости
   useEffect(() => {
-    if (!chartRef.current) return;
-
     const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
+      ([entry]) => {
+        if (entry.isIntersecting) {
           setShouldLoadChart(true);
-          observer.disconnect(); // Отключаем после срабатывания
+          observer.disconnect();
         }
       },
-      { threshold: 0.1 } // Когда 10% блока видно
+      { threshold: 0.1 }
     );
 
-    observer.observe(chartRef.current);
+    if (chartRef.current) {
+      observer.observe(chartRef.current);
+    }
 
     return () => observer.disconnect();
   }, []);
 
   return (
-    <div className="container mx-auto p-4">
-      {/* Остальной контент страницы */}
-      <h1>Главная страница</h1>
+    <div>
+      <div>Контент страницы</div>
       
-      {/* Другой контент до графика */}
-      <div className="h-screen bg-gray-100">
-        Здесь много контента, который видно сразу
-      </div>
-
-      {/* 3️⃣ Блок с графиком — загружается при скролле */}
-      <div ref={chartRef} id="chart-section" className="h-screen">
-        {shouldLoadChart ? (
-          <HeavyChart />
-        ) : (
-          <div className="flex items-center justify-center h-full">
-            <p className="text-gray-400">Прокрутите ниже для загрузки графика</p>
-          </div>
+      <div ref={chartRef}>
+        {shouldLoadChart && (
+          <Suspense fallback={<div>Загрузка графика...</div>}>
+            <HeavyChart />
+          </Suspense>
         )}
       </div>
 
-      {/* 4️⃣ Блок с чатом — загружается только при клике */}
-      <div className="h-screen bg-gray-50">
-        {!showChat ? (
-          <button 
-            onClick={() => setShowChat(true)}
-            className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition"
-          >
-            Открыть чат для консультации
-          </button>
-        ) : (
-          <div className="h-[500px]">
-            <ChatWidget />
-          </div>
-        )}
-      </div>
+      <button onClick={() => setShowChat(true)}>
+        Открыть чат
+      </button>
+      
+      {showChat && (
+        <Suspense fallback={<div>Загрузка чата...</div>}>
+          <ChatWidget />
+        </Suspense>
+      )}
     </div>
   );
 }
