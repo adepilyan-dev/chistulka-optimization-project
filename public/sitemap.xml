@@ -4,13 +4,13 @@
   <!-- Основные страницы, услуги, районы, блог -->
   <sitemap>
     <loc>https://arenda-chistoty.ru/sitemap.xml</loc>
-    <lastmod>2026-06-16</lastmod>
+    <lastmod>2026-06-17T12:00:00+00:00</lastmod>
   </sitemap>
 
   <!-- Комбинации Услуга × Район (156 URL) -->
   <sitemap>
     <loc>https://arenda-chistoty.ru/sitemap-service-district.xml</loc>
-    <lastmod>2026-06-16</lastmod>
+    <lastmod>2026-06-17T12:00:00+00:00</lastmod>
   </sitemap>
 
 </sitemapindex>
