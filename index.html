@@ -60,13 +60,34 @@
     <!-- Основные скрипты платформы с defer (загрузка после HTML) -->
     <script src="https://cdn.poehali.dev/intertnal/js/pp-min-2.js" defer></script>
     <script src="https://cdn.poehali.dev/intertnal/js/route-min.js" defer></script>
-    <!-- telemetry-min.js удалён (лишний) -->
-    <!-- inspector-min.js удалён (инструмент разработчика) -->
 </head>
 
 <body>
-<div id="root"></div>
-<!-- Основной бандл React – грузим асинхронно после всего -->
-<script type="module" src="/src/main.tsx" defer></script>
+    <!-- 
+        🔥 ИНДИКАТОР ЗАГРУЗКИ 
+        Показывается, пока React-приложение не подгрузится.
+        После загрузки React заменит содержимое #root на своё.
+    -->
+    <div id="root">
+        <div style="display:flex; justify-content:center; align-items:center; min-height:100vh; font-family:'Golos Text',sans-serif; color:#666; font-size:18px; background:#f9f9f9; margin:0; padding:0;">
+            <div style="text-align:center;">
+                <!-- Спиннер -->
+                <svg width="50" height="50" viewBox="0 0 50 50" style="margin-bottom:20px; display:block; margin-left:auto; margin-right:auto;">
+                    <circle cx="25" cy="25" r="20" stroke="#ddd" stroke-width="4" fill="none"/>
+                    <circle cx="25" cy="25" r="20" stroke="#e74c3c" stroke-width="4" fill="none" stroke-dasharray="100" stroke-linecap="round" style="animation: spin 1s linear infinite;"/>
+                </svg>
+                <div style="font-size:20px; font-weight:500; color:#333;">Загрузка...</div>
+                <div style="font-size:14px; color:#999; margin-top:8px;">Пожалуйста, подождите</div>
+                <style>
+                    @keyframes spin {
+                        100% { transform: rotate(360deg); }
+                    }
+                </style>
+            </div>
+        </div>
+    </div>
+
+    <!-- Основной бандл React – грузим асинхронно после всего -->
+    <script type="module" src="/src/main.tsx" defer></script>
 </body>
 </html>
