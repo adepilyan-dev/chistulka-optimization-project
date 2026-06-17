@@ -36,7 +36,6 @@ export function Navbar() {
       aria-label="Главное меню"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between">
-        {/* Логотип — ссылка на главную */}
         <Link
           to="/"
           className="flex items-center"
@@ -51,7 +50,6 @@ export function Navbar() {
           />
         </Link>
 
-        {/* Десктопное меню */}
         <div className="hidden lg:flex items-center gap-6">
           <div
             className="relative"
@@ -132,7 +130,6 @@ export function Navbar() {
           </Link>
         </div>
 
-        {/* Контакты */}
         <div className="hidden lg:flex items-center gap-3">
           <a
             href="tel:+79189682882"
@@ -150,7 +147,6 @@ export function Navbar() {
           </button>
         </div>
 
-        {/* Мобильное меню */}
         <button
           className="lg:hidden p-2 rounded-lg"
           onClick={() => setOpen(!open)}
@@ -161,7 +157,6 @@ export function Navbar() {
         </button>
       </div>
 
-      {/* Мобильное меню (выпадающее) */}
       {open && (
         <div className="lg:hidden bg-white border-t px-4 py-4 flex flex-col gap-1 animate-fade-in">
           <a
@@ -273,7 +268,6 @@ export function Hero() {
       id="home"
       aria-labelledby="hero-title"
     >
-      {/* Декоративные элементы */}
       <div
         className="absolute top-24 right-12 w-80 h-80 rounded-full opacity-25 animate-float pointer-events-none"
         style={{
@@ -310,7 +304,6 @@ export function Hero() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full pt-24 pb-16">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Левая колонка — текст */}
           <div className="space-y-7">
             <div className="animate-fade-up stagger-1">
               <span className="section-tag">
@@ -348,7 +341,6 @@ export function Hero() {
               с выездом на дом
             </h1>
 
-            {/* ✅ Блок с описанием компании (исправлено) */}
             <blockquote
               className="text-lg animate-fade-up stagger-3"
               style={{ color: "var(--gray)", maxWidth: 480 }}
@@ -365,7 +357,6 @@ export function Hero() {
               </footer>
             </blockquote>
 
-            {/* Кнопки */}
             <div className="flex flex-wrap gap-4 animate-fade-up stagger-4">
               <button
                 onClick={() => scrollToId("contacts")}
@@ -385,7 +376,6 @@ export function Hero() {
               </button>
             </div>
 
-            {/* Преимущества */}
             <div className="flex flex-wrap gap-5 pt-2 animate-fade-up stagger-5">
               {["Гарантия 100%", "Без предоплаты", "Безопасно для детей"].map(
                 (t) => (
@@ -407,7 +397,6 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Правая колонка — изображение */}
           <div className="relative animate-scale-in stagger-3">
             <div
               className="relative rounded-3xl overflow-hidden shadow-2xl"
@@ -429,7 +418,6 @@ export function Hero() {
               />
             </div>
 
-            {/* Бейдж с рейтингом */}
             <div
               className="absolute -bottom-3 -left-3 sm:-bottom-4 sm:-left-4 bg-white rounded-2xl shadow-xl p-3 sm:p-4 flex items-center gap-3 animate-float"
               style={{ animationDelay: "1s" }}
@@ -453,7 +441,6 @@ export function Hero() {
               </div>
             </div>
 
-            {/* Бейдж "Уже сегодня" */}
             <div
               className="absolute -top-3 -right-3 sm:-top-4 sm:-right-4 bg-white rounded-2xl shadow-xl px-3 py-2 sm:px-4 sm:py-3 animate-float"
               style={{ animationDelay: "2.5s" }}
@@ -481,7 +468,6 @@ export function Hero() {
           </div>
         </div>
 
-        {/* Статистика */}
         <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 animate-fade-up stagger-6">
           {STATS.map((s) => (
             <div
@@ -703,7 +689,6 @@ export function Calculator() {
           className={`bg-white rounded-3xl p-6 md:p-10 shadow-2xl ${inView ? "animate-scale-in stagger-3" : "opacity-0"}`}
         >
           <div className="grid md:grid-cols-2 gap-8">
-            {/* Левая колонка — выбор мебели */}
             <div className="space-y-6">
               <div>
                 <label
@@ -830,7 +815,6 @@ export function Calculator() {
               </div>
             </div>
 
-            {/* Правая колонка — итог */}
             <div className="flex flex-col justify-between gap-4">
               <div
                 className="rounded-2xl p-6"
@@ -936,7 +920,557 @@ export function Calculator() {
 }
 
 // ============================================================
-// 6. ГЛАВНАЯ СТРАНИЦА (СБОРКА)
+// 6. НОВАЯ СЕКЦИЯ: ПОЧЕМУ ВЫБИРАЮТ НАС
+// ============================================================
+export function WhyUs() {
+  const { ref, inView } = useInView();
+  const advantages = [
+    {
+      icon: "Shield",
+      title: "Гарантия качества",
+      desc: "Даём гарантию на все виды работ. Если результат не устроит — переделаем бесплатно.",
+    },
+    {
+      icon: "Clock",
+      title: "Выезд за 30 минут",
+      desc: "Мастер прибудет в удобное для вас время. Работаем ежедневно с 8:00 до 22:00.",
+    },
+    {
+      icon: "Heart",
+      title: "Безопасно для детей",
+      desc: "Используем сертифицированные средства, безопасные для детей, животных и аллергиков.",
+    },
+    {
+      icon: "ThumbsUp",
+      title: "Без предоплаты",
+      desc: "Оплата только после выполнения работы. Вы платите за результат, а не за обещания.",
+    },
+    {
+      icon: "Award",
+      title: "Опыт 7+ лет",
+      desc: "Более 7 лет на рынке химчистки. За это время мы вернули свежесть тысячам предметов мебели.",
+    },
+    {
+      icon: "Truck",
+      title: "Собственный транспорт",
+      desc: "Выезжаем на профессиональном оборудовании. Всё необходимое для чистки всегда с собой.",
+    },
+  ];
+
+  return (
+    <section
+      id="why-us"
+      className="py-20"
+      style={{ background: "white" }}
+      aria-labelledby="why-title"
+    >
+      <div ref={ref} className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="text-center mb-14">
+          <span
+            className={`section-tag ${inView ? "animate-fade-up" : "opacity-0"}`}
+          >
+            Преимущества
+          </span>
+          <h2
+            id="why-title"
+            className={`font-oswald font-bold mt-4 ${inView ? "animate-fade-up stagger-1" : "opacity-0"}`}
+            style={{ fontSize: "clamp(2rem, 4vw, 3rem)", color: "var(--dark)" }}
+          >
+            Почему выбирают нас
+          </h2>
+          <p
+            className={`mt-3 text-base max-w-xl mx-auto ${inView ? "animate-fade-up stagger-2" : "opacity-0"}`}
+            style={{ color: "var(--gray)" }}
+          >
+            6 причин доверить нам чистоту вашего дома
+          </p>
+        </div>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {advantages.map((item, i) => (
+            <div
+              key={item.title}
+              className={`p-6 rounded-2xl transition-all hover:shadow-xl ${inView ? `animate-fade-up stagger-${Math.min(i + 1, 6)}` : "opacity-0"}`}
+              style={{
+                background: "var(--light-bg)",
+                border: "1px solid rgba(12,184,160,0.1)",
+              }}
+            >
+              <div
+                className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
+                style={{ background: "rgba(12,184,160,0.12)" }}
+              >
+                <Icon
+                  name={item.icon}
+                  size={24}
+                  style={{ color: "var(--teal)" }}
+                />
+              </div>
+              <h3
+                className="font-oswald font-bold text-lg mb-2"
+                style={{ color: "var(--dark)" }}
+              >
+                {item.title}
+              </h3>
+              <p
+                className="text-sm leading-relaxed"
+                style={{ color: "var(--gray)" }}
+              >
+                {item.desc}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ============================================================
+// 7. НОВАЯ СЕКЦИЯ: НАШИ РАБОТЫ
+// ============================================================
+export function OurWorks() {
+  const { ref, inView } = useInView();
+  const works = [
+    {
+      title: "Диван до/после",
+      img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/divan-1.jpg",
+      desc: "Удалены сложные пятна от кофе и сока",
+    },
+    {
+      title: "Кресло до/после",
+      img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/kreslo-1.jpg",
+      desc: "Восстановлен цвет, устранён запах",
+    },
+    {
+      title: "Матрас до/после",
+      img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/matras-1.jpg",
+      desc: "Глубокая чистка, удалены пылевые клещи",
+    },
+    {
+      title: "Ковёр до/после",
+      img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/kovor-1.jpg",
+      desc: "Возвращена яркость, удалены пятна от вина",
+    },
+  ];
+
+  return (
+    <section
+      id="works"
+      className="py-20"
+      style={{ background: "var(--light-bg)" }}
+      aria-labelledby="works-title"
+    >
+      <div ref={ref} className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="text-center mb-14">
+          <span
+            className={`section-tag ${inView ? "animate-fade-up" : "opacity-0"}`}
+          >
+            Портфолио
+          </span>
+          <h2
+            id="works-title"
+            className={`font-oswald font-bold mt-4 ${inView ? "animate-fade-up stagger-1" : "opacity-0"}`}
+            style={{ fontSize: "clamp(2rem, 4vw, 3rem)", color: "var(--dark)" }}
+          >
+            Наши работы
+          </h2>
+          <p
+            className={`mt-3 text-base max-w-xl mx-auto ${inView ? "animate-fade-up stagger-2" : "opacity-0"}`}
+            style={{ color: "var(--gray)" }}
+          >
+            Реальные примеры нашей работы
+          </p>
+        </div>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {works.map((work, i) => (
+            <div
+              key={work.title}
+              className={`group relative rounded-2xl overflow-hidden shadow-md ${inView ? `animate-fade-up stagger-${Math.min(i + 1, 4)}` : "opacity-0"}`}
+            >
+              <img
+                src={work.img}
+                alt={work.title}
+                className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+                loading="lazy"
+                width="400"
+                height="300"
+              />
+              <div
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(transparent 40%, rgba(0,0,0,0.8))",
+                }}
+              />
+              <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+                <h3 className="font-oswald font-bold text-lg">{work.title}</h3>
+                <p className="text-sm opacity-90">{work.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="text-center mt-10">
+          <Link
+            to="/nashi-raboty"
+            className="btn-outline px-8 py-3 font-oswald text-base"
+          >
+            Смотреть все работы
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ============================================================
+// 8. НОВАЯ СЕКЦИЯ: ОТЗЫВЫ
+// ============================================================
+export function Reviews() {
+  const { ref, inView } = useInView();
+  const reviews = [
+    {
+      name: "Екатерина С.",
+      date: "12 июня 2026",
+      text: "Заказывала химчистку дивана — мастер приехал через час, всё сделал быстро и аккуратно. Диван как новый! Без запаха, без разводов. Буду рекомендовать всем!",
+      rating: 5,
+    },
+    {
+      name: "Андрей М.",
+      date: "10 июня 2026",
+      text: "Чистили ковёр после переезда — были сложные пятна. Мастер справился на отлично. Ковёр светлый, но стал чистым и свежим. Очень доволен результатом.",
+      rating: 5,
+    },
+    {
+      name: "Ольга К.",
+      date: "8 июня 2026",
+      text: "У нас дома аллергик, поэтому боялась за средства. Мастер подтвердил, что все средства гипоаллергенные. Запаха нет, дышится легко. Отличная работа!",
+      rating: 5,
+    },
+    {
+      name: "Иван П.",
+      date: "5 июня 2026",
+      text: "Заказывал чистку кресла — была сложная ситуация с пятнами от вина. Мастер вывел без следа, кресло выглядит как новое. Спасибо, обратимся ещё!",
+      rating: 5,
+    },
+  ];
+
+  return (
+    <section
+      id="reviews"
+      className="py-20"
+      style={{ background: "white" }}
+      aria-labelledby="reviews-title"
+    >
+      <div ref={ref} className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="text-center mb-14">
+          <span
+            className={`section-tag ${inView ? "animate-fade-up" : "opacity-0"}`}
+          >
+            Отзывы
+          </span>
+          <h2
+            id="reviews-title"
+            className={`font-oswald font-bold mt-4 ${inView ? "animate-fade-up stagger-1" : "opacity-0"}`}
+            style={{ fontSize: "clamp(2rem, 4vw, 3rem)", color: "var(--dark)" }}
+          >
+            Что говорят наши клиенты
+          </h2>
+          <p
+            className={`mt-3 text-base max-w-xl mx-auto ${inView ? "animate-fade-up stagger-2" : "opacity-0"}`}
+            style={{ color: "var(--gray)" }}
+          >
+            1 240 отзывов со средней оценкой 4.98
+          </p>
+        </div>
+        <div className="grid md:grid-cols-2 gap-5">
+          {reviews.map((r, i) => (
+            <div
+              key={r.name}
+              className={`p-6 rounded-2xl ${inView ? `animate-fade-up stagger-${Math.min(i + 1, 4)}` : "opacity-0"}`}
+              style={{ background: "var(--light-bg)" }}
+            >
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-3">
+                  <div
+                    className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-white"
+                    style={{ background: "var(--teal)" }}
+                  >
+                    {r.name.charAt(0)}
+                  </div>
+                  <div>
+                    <div
+                      className="font-semibold text-sm"
+                      style={{ color: "var(--dark)" }}
+                    >
+                      {r.name}
+                    </div>
+                    <div className="text-xs" style={{ color: "var(--gray)" }}>
+                      {r.date}
+                    </div>
+                  </div>
+                </div>
+                <div className="flex text-yellow-400 text-sm">
+                  {"★".repeat(r.rating)}
+                  {"☆".repeat(5 - r.rating)}
+                </div>
+              </div>
+              <p
+                className="text-sm leading-relaxed"
+                style={{ color: "var(--gray)" }}
+              >
+                "{r.text}"
+              </p>
+            </div>
+          ))}
+        </div>
+        <div className="text-center mt-10">
+          <button
+            onClick={() => scrollToId("contacts")}
+            className="btn-primary px-8 py-3 font-oswald text-base"
+          >
+            Оставить отзыв
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ============================================================
+// 9. НОВАЯ СЕКЦИЯ: КОНТАКТЫ
+// ============================================================
+export function Contacts() {
+  const { ref, inView } = useInView();
+  return (
+    <section
+      id="contacts"
+      className="py-20"
+      style={{ background: "var(--light-bg)" }}
+      aria-labelledby="contacts-title"
+    >
+      <div ref={ref} className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="text-center mb-14">
+          <span
+            className={`section-tag ${inView ? "animate-fade-up" : "opacity-0"}`}
+          >
+            Свяжитесь с нами
+          </span>
+          <h2
+            id="contacts-title"
+            className={`font-oswald font-bold mt-4 ${inView ? "animate-fade-up stagger-1" : "opacity-0"}`}
+            style={{ fontSize: "clamp(2rem, 4vw, 3rem)", color: "var(--dark)" }}
+          >
+            Мы на связи 24/7
+          </h2>
+          <p
+            className={`mt-3 text-base max-w-xl mx-auto ${inView ? "animate-fade-up stagger-2" : "opacity-0"}`}
+            style={{ color: "var(--gray)" }}
+          >
+            Позвоните или оставьте заявку — мы перезвоним вам в течение 15 минут
+          </p>
+        </div>
+        <div className="grid lg:grid-cols-2 gap-8">
+          {/* Левая колонка — форма */}
+          <div
+            className={`p-8 rounded-3xl shadow-lg bg-white ${inView ? "animate-fade-up stagger-3" : "opacity-0"}`}
+          >
+            <h3
+              className="font-oswald font-bold text-xl mb-4"
+              style={{ color: "var(--dark)" }}
+            >
+              Оставьте заявку
+            </h3>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                alert("Спасибо! Мы свяжемся с вами в ближайшее время.");
+              }}
+            >
+              <div className="space-y-4">
+                <div>
+                  <label
+                    className="block text-sm font-medium mb-1"
+                    style={{ color: "var(--dark)" }}
+                  >
+                    Ваше имя
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Иван Петров"
+                    className="w-full px-4 py-3 rounded-xl border focus:outline-none focus:ring-2 focus:ring-[var(--teal)]"
+                    style={{ borderColor: "var(--border)" }}
+                  />
+                </div>
+                <div>
+                  <label
+                    className="block text-sm font-medium mb-1"
+                    style={{ color: "var(--dark)" }}
+                  >
+                    Телефон
+                  </label>
+                  <input
+                    type="tel"
+                    placeholder="+7 (918) 123-45-67"
+                    className="w-full px-4 py-3 rounded-xl border focus:outline-none focus:ring-2 focus:ring-[var(--teal)]"
+                    style={{ borderColor: "var(--border)" }}
+                  />
+                </div>
+                <div>
+                  <label
+                    className="block text-sm font-medium mb-1"
+                    style={{ color: "var(--dark)" }}
+                  >
+                    Сообщение
+                  </label>
+                  <textarea
+                    rows={3}
+                    placeholder="Опишите, что нужно почистить..."
+                    className="w-full px-4 py-3 rounded-xl border focus:outline-none focus:ring-2 focus:ring-[var(--teal)]"
+                    style={{ borderColor: "var(--border)" }}
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="w-full btn-primary py-3 font-oswald font-semibold text-base"
+                >
+                  Отправить заявку
+                </button>
+                <p
+                  className="text-xs text-center"
+                  style={{ color: "var(--gray)" }}
+                >
+                  Нажимая кнопку, вы соглашаетесь с политикой обработки данных
+                </p>
+              </div>
+            </form>
+          </div>
+
+          {/* Правая колонка — контакты */}
+          <div
+            className={`space-y-6 ${inView ? "animate-fade-up stagger-4" : "opacity-0"}`}
+          >
+            <div className="p-6 rounded-2xl bg-white shadow-md">
+              <div className="flex items-start gap-4">
+                <div
+                  className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
+                  style={{ background: "rgba(12,184,160,0.12)" }}
+                >
+                  <Icon
+                    name="Phone"
+                    size={22}
+                    style={{ color: "var(--teal)" }}
+                  />
+                </div>
+                <div>
+                  <div
+                    className="text-sm font-medium"
+                    style={{ color: "var(--gray)" }}
+                  >
+                    Телефон
+                  </div>
+                  <a
+                    href="tel:+79189682882"
+                    className="text-lg font-bold transition-colors hover:text-[var(--teal)]"
+                    style={{ color: "var(--dark)" }}
+                  >
+                    8 (918) 968-28-82
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-white shadow-md">
+              <div className="flex items-start gap-4">
+                <div
+                  className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
+                  style={{ background: "rgba(12,184,160,0.12)" }}
+                >
+                  <Icon
+                    name="Clock"
+                    size={22}
+                    style={{ color: "var(--teal)" }}
+                  />
+                </div>
+                <div>
+                  <div
+                    className="text-sm font-medium"
+                    style={{ color: "var(--gray)" }}
+                  >
+                    Часы работы
+                  </div>
+                  <div
+                    className="text-lg font-bold"
+                    style={{ color: "var(--dark)" }}
+                  >
+                    Ежедневно, 8:00 – 22:00
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-white shadow-md">
+              <div className="flex items-start gap-4">
+                <div
+                  className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
+                  style={{ background: "rgba(12,184,160,0.12)" }}
+                >
+                  <Icon
+                    name="MapPin"
+                    size={22}
+                    style={{ color: "var(--teal)" }}
+                  />
+                </div>
+                <div>
+                  <div
+                    className="text-sm font-medium"
+                    style={{ color: "var(--gray)" }}
+                  >
+                    Адрес
+                  </div>
+                  <div
+                    className="text-lg font-bold"
+                    style={{ color: "var(--dark)" }}
+                  >
+                    Краснодар, ул. Северная, 123
+                  </div>
+                  <div
+                    className="text-sm mt-1"
+                    style={{ color: "var(--gray)" }}
+                  >
+                    Выезд по всему городу и пригороду
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              className="p-4 rounded-2xl"
+              style={{ background: "#fffbe0", border: "1px solid #ffe227" }}
+            >
+              <div className="flex items-center gap-3">
+                <Icon name="Gift" size={22} style={{ color: "#c9a800" }} />
+                <div>
+                  <div
+                    className="font-semibold text-sm"
+                    style={{ color: "#7a6200" }}
+                  >
+                    🎉 Скидка 10% на первый заказ!
+                  </div>
+                  <div className="text-xs" style={{ color: "#7a6200" }}>
+                    Действует при заказе от 3 000 ₽
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ============================================================
+// 10. ГЛАВНАЯ СТРАНИЦА (СБОРКА)
 // ============================================================
 export function HomePage() {
   return (
@@ -958,9 +1492,13 @@ export function HomePage() {
         <Navbar />
         <Hero />
         <Marquee />
+        <WhyUs />
         <Services />
+        <OurWorks />
         <Calculator />
-        {/* Добавьте сюда остальные секции: Отзывы, Контакты, Футер */}
+        <Reviews />
+        <Contacts />
+        {/* Добавьте сюда футер */}
       </main>
     </>
   );
