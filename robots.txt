@@ -9,4 +9,4 @@ Disallow: /sample-page/
 Sitemap: https://arenda-chistoty.ru/sitemap.xml
 
 # Указываем основной зеркало сайта (для Яндекса)
-Host: https://arenda-chistoty.ru
+Host: arenda-chistoty.ru
