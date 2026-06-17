@@ -1,4 +1,4 @@
-// HomePage.jsx — полностью исправленная главная страница
+// HomePage.jsx — полностью обновлённая главная страница со всеми ссылками
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
@@ -347,8 +347,39 @@ export function Hero() {
             >
               Профессиональная химчистка диванов, кресел, матрасов и ковров в
               Краснодаре. Выезд на дом, безопасные средства для детей и
-              животных, сушка за 2–4 часа. Работаем по всему городу:
-              Центральный, Прикубанский, Карасунский и Западный округа.
+              животных, сушка за 2–4 часа. Работаем по всему городу:{" "}
+              <Link
+                to="/uslugi/himchistka-divanov/tsentralnyy-okrug"
+                className="hover:text-[var(--teal)] transition-colors"
+                style={{ color: "var(--teal)" }}
+              >
+                Центральный
+              </Link>
+              ,{" "}
+              <Link
+                to="/uslugi/himchistka-divanov/prikubanskiy-okrug"
+                className="hover:text-[var(--teal)] transition-colors"
+                style={{ color: "var(--teal)" }}
+              >
+                Прикубанский
+              </Link>
+              ,{" "}
+              <Link
+                to="/uslugi/himchistka-divanov/karasunsky-okrug"
+                className="hover:text-[var(--teal)] transition-colors"
+                style={{ color: "var(--teal)" }}
+              >
+                Карасунский
+              </Link>{" "}
+              и{" "}
+              <Link
+                to="/uslugi/himchistka-divanov/zapadnyy-okrug"
+                className="hover:text-[var(--teal)] transition-colors"
+                style={{ color: "var(--teal)" }}
+              >
+                Западный
+              </Link>{" "}
+              округа.
               <footer
                 className="mt-2 text-sm font-semibold"
                 style={{ color: "var(--teal)" }}
@@ -436,7 +467,12 @@ export function Hero() {
                   4.98 / 5.0
                 </div>
                 <div className="text-xs" style={{ color: "var(--gray)" }}>
-                  1 240 отзывов
+                  <Link
+                    to="/otzyvy"
+                    className="hover:text-[var(--teal)] transition-colors"
+                  >
+                    1 240 отзывов
+                  </Link>
                 </div>
               </div>
             </div>
@@ -612,6 +648,16 @@ export function Services() {
               </div>
             );
           })}
+        </div>
+        {/* ✅ Ссылка на полный прайс-лист */}
+        <div className="text-center mt-12">
+          <Link
+            to="/tseny"
+            className="btn-outline px-8 py-3 font-oswald text-base inline-flex items-center gap-2"
+          >
+            <Icon name="List" size={18} />
+            Полный прайс-лист
+          </Link>
         </div>
       </div>
     </section>
@@ -920,7 +966,7 @@ export function Calculator() {
 }
 
 // ============================================================
-// 6. НОВАЯ СЕКЦИЯ: ПОЧЕМУ ВЫБИРАЮТ НАС
+// 6. ПОЧЕМУ ВЫБИРАЮТ НАС
 // ============================================================
 export function WhyUs() {
   const { ref, inView } = useInView();
@@ -1020,13 +1066,23 @@ export function WhyUs() {
             </div>
           ))}
         </div>
+        {/* ✅ Ссылка на страницу с услугами */}
+        <div className="text-center mt-12">
+          <Link
+            to="/uslugi"
+            className="btn-outline px-8 py-3 font-oswald text-base inline-flex items-center gap-2"
+          >
+            <Icon name="Grid" size={18} />
+            Все услуги
+          </Link>
+        </div>
       </div>
     </section>
   );
 }
 
 // ============================================================
-// 7. НОВАЯ СЕКЦИЯ: НАШИ РАБОТЫ
+// 7. НАШИ РАБОТЫ
 // ============================================================
 export function OurWorks() {
   const { ref, inView } = useInView();
@@ -1109,11 +1165,13 @@ export function OurWorks() {
             </div>
           ))}
         </div>
+        {/* ✅ Ссылка на страницу со всеми работами */}
         <div className="text-center mt-10">
           <Link
             to="/nashi-raboty"
-            className="btn-outline px-8 py-3 font-oswald text-base"
+            className="btn-outline px-8 py-3 font-oswald text-base inline-flex items-center gap-2"
           >
+            <Icon name="Camera" size={18} />
             Смотреть все работы
           </Link>
         </div>
@@ -1123,7 +1181,7 @@ export function OurWorks() {
 }
 
 // ============================================================
-// 8. НОВАЯ СЕКЦИЯ: ОТЗЫВЫ
+// 8. ОТЗЫВЫ
 // ============================================================
 export function Reviews() {
   const { ref, inView } = useInView();
@@ -1223,7 +1281,17 @@ export function Reviews() {
             </div>
           ))}
         </div>
+        {/* ✅ Ссылка на страницу со всеми отзывами */}
         <div className="text-center mt-10">
+          <Link
+            to="/otzyvy"
+            className="btn-outline px-8 py-3 font-oswald text-base inline-flex items-center gap-2"
+          >
+            <Icon name="MessageCircle" size={18} />
+            Все отзывы (1 240)
+          </Link>
+        </div>
+        <div className="text-center mt-4">
           <button
             onClick={() => scrollToId("contacts")}
             className="btn-primary px-8 py-3 font-oswald text-base"
@@ -1237,7 +1305,7 @@ export function Reviews() {
 }
 
 // ============================================================
-// 9. НОВАЯ СЕКЦИЯ: КОНТАКТЫ
+// 9. КОНТАКТЫ
 // ============================================================
 export function Contacts() {
   const { ref, inView } = useInView();
@@ -1270,7 +1338,6 @@ export function Contacts() {
           </p>
         </div>
         <div className="grid lg:grid-cols-2 gap-8">
-          {/* Левая колонка — форма */}
           <div
             className={`p-8 rounded-3xl shadow-lg bg-white ${inView ? "animate-fade-up stagger-3" : "opacity-0"}`}
           >
@@ -1339,13 +1406,19 @@ export function Contacts() {
                   className="text-xs text-center"
                   style={{ color: "var(--gray)" }}
                 >
-                  Нажимая кнопку, вы соглашаетесь с политикой обработки данных
+                  Нажимая кнопку, вы соглашаетесь с{" "}
+                  <Link
+                    to="/privacy"
+                    className="hover:text-[var(--teal)] transition-colors"
+                    style={{ color: "var(--teal)" }}
+                  >
+                    политикой обработки данных
+                  </Link>
                 </p>
               </div>
             </form>
           </div>
 
-          {/* Правая колонка — контакты */}
           <div
             className={`space-y-6 ${inView ? "animate-fade-up stagger-4" : "opacity-0"}`}
           >
@@ -1470,7 +1543,240 @@ export function Contacts() {
 }
 
 // ============================================================
-// 10. ГЛАВНАЯ СТРАНИЦА (СБОРКА)
+// 10. ПОДВАЛ (FOOTER) С ВНУТРЕННИМИ ССЫЛКАМИ
+// ============================================================
+export function Footer() {
+  return (
+    <footer className="py-16" style={{ background: "#1a1a1a" }}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          {/* Колонка 1 — О компании */}
+          <div>
+            <h4 className="font-oswald font-bold text-white text-lg mb-4">
+              О компании
+            </h4>
+            <ul className="space-y-2">
+              <li>
+                <Link
+                  to="/o-kompanii"
+                  className="text-sm transition-colors hover:text-[var(--teal)]"
+                  style={{ color: "rgba(255,255,255,0.6)" }}
+                >
+                  О нас
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/nashi-raboty"
+                  className="text-sm transition-colors hover:text-[var(--teal)]"
+                  style={{ color: "rgba(255,255,255,0.6)" }}
+                >
+                  Наши работы
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/otzyvy"
+                  className="text-sm transition-colors hover:text-[var(--teal)]"
+                  style={{ color: "rgba(255,255,255,0.6)" }}
+                >
+                  Отзывы клиентов
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/aktsii"
+                  className="text-sm transition-colors hover:text-[var(--teal)]"
+                  style={{ color: "rgba(255,255,255,0.6)" }}
+                >
+                  Акции и скидки
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/tseny"
+                  className="text-sm transition-colors hover:text-[var(--teal)]"
+                  style={{ color: "rgba(255,255,255,0.6)" }}
+                >
+                  Цены на услуги
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Колонка 2 — Услуги */}
+          <div>
+            <h4 className="font-oswald font-bold text-white text-lg mb-4">
+              Услуги
+            </h4>
+            <ul className="space-y-2">
+              <li>
+                <Link
+                  to="/uslugi/himchistka-divanov"
+                  className="text-sm transition-colors hover:text-[var(--teal)]"
+                  style={{ color: "rgba(255,255,255,0.6)" }}
+                >
+                  Химчистка диванов
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/uslugi/himchistka-kresel"
+                  className="text-sm transition-colors hover:text-[var(--teal)]"
+                  style={{ color: "rgba(255,255,255,0.6)" }}
+                >
+                  Химчистка кресел
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/uslugi/himchistka-matrasov"
+                  className="text-sm transition-colors hover:text-[var(--teal)]"
+                  style={{ color: "rgba(255,255,255,0.6)" }}
+                >
+                  Химчистка матрасов
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/uslugi/himchistka-kovrov"
+                  className="text-sm transition-colors hover:text-[var(--teal)]"
+                  style={{ color: "rgba(255,255,255,0.6)" }}
+                >
+                  Химчистка ковров
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/uslugi/himchistka-avtosalona"
+                  className="text-sm transition-colors hover:text-[var(--teal)]"
+                  style={{ color: "rgba(255,255,255,0.6)" }}
+                >
+                  Химчистка автосалона
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Колонка 3 — Районы */}
+          <div>
+            <h4 className="font-oswald font-bold text-white text-lg mb-4">
+              Районы Краснодара
+            </h4>
+            <ul className="space-y-2">
+              {DISTRICTS.slice(0, 6).map((d) => (
+                <li key={d.slug}>
+                  <Link
+                    to={`/uslugi/himchistka-divanov/${d.slug}`}
+                    className="text-sm transition-colors hover:text-[var(--teal)]"
+                    style={{ color: "rgba(255,255,255,0.6)" }}
+                  >
+                    {d.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Колонка 4 — Контакты и соцсети */}
+          <div>
+            <h4 className="font-oswald font-bold text-white text-lg mb-4">
+              Контакты
+            </h4>
+            <ul className="space-y-2">
+              <li>
+                <a
+                  href="tel:+79189682882"
+                  className="text-sm transition-colors hover:text-[var(--teal)]"
+                  style={{ color: "rgba(255,255,255,0.6)" }}
+                >
+                  +7 (918) 968-28-82
+                </a>
+              </li>
+              <li>
+                <a
+                  href="mailto:info@arenda-chistoty.ru"
+                  className="text-sm transition-colors hover:text-[var(--teal)]"
+                  style={{ color: "rgba(255,255,255,0.6)" }}
+                >
+                  info@arenda-chistoty.ru
+                </a>
+              </li>
+              <li>
+                <span
+                  className="text-sm"
+                  style={{ color: "rgba(255,255,255,0.6)" }}
+                >
+                  Краснодар, ул. Северная, 123
+                </span>
+              </li>
+              <li className="pt-2 flex gap-3">
+                <a
+                  href="#"
+                  className="text-white/60 hover:text-[var(--teal)] transition-colors"
+                  aria-label="Instagram"
+                >
+                  <Icon name="Instagram" size={20} />
+                </a>
+                <a
+                  href="#"
+                  className="text-white/60 hover:text-[var(--teal)] transition-colors"
+                  aria-label="WhatsApp"
+                >
+                  <Icon name="WhatsApp" size={20} />
+                </a>
+                <a
+                  href="#"
+                  className="text-white/60 hover:text-[var(--teal)] transition-colors"
+                  aria-label="Telegram"
+                >
+                  <Icon name="Telegram" size={20} />
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div
+          className="border-t mt-10 pt-6"
+          style={{ borderColor: "rgba(255,255,255,0.1)" }}
+        >
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>
+              © 2026 Аренда Чистоты. Все права защищены.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4 text-xs">
+              <Link
+                to="/privacy"
+                className="transition-colors hover:text-[var(--teal)]"
+                style={{ color: "rgba(255,255,255,0.4)" }}
+              >
+                Политика конфиденциальности
+              </Link>
+              <Link
+                to="/terms"
+                className="transition-colors hover:text-[var(--teal)]"
+                style={{ color: "rgba(255,255,255,0.4)" }}
+              >
+                Условия использования
+              </Link>
+              <Link
+                to="/sitemap-index.xml"
+                className="transition-colors hover:text-[var(--teal)]"
+                style={{ color: "rgba(255,255,255,0.4)" }}
+              >
+                Карта сайта
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+// ============================================================
+// 11. ГЛАВНАЯ СТРАНИЦА (СБОРКА)
 // ============================================================
 export function HomePage() {
   return (
@@ -1498,7 +1804,7 @@ export function HomePage() {
         <Calculator />
         <Reviews />
         <Contacts />
-        {/* Добавьте сюда футер */}
+        <Footer />
       </main>
     </>
   );
