@@ -17,9 +17,10 @@
     <meta name="format-detection" content="telephone=yes"/>
     
     <!--
-      ИСПРАВЛЕНИЕ ДЛЯ ШРИФТОВ (Google Fonts):
-      1. preconnect - устанавливает раннее соединение.
-      2. Стиль загружается через media="print", чтобы не блокировать отрисовку.
+      ✅ ИСПРАВЛЕНИЕ ДЛЯ ШРИФТОВ (Google Fonts):
+      - preconnect - устанавливает раннее соединение.
+      - Стиль загружается через media="print", чтобы не блокировать отрисовку.
+      - Добавлен onload и noscript для надёжности.
     -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,6 +30,8 @@
     </noscript>
     
     <meta name="author" content="Аренда Чистоты"/>
+    
+    <!-- Фавикон с версией -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=1.0.0">
     
     <!-- Open Graph -->
@@ -48,40 +51,93 @@
     
     <!-- Каноническая ссылка -->
     <link rel="canonical" href="https://arenda-chistoty.ru/">
+
+    <!--
+      ✅ КРИТИЧЕСКИЙ CSS ДЛЯ ИНДИКАТОРА ЗАГРУЗКИ (встроен, чтобы не блокировать)
+      Весь CSS для спиннера встроен прямо в HTML, чтобы он отобразился мгновенно.
+    -->
+    <style>
+        /* Сброс для индикатора загрузки */
+        #root {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Golos Text', sans-serif;
+            color: #666;
+            font-size: 18px;
+            background: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        #root .loader {
+            text-align: center;
+        }
+        #root .spinner {
+            display: block;
+            margin: 0 auto 20px;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+        #root .spinner-circle {
+            fill: none;
+            stroke-width: 4;
+        }
+        #root .spinner-circle-bg {
+            stroke: #ddd;
+        }
+        #root .spinner-circle-fg {
+            stroke: #e74c3c;
+            stroke-dasharray: 100;
+            stroke-linecap: round;
+        }
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+        #root .loader-text {
+            font-size: 20px;
+            font-weight: 500;
+            color: #333;
+        }
+        #root .loader-subtext {
+            font-size: 14px;
+            color: #999;
+            margin-top: 8px;
+        }
+    </style>
 </head>
 <body>
-    <!-- ИНДИКАТОР ЗАГРУЗКИ (показывается мгновенно) -->
+    <!--
+      ✅ ИНДИКАТОР ЗАГРУЗКИ (оптимизирован)
+      - Стили встроены в <style> для мгновенного отображения
+      - Используются CSS-классы вместо инлайн-стилей (быстрее)
+    -->
     <div id="root">
-        <div style="display:flex; justify-content:center; align-items:center; min-height:100vh; font-family:'Golos Text',sans-serif; color:#666; font-size:18px; background:#f9f9f9; margin:0; padding:0;">
-            <div style="text-align:center;">
-                <svg width="50" height="50" viewBox="0 0 50 50" style="margin-bottom:20px; display:block; margin-left:auto; margin-right:auto;">
-                    <circle cx="25" cy="25" r="20" stroke="#ddd" stroke-width="4" fill="none"/>
-                    <circle cx="25" cy="25" r="20" stroke="#e74c3c" stroke-width="4" fill="none" stroke-dasharray="100" stroke-linecap="round" style="animation: spin 1s linear infinite;"/>
-                </svg>
-                <div style="font-size:20px; font-weight:500; color:#333;">Загрузка...</div>
-                <div style="font-size:14px; color:#999; margin-top:8px;">Пожалуйста, подождите</div>
-                <style>
-                    @keyframes spin {
-                        100% { transform: rotate(360deg); }
-                    }
-                </style>
-            </div>
+        <div class="loader">
+            <svg class="spinner" viewBox="0 0 50 50">
+                <circle class="spinner-circle spinner-circle-bg" cx="25" cy="25" r="20"/>
+                <circle class="spinner-circle spinner-circle-fg" cx="25" cy="25" r="20"/>
+            </svg>
+            <div class="loader-text">Загрузка...</div>
+            <div class="loader-subtext">Пожалуйста, подождите</div>
         </div>
     </div>
 
     <!--
-      ИСПРАВЛЕНИЕ ДЛЯ СКРИПТОВ:
-      Используем async вместо defer, чтобы они точно не блокировали отрисовку.
+      ✅ ИСПРАВЛЕНИЕ ДЛЯ СКРИПТОВ:
+      - Все скрипты загружаются асинхронно (async), чтобы не блокировать отрисовку.
+      - Добавлена версия для обновления кеша.
     -->
     <script src="https://cdn.poehali.dev/intertnal/js/pp-min-2.js?v=1.0.0" async></script>
     <script src="https://cdn.poehali.dev/intertnal/js/route-min.js?v=1.0.0" async></script>
 
-    <!-- Основной бандл React (грузится последним) -->
+    <!-- Основной бандл React – загружается после всего контента -->
     <script type="module" src="/src/main.tsx" defer></script>
 
     <!--
-      ИСПРАВЛЕНИЕ ДЛЯ МЕТРИКИ:
-      Счётчик Яндекса перенесён в самый конец body.
+      ✅ ИСПРАВЛЕНИЕ ДЛЯ ЯНДЕКС.МЕТРИКИ:
+      Счётчик перенесён в самый конец body, чтобы не мешать загрузке.
     -->
     <script type="text/javascript">
         (function(m,e,t,r,i,k,a){
