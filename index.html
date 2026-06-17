@@ -16,14 +16,19 @@
     <meta name="yandex:work-hours" content="09:00-22:00"/>
     <meta name="format-detection" content="telephone=yes"/>
     
-    <!-- Шрифты с display=swap -->
+    <!--
+      ИСПРАВЛЕНИЕ ДЛЯ ШРИФТОВ (Google Fonts):
+      1. preconnect - устанавливает раннее соединение.
+      2. Стиль загружается через media="print", чтобы не блокировать отрисовку.
+    -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;900&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;900&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript>
+        <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;900&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+    </noscript>
     
     <meta name="author" content="Аренда Чистоты"/>
-    
-    <!-- Фавикон с версией (для обновления кеша) -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=1.0.0">
     
     <!-- Open Graph -->
@@ -43,27 +48,9 @@
     
     <!-- Каноническая ссылка -->
     <link rel="canonical" href="https://arenda-chistoty.ru/">
-
-    <!-- Yandex.Metrika counter -->
-    <script type="text/javascript">
-        (function(m,e,t,r,i,k,a){
-            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-            m[i].l=1*new Date();
-            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=109765159', 'ym');
-        ym(109765159, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
-    </script>
-    <noscript><div><img src="https://mc.yandex.ru/watch/109765159" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-    <!-- /Yandex.Metrika counter -->
-
-    <!-- Основные скрипты с версиями и defer -->
-    <script src="https://cdn.poehali.dev/intertnal/js/pp-min-2.js?v=1.0.0" defer></script>
-    <script src="https://cdn.poehali.dev/intertnal/js/route-min.js?v=1.0.0" defer></script>
 </head>
-
 <body>
-    <!-- Индикатор загрузки -->
+    <!-- ИНДИКАТОР ЗАГРУЗКИ (показывается мгновенно) -->
     <div id="root">
         <div style="display:flex; justify-content:center; align-items:center; min-height:100vh; font-family:'Golos Text',sans-serif; color:#666; font-size:18px; background:#f9f9f9; margin:0; padding:0;">
             <div style="text-align:center;">
@@ -82,7 +69,29 @@
         </div>
     </div>
 
-    <!-- Основной бандл React -->
+    <!--
+      ИСПРАВЛЕНИЕ ДЛЯ СКРИПТОВ:
+      Используем async вместо defer, чтобы они точно не блокировали отрисовку.
+    -->
+    <script src="https://cdn.poehali.dev/intertnal/js/pp-min-2.js?v=1.0.0" async></script>
+    <script src="https://cdn.poehali.dev/intertnal/js/route-min.js?v=1.0.0" async></script>
+
+    <!-- Основной бандл React (грузится последним) -->
     <script type="module" src="/src/main.tsx" defer></script>
+
+    <!--
+      ИСПРАВЛЕНИЕ ДЛЯ МЕТРИКИ:
+      Счётчик Яндекса перенесён в самый конец body.
+    -->
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){
+            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=109765159', 'ym');
+        ym(109765159, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/109765159" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 </body>
 </html>
