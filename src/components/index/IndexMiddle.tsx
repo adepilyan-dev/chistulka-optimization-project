@@ -42,7 +42,7 @@ export function About() {
                     src="https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/d094ad5b-a76b-4a14-ad88-7d73d2d3a774.jpg"
                     alt="Химчистка дивана на дому в Краснодаре"
                     className="w-full h-full object-cover"
-                    loading="lazy"
+                    fetchPriority="high"
                   />
                 </div>
                 <div className="rounded-2xl p-5" style={{ background: "#ffe227" }}>
@@ -56,7 +56,7 @@ export function About() {
                     src="https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/4aefd336-06ed-4dc6-84f8-86b03f8805e9.jpg"
                     alt="Химчистка матраса"
                     className="w-full h-full object-cover"
-                    loading="lazy"
+                    fetchPriority="high"
                   />
                 </div>
               </div>
