@@ -1,176 +1,153 @@
-import * as React from "react"
-import * as LabelPrimitive from "@radix-ui/react-label"
-import { Slot } from "@radix-ui/react-slot"
-import {
-  Controller,
-  ControllerProps,
-  FieldPath,
-  FieldValues,
-  FormProvider,
-  useFormContext,
-} from "react-hook-form"
+// Форма заявки на выезд мастера
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 
-import { cn } from "@/lib/utils"
-import { Label } from "@/components/ui/label"
+const orderSchema = z.object({
+  name: z.string().min(2, "Имя должно содержать минимум 2 символа"),
+  phone: z.string().min(10, "Введите корректный номер телефона"),
+  service: z.string().optional(),
+  address: z.string().optional(),
+  comment: z.string().optional(),
+});
 
-const Form = FormProvider
+type OrderFormValues = z.infer<typeof orderSchema>;
 
-type FormFieldContextValue<
-  TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
-> = {
-  name: TName
-}
+function OrderForm({ onSuccess }: { onSuccess?: () => void }) {
+  const form = useForm<OrderFormValues>({
+    resolver: zodResolver(orderSchema),
+    defaultValues: {
+      name: "",
+      phone: "",
+      service: "",
+      address: "",
+      comment: "",
+    },
+  });
 
-const FormFieldContext = React.createContext<FormFieldContextValue>(
-  {} as FormFieldContextValue
-)
-
-const FormField = <
-  TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
->({
-  ...props
-}: ControllerProps<TFieldValues, TName>) => {
-  return (
-    <FormFieldContext.Provider value={{ name: props.name }}>
-      <Controller {...props} />
-    </FormFieldContext.Provider>
-  )
-}
-
-const useFormField = () => {
-  const fieldContext = React.useContext(FormFieldContext)
-  const itemContext = React.useContext(FormItemContext)
-  const { getFieldState, formState } = useFormContext()
-
-  const fieldState = getFieldState(fieldContext.name, formState)
-
-  if (!fieldContext) {
-    throw new Error("useFormField should be used within <FormField>")
-  }
-
-  const { id } = itemContext
-
-  return {
-    id,
-    name: fieldContext.name,
-    formItemId: `${id}-form-item`,
-    formDescriptionId: `${id}-form-item-description`,
-    formMessageId: `${id}-form-item-message`,
-    ...fieldState,
-  }
-}
-
-type FormItemContextValue = {
-  id: string
-}
-
-const FormItemContext = React.createContext<FormItemContextValue>(
-  {} as FormItemContextValue
-)
-
-const FormItem = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => {
-  const id = React.useId()
+  const onSubmit = async (data: OrderFormValues) => {
+    try {
+      await fetch("/api/order", {
+        method: "POST",
+        body: JSON.stringify(data),
+      });
+      onSuccess?.();
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
-    <FormItemContext.Provider value={{ id }}>
-      <div ref={ref} className={cn("space-y-2", className)} {...props} />
-    </FormItemContext.Provider>
-  )
-})
-FormItem.displayName = "FormItem"
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem required>
+              <FormLabel className="text-sm font-medium">Ваше имя</FormLabel>
+              <FormControl>
+                <input
+                  {...field}
+                  placeholder="Например, Елена"
+                  className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-const FormLabel = React.forwardRef<
-  React.ElementRef<typeof LabelPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root>
->(({ className, ...props }, ref) => {
-  const { error, formItemId } = useFormField()
+        <FormField
+          control={form.control}
+          name="phone"
+          render={({ field }) => (
+            <FormItem required>
+              <FormLabel className="text-sm font-medium">
+                Номер телефона
+              </FormLabel>
+              <FormControl>
+                <input
+                  {...field}
+                  type="tel"
+                  placeholder="8 918 968-28-82"
+                  className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20"
+                />
+              </FormControl>
+              <FormDescription className="text-xs text-gray-400">
+                Перезвоним в течение 15 минут
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-  return (
-    <Label
-      ref={ref}
-      className={cn(error && "text-destructive", className)}
-      htmlFor={formItemId}
-      {...props}
-    />
-  )
-})
-FormLabel.displayName = "FormLabel"
+        <FormField
+          control={form.control}
+          name="service"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-sm font-medium">Услуга</FormLabel>
+              <FormControl>
+                <select
+                  {...field}
+                  className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20"
+                >
+                  <option value="">Выберите услугу</option>
+                  <option value="sofa">Химчистка дивана</option>
+                  <option value="chair">Химчистка кресла</option>
+                  <option value="mattress">Химчистка матраса</option>
+                  <option value="carpet">Химчистка ковра</option>
+                </select>
+              </FormControl>
+            </FormItem>
+          )}
+        />
 
-const FormControl = React.forwardRef<
-  React.ElementRef<typeof Slot>,
-  React.ComponentPropsWithoutRef<typeof Slot>
->(({ ...props }, ref) => {
-  const { error, formItemId, formDescriptionId, formMessageId } = useFormField()
+        <FormField
+          control={form.control}
+          name="address"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-sm font-medium">Адрес</FormLabel>
+              <FormControl>
+                <input
+                  {...field}
+                  placeholder="ул. Примерная, д. 1"
+                  className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm outline-none focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20"
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
 
-  return (
-    <Slot
-      ref={ref}
-      id={formItemId}
-      aria-describedby={
-        !error
-          ? `${formDescriptionId}`
-          : `${formDescriptionId} ${formMessageId}`
-      }
-      aria-invalid={!!error}
-      {...props}
-    />
-  )
-})
-FormControl.displayName = "FormControl"
+        <FormField
+          control={form.control}
+          name="comment"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-sm font-medium">Комментарий</FormLabel>
+              <FormControl>
+                <textarea
+                  {...field}
+                  placeholder="Дополнительная информация..."
+                  rows={3}
+                  className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm outline-none resize-none focus:border-teal-400 focus:ring-2 focus:ring-teal-400/20"
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
 
-const FormDescription = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLParagraphElement>
->(({ className, ...props }, ref) => {
-  const { formDescriptionId } = useFormField()
-
-  return (
-    <p
-      ref={ref}
-      id={formDescriptionId}
-      className={cn("text-sm text-muted-foreground", className)}
-      {...props}
-    />
-  )
-})
-FormDescription.displayName = "FormDescription"
-
-const FormMessage = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLParagraphElement>
->(({ className, children, ...props }, ref) => {
-  const { error, formMessageId } = useFormField()
-  const body = error ? String(error?.message) : children
-
-  if (!body) {
-    return null
-  }
-
-  return (
-    <p
-      ref={ref}
-      id={formMessageId}
-      className={cn("text-sm font-medium text-destructive", className)}
-      {...props}
-    >
-      {body}
-    </p>
-  )
-})
-FormMessage.displayName = "FormMessage"
-
-export {
-  useFormField,
-  Form,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormDescription,
-  FormMessage,
-  FormField,
+        <Button
+          type="submit"
+          variant="teal"
+          className="w-full py-3.5 text-base font-oswald"
+        >
+          <Icon name="Calendar" size={18} className="mr-2" />
+          Вызвать мастера
+        </Button>
+      </form>
+    </Form>
+  );
 }
