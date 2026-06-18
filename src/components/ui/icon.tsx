@@ -1,555 +1,320 @@
 import React from "react";
-import Icon from "@/components/ui/icon";
-import { cn } from "@/lib/utils";
+import {
+  BenefitsList,
+  ContactsList,
+  SocialGroup,
+  ContactSection,
+  type Benefit,
+  type ContactItem,
+} from "@/components/ui/contact-blocks";
+import { Button } from "@/components/ui/button";
+import { ymGoal } from "@/hooks/useYandexMetrika";
 
 // ============================
-// Анимации
+// Данные для проекта
 // ============================
 
-const fadeInUp = "animate-fade-up";
-const staggerDelay = (i: number) => `stagger-${Math.min(i + 1, 6)}`;
+const BENEFITS: Benefit[] = [
+  {
+    icon: "ShieldCheck",
+    text: "Гарантия результата",
+    description: "Перечистим бесплатно, если результат не устроит",
+    badge: "100%",
+  },
+  {
+    icon: "Clock",
+    text: "Выезд 7 дней в неделю",
+    description: "С 8:00 до 22:00, без выходных",
+  },
+  {
+    icon: "Wallet",
+    text: "Оплата после приёмки",
+    description: "Только когда убедитесь в результате",
+  },
+  {
+    icon: "Leaf",
+    text: "Безопасно для детей",
+    description: "Гипоаллергенные средства",
+    badge: "Для семьи",
+  },
+];
+
+const CONTACTS: ContactItem[] = [
+  {
+    icon: "Phone",
+    label: "Телефон",
+    value: "8 918 968-28-82",
+    link: "tel:+79189682882",
+    badge: "Онлайн",
+    onClick: () => ymGoal("phone_click"),
+  },
+  {
+    icon: "MessageSquare",
+    label: "WhatsApp",
+    value: "Написать в WhatsApp",
+    link: "https://wa.me/79189682882",
+    description: "Ответ за 5 минут",
+    onClick: () => ymGoal("whatsapp_click"),
+  },
+  {
+    icon: "MessageCircle",
+    label: "MAX",
+    value: "Написать в MAX",
+    link: "https://max.ru/u/f9LHodD0cOIhDoRH_6LXfcSUOHBuL1Ox9Kjst5F3mN4736vAC4pXtz-GKzc",
+    description: "Онлайн 9:00–22:00",
+    onClick: () => ymGoal("max_click"),
+  },
+  {
+    icon: "Users",
+    label: "ВКонтакте",
+    value: "Группа ВКонтакте",
+    link: "https://vk.com/club239497134",
+    description: "Отзывы и акции",
+    onClick: () => ymGoal("vk_click"),
+  },
+  {
+    icon: "MapPin",
+    label: "Адрес",
+    value: "Краснодар",
+    description: "Работаем по всему городу и краю",
+    link: null,
+  },
+];
+
+const SOCIALS = [
+  {
+    href: "https://wa.me/79189682882",
+    icon: "MessageSquare",
+    label: "WhatsApp",
+  },
+  { href: "https://vk.com/club239497134", icon: "Users", label: "ВКонтакте" },
+  {
+    href: "https://max.ru/u/f9LHodD0cOIhDoRH_6LXfcSUOHBuL1Ox9Kjst5F3mN4736vAC4pXtz-GKzc",
+    icon: "MessageCircle",
+    label: "MAX",
+    color: "bg-teal-500 hover:bg-teal-600",
+  },
+  {
+    href: "tel:+79189682882",
+    icon: "Phone",
+    label: "Позвонить",
+    color: "bg-yellow-400 hover:bg-yellow-500",
+  },
+];
 
 // ============================
-// 1. Список преимуществ
+// Компоненты для разных секций
 // ============================
 
-interface Benefit {
-  icon: string;
-  text: string;
-  color?: string;
-  description?: string;
-  badge?: string;
-}
-
-interface BenefitsListProps {
-  items: Benefit[];
-  variant?: "compact" | "default" | "large";
-  theme?: "light" | "dark" | "teal";
-  animated?: boolean;
-  className?: string;
-}
-
-const benefitSizeMap = {
-  compact: {
-    iconSize: 14,
-    boxSize: "w-7 h-7",
-    textSize: "text-xs",
-    gap: "gap-2",
-  },
-  default: {
-    iconSize: 18,
-    boxSize: "w-9 h-9",
-    textSize: "text-sm",
-    gap: "gap-3",
-  },
-  large: {
-    iconSize: 22,
-    boxSize: "w-11 h-11",
-    textSize: "text-base",
-    gap: "gap-4",
-  },
-};
-
-const benefitThemeMap = {
-  light: {
-    bg: "bg-teal-light",
-    icon: "text-teal",
-    text: "text-gray-700",
-    description: "text-gray-500",
-    badge: "bg-teal-100 text-teal-700",
-    hover: "group-hover:bg-teal/10",
-  },
-  dark: {
-    bg: "bg-teal-500/20",
-    icon: "text-teal-300",
-    text: "text-white",
-    description: "text-gray-400",
-    badge: "bg-teal-500/30 text-teal-300",
-    hover: "group-hover:bg-teal-500/30",
-  },
-  teal: {
-    bg: "bg-white/20",
-    icon: "text-white",
-    text: "text-white",
-    description: "text-teal-100",
-    badge: "bg-white/20 text-white",
-    hover: "group-hover:bg-white/30",
-  },
-};
-
-export function BenefitsList({
-  items,
-  variant = "default",
-  theme = "light",
-  animated = false,
-  className,
-}: BenefitsListProps) {
-  const sizes = benefitSizeMap[variant];
-  const styles = benefitThemeMap[theme];
-
+// 1. Преимущества на главной
+export function HomeBenefits() {
   return (
-    <div className={cn("space-y-3", className)}>
-      {items.map((item, i) => (
-        <div
-          key={item.text}
-          className={cn(
-            "flex items-center group transition-all duration-300",
-            sizes.gap,
-            animated && fadeInUp,
-            animated && staggerDelay(i),
-          )}
-        >
-          <div
-            className={cn(
-              "rounded-xl flex items-center justify-center flex-shrink-0 transition-colors duration-300",
-              styles.bg,
-              styles.hover,
-              sizes.boxSize,
-            )}
-          >
-            <Icon
-              name={item.icon}
-              size={sizes.iconSize}
-              className={cn(
-                "transition-colors duration-300",
-                styles.icon,
-                item.color,
-              )}
-            />
-          </div>
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 flex-wrap">
-              <span className={cn("font-medium", sizes.textSize, styles.text)}>
-                {item.text}
-              </span>
-              {item.badge && (
-                <span
-                  className={cn(
-                    "text-[10px] px-2 py-0.5 rounded-full font-medium",
-                    styles.badge,
-                  )}
-                >
-                  {item.badge}
-                </span>
-              )}
-            </div>
-            {item.description && (
-              <p className={cn("text-xs leading-relaxed", styles.description)}>
-                {item.description}
-              </p>
-            )}
-          </div>
-        </div>
-      ))}
+    <div className="py-8">
+      <BenefitsList
+        items={BENEFITS}
+        variant="large"
+        theme="light"
+        animated
+        className="max-w-2xl mx-auto"
+      />
     </div>
   );
 }
 
-// ============================
-// 2. Контакты
-// ============================
-
-interface ContactItem {
-  icon: string;
-  label: string;
-  value: string;
-  link?: string | null;
-  target?: "_blank" | "_self";
-  description?: string;
-  badge?: string;
-  onClick?: () => void;
-}
-
-interface ContactsListProps {
-  items: ContactItem[];
-  variant?: "compact" | "default" | "large";
-  theme?: "light" | "dark" | "teal";
-  animated?: boolean;
-  className?: string;
-  showArrow?: boolean;
-}
-
-const contactSizeMap = {
-  compact: {
-    iconSize: 16,
-    boxSize: "w-9 h-9",
-    padding: "p-3",
-    textSize: "text-xs",
-  },
-  default: {
-    iconSize: 20,
-    boxSize: "w-11 h-11",
-    padding: "p-4",
-    textSize: "text-sm",
-  },
-  large: {
-    iconSize: 24,
-    boxSize: "w-13 h-13",
-    padding: "p-5",
-    textSize: "text-base",
-  },
-};
-
-const contactThemeMap = {
-  light: {
-    bg: "bg-teal-light",
-    icon: "text-teal",
-    label: "text-gray-500",
-    value: "text-gray-800",
-    description: "text-gray-400",
-    border: "border-gray-200",
-    hover: "hover:border-teal-200 hover:shadow-md",
-    badge: "bg-teal-100 text-teal-700",
-  },
-  dark: {
-    bg: "bg-teal-500/20",
-    icon: "text-teal-300",
-    label: "text-gray-400",
-    value: "text-white",
-    description: "text-gray-500",
-    border: "border-gray-700",
-    hover: "hover:border-teal-500/50 hover:shadow-lg",
-    badge: "bg-teal-500/30 text-teal-300",
-  },
-  teal: {
-    bg: "bg-white/20",
-    icon: "text-white",
-    label: "text-teal-100",
-    value: "text-white",
-    description: "text-teal-200/70",
-    border: "border-white/20",
-    hover: "hover:border-white/50 hover:shadow-lg",
-    badge: "bg-white/20 text-white",
-  },
-};
-
-export function ContactsList({
-  items,
-  variant = "default",
-  theme = "light",
-  animated = false,
-  showArrow = true,
-  className,
-}: ContactsListProps) {
-  const sizes = contactSizeMap[variant];
-  const styles = contactThemeMap[theme];
-
+// 2. Контакты в футере
+export function FooterContacts() {
   return (
-    <div className={cn("space-y-3", className)}>
-      {items.map((item, i) => {
-        const Tag = item.link ? "a" : "div";
-        const isExternal =
-          item.target === "_blank" || item.link?.startsWith("http");
-
-        return (
-          <Tag
-            key={item.label}
-            {...(item.link
-              ? {
-                  href: item.link,
-                  target: isExternal ? "_blank" : "_self",
-                  rel: isExternal ? "noopener noreferrer" : undefined,
-                }
-              : {})}
-            onClick={item.onClick}
-            className={cn(
-              "flex items-center gap-4 rounded-2xl border transition-all duration-300 bg-white/5",
-              item.link && "cursor-pointer",
-              styles.border,
-              styles.hover,
-              sizes.padding,
-              animated && fadeInUp,
-              animated && staggerDelay(i),
-            )}
-          >
-            <div
-              className={cn(
-                "rounded-xl flex items-center justify-center flex-shrink-0 transition-colors duration-300",
-                styles.bg,
-                sizes.boxSize,
-              )}
-            >
-              <Icon
-                name={item.icon}
-                size={sizes.iconSize}
-                className={styles.icon}
-              />
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className={cn("text-xs", styles.label)}>{item.label}</div>
-              <div
-                className={cn(
-                  "font-semibold truncate",
-                  sizes.textSize,
-                  styles.value,
-                )}
-              >
-                {item.value}
-              </div>
-              {item.description && (
-                <div className={cn("text-xs", styles.description)}>
-                  {item.description}
-                </div>
-              )}
-            </div>
-            {item.badge && (
-              <span
-                className={cn(
-                  "text-[10px] px-2 py-0.5 rounded-full font-medium flex-shrink-0",
-                  styles.badge,
-                )}
-              >
-                {item.badge}
-              </span>
-            )}
-            {showArrow && item.link && (
-              <Icon
-                name="ChevronRight"
-                size={16}
-                className={cn(
-                  "flex-shrink-0 transition-transform group-hover:translate-x-1",
-                  styles.icon,
-                )}
-              />
-            )}
-          </Tag>
-        );
-      })}
-    </div>
+    <ContactsList
+      items={CONTACTS.filter(
+        (c) => c.icon === "Phone" || c.icon === "MessageSquare",
+      )}
+      variant="compact"
+      theme="dark"
+      animated
+      showArrow={false}
+    />
   );
 }
 
-// ============================
-// 3. Кнопка соцсети
-// ============================
-
-interface SocialButtonProps {
-  href: string;
-  icon: string;
-  label?: string;
-  color?: string;
-  size?: "sm" | "md" | "lg";
-  animated?: boolean;
-  className?: string;
-  onClick?: () => void;
-}
-
-const socialSizeMap = {
-  sm: { buttonSize: "w-10 h-10", iconSize: 18 },
-  md: { buttonSize: "w-14 h-14", iconSize: 24 },
-  lg: { buttonSize: "w-16 h-16", iconSize: 28 },
-};
-
-const socialColors: Record<string, string> = {
-  whatsapp: "bg-green-500 hover:bg-green-600",
-  telegram: "bg-blue-500 hover:bg-blue-600",
-  vk: "bg-blue-600 hover:bg-blue-700",
-  phone: "bg-yellow-400 hover:bg-yellow-500 text-gray-800",
-  email: "bg-gray-600 hover:bg-gray-700",
-  instagram: "bg-pink-600 hover:bg-pink-700",
-  youtube: "bg-red-600 hover:bg-red-700",
-  messagecircle: "bg-teal-500 hover:bg-teal-600",
-  default: "bg-teal-500 hover:bg-teal-600",
-};
-
-export function SocialButton({
-  href,
-  icon,
-  label,
-  color,
-  size = "md",
-  animated = false,
-  className,
-  onClick,
-}: SocialButtonProps) {
-  const sizes = socialSizeMap[size];
-  const bgColor =
-    color || socialColors[icon.toLowerCase()] || socialColors.default;
-  const iconColor =
-    icon.toLowerCase() === "phone" ? "text-gray-800" : "text-white";
-
+// 3. Контакты на странице
+export function PageContacts() {
   return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      onClick={onClick}
-      aria-label={label || icon}
-      className={cn(
-        "rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-110 active:scale-95 hover:shadow-xl",
-        bgColor,
-        sizes.buttonSize,
-        animated && "animate-float",
-        animated && "hover:animate-none",
-        className,
-      )}
-    >
-      <Icon name={icon} size={sizes.iconSize} className={iconColor} />
-    </a>
-  );
-}
-
-// ============================
-// 4. Группа соцсетей
-// ============================
-
-interface SocialGroupProps {
-  items: Array<{
-    href: string;
-    icon: string;
-    label?: string;
-    color?: string;
-  }>;
-  size?: "sm" | "md" | "lg";
-  animated?: boolean;
-  className?: string;
-  layout?: "row" | "column" | "grid";
-}
-
-export function SocialGroup({
-  items,
-  size = "md",
-  animated = false,
-  className,
-  layout = "row",
-}: SocialGroupProps) {
-  const layoutClasses = {
-    row: "flex flex-row",
-    column: "flex flex-col",
-    grid: "grid grid-cols-2 sm:grid-cols-4 gap-3",
-  };
-
-  return (
-    <div
-      className={cn(
-        "items-center gap-3",
-        layoutClasses[layout],
-        layout !== "grid" && "flex",
-        className,
-      )}
-    >
-      {items.map((item, i) => (
-        <SocialButton
-          key={item.icon}
-          href={item.href}
-          icon={item.icon}
-          label={item.label}
-          color={item.color}
-          size={size}
-          animated={animated}
+    <div className="grid md:grid-cols-2 gap-8">
+      <div>
+        <h3 className="font-oswald text-xl font-bold mb-4">Контакты</h3>
+        <ContactsList
+          items={CONTACTS}
+          variant="default"
+          theme="light"
+          animated
         />
-      ))}
-    </div>
-  );
-}
-
-// ============================
-// 5. Контактная секция (комбинированная)
-// ============================
-
-interface ContactSectionProps {
-  title?: string;
-  subtitle?: string;
-  benefits?: Benefit[];
-  contacts?: ContactItem[];
-  socials?: Array<{
-    href: string;
-    icon: string;
-    label?: string;
-    color?: string;
-  }>;
-  theme?: "light" | "dark" | "teal";
-  variant?: "compact" | "default" | "large";
-  animated?: boolean;
-  className?: string;
-}
-
-export function ContactSection({
-  title = "Свяжитесь с нами",
-  subtitle,
-  benefits,
-  contacts,
-  socials,
-  theme = "light",
-  variant = "default",
-  animated = true,
-  className,
-}: ContactSectionProps) {
-  const isDark = theme === "dark";
-  const isTeal = theme === "teal";
-
-  const bgColor = isDark ? "bg-gray-900" : isTeal ? "bg-teal-600" : "bg-white";
-
-  const textColor = isDark
-    ? "text-white"
-    : isTeal
-      ? "text-white"
-      : "text-gray-900";
-
-  const subtitleColor = isDark
-    ? "text-gray-400"
-    : isTeal
-      ? "text-teal-100"
-      : "text-gray-500";
-
-  return (
-    <div
-      className={cn(
-        "rounded-3xl p-6 md:p-8 lg:p-10 transition-all duration-300",
-        bgColor,
-        className,
-      )}
-    >
-      {(title || subtitle) && (
-        <div className={cn("mb-6", animated && "animate-fade-up")}>
-          {title && (
-            <h2
-              className={cn(
-                "font-oswald font-bold text-2xl md:text-3xl",
-                textColor,
-              )}
-            >
-              {title}
-            </h2>
-          )}
-          {subtitle && (
-            <p className={cn("text-sm mt-1", subtitleColor)}>{subtitle}</p>
-          )}
-        </div>
-      )}
-
-      <div className="space-y-6">
-        {benefits && benefits.length > 0 && (
-          <BenefitsList
-            items={benefits}
-            variant={variant}
-            theme={theme}
-            animated={animated}
-          />
-        )}
-
-        {contacts && contacts.length > 0 && (
-          <ContactsList
-            items={contacts}
-            variant={variant}
-            theme={theme}
-            animated={animated}
-          />
-        )}
-
-        {socials && socials.length > 0 && (
-          <div className={cn("pt-2", animated && "animate-fade-up")}>
-            <SocialGroup
-              items={socials}
-              size={
-                variant === "compact" ? "sm" : variant === "large" ? "lg" : "md"
-              }
-              animated={animated}
-              layout="row"
-            />
-          </div>
-        )}
+      </div>
+      <div className="flex flex-col justify-center items-center bg-teal-light rounded-3xl p-8">
+        <h4 className="font-oswald text-lg font-bold mb-4">Мы в соцсетях</h4>
+        <SocialGroup
+          items={SOCIALS}
+          size="lg"
+          animated
+          layout="row"
+          gap="gap-4"
+          wrap
+        />
+        <Button
+          variant="teal"
+          size="lg"
+          className="mt-6 w-full max-w-xs"
+          onClick={() => ymGoal("contact_section_click")}
+        >
+          Связаться с нами
+        </Button>
       </div>
     </div>
   );
+}
+
+// 4. Полная контактная секция
+export function ContactSectionFull() {
+  return (
+    <ContactSection
+      title="Свяжитесь с нами"
+      subtitle="Ответим на все вопросы и приедем в удобное время"
+      theme="teal"
+      variant="large"
+      animated
+      benefits={BENEFITS}
+      contacts={CONTACTS.slice(0, 2)}
+      socials={SOCIALS}
+    >
+      <Button
+        variant="yellow"
+        size="lg"
+        className="w-full mt-4 font-oswald text-base"
+        onClick={() => ymGoal("contact_section_button")}
+      >
+        <Icon name="Calendar" size={18} className="mr-2" />
+        Вызвать мастера
+      </Button>
+    </ContactSection>
+  );
+}
+
+// 5. Социальные кнопки в хедере
+export function HeaderSocials() {
+  return (
+    <SocialGroup
+      items={[
+        { href: "https://wa.me/79189682882", icon: "MessageSquare" },
+        { href: "https://vk.com/club239497134", icon: "Users" },
+      ]}
+      size="sm"
+      animated={false}
+      layout="row"
+      gap="gap-2"
+    />
+  );
+}
+
+// 6. Флоатинг кнопки соцсетей
+export function FloatingSocials() {
+  return (
+    <div className="fixed bottom-20 right-4 sm:bottom-6 z-[90] flex flex-col gap-3">
+      <SocialGroup
+        items={[
+          {
+            href: "https://wa.me/79189682882",
+            icon: "MessageSquare",
+            color: "bg-green-500 hover:bg-green-600",
+          },
+          {
+            href: "https://vk.com/club239497134",
+            icon: "Users",
+            color: "bg-blue-600 hover:bg-blue-700",
+          },
+          {
+            href: "https://max.ru/u/f9LHodD0cOIhDoRH_6LXfcSUOHBuL1Ox9Kjst5F3mN4736vAC4pXtz-GKzc",
+            icon: "MessageCircle",
+            color: "bg-teal-500 hover:bg-teal-600",
+          },
+          {
+            href: "tel:+79189682882",
+            icon: "Phone",
+            color: "bg-yellow-400 hover:bg-yellow-500",
+          },
+        ]}
+        size="md"
+        animated
+        layout="column"
+        gap="gap-2"
+      />
+    </div>
+  );
+}
+
+// 7. Мобильное меню с контактами
+export function MobileMenuContacts() {
+  return (
+    <div className="space-y-6 p-4">
+      <div className="space-y-2">
+        <h4 className="font-oswald font-bold text-lg">Контакты</h4>
+        <ContactsList
+          items={CONTACTS.filter(
+            (c) => c.icon === "Phone" || c.icon === "MessageSquare",
+          )}
+          variant="compact"
+          theme="light"
+          showArrow={false}
+        />
+      </div>
+      <div className="space-y-2">
+        <h4 className="font-oswald font-bold text-lg">Мы в соцсетях</h4>
+        <SocialGroup items={SOCIALS} size="sm" layout="row" gap="gap-2" wrap />
+      </div>
+    </div>
+  );
+}
+
+// ============================
+// Основной компонент контактов
+// ============================
+
+export function Contacts() {
+  return (
+    <section id="contacts" className="py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <span className="section-tag">Контакты</span>
+            <h2
+              className="font-oswald font-bold mt-4"
+              style={{
+                fontSize: "clamp(2rem, 4vw, 3rem)",
+                color: "var(--dark)",
+              }}
+            >
+              Вызвать мастера на дом
+            </h2>
+            <p className="mt-3 mb-8 text-base" style={{ color: "var(--gray)" }}>
+              Позвоните или оставьте заявку — ответим в течение 15 минут,
+              приедем в удобное время.
+            </p>
+            <ContactsList
+              items={CONTACTS}
+              variant="large"
+              theme="light"
+              animated
+            />
+          </div>
+          <ContactForm />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ============================
+// Форма заявки (из существующего кода)
+// ============================
+
+function ContactForm() {
+  // ... существующий код формы
 }
