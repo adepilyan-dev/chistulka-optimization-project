@@ -1,305 +1,230 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* ============================================
+   🎨 ГЛОБАЛЬНЫЕ СТИЛИ ДЛЯ САЙТА
+   Аренда Чистоты — Химчистка мебели в Краснодаре
+   ============================================ */
 
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 210 20% 10%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 210 20% 10%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 210 20% 10%;
-
-    --primary: 175 80% 38%;
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 55 100% 55%;
-    --secondary-foreground: 210 20% 10%;
-
-    --muted: 175 20% 95%;
-    --muted-foreground: 175 10% 45%;
-
-    --accent: 55 100% 55%;
-    --accent-foreground: 210 20% 10%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 175 20% 88%;
-    --input: 175 20% 88%;
-    --ring: 175 80% 38%;
-
-    --radius: 1rem;
-
-    /* Brand colors */
-    --teal: #0cb8a0;
-    --teal-dark: #089b86;
-    --teal-light: #e0f7f4;
-    --yellow: #ffe227;
-    --yellow-dark: #f5d000;
-    --dark: #0d1f1e;
-    --dark-2: #163330;
-    --gray: #6b8f8c;
-    --light-bg: #f4fafa;
-  }
+/* ---------- CSS-переменные ---------- */
+:root {
+  --teal: #0cb8a0;
+  --teal-dark: #0a8f7a;
+  --teal-light: #e6f7f4;
+  --yellow: #ffe227;
+  --dark: #1a1a2e;
+  --gray: #6c757d;
+  --light-bg: #f8fafc;
+  --border: #e5e7eb;
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-
-  body {
-    @apply bg-background text-foreground;
-    font-family: "Golos Text", sans-serif;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5 {
-    font-family: "Oswald", sans-serif;
-    font-weight: 700;
-  }
+/* ---------- Базовые стили ---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-@layer utilities {
-  .font-golos {
-    font-family: "Golos Text", sans-serif;
-  }
-  .font-oswald {
-    font-family: "Oswald", sans-serif;
-  }
-
-  .animate-fade-up {
-    animation: fadeUp 0.6s ease forwards;
-  }
-
-  .animate-fade-in {
-    animation: fadeIn 0.5s ease forwards;
-  }
-
-  .animate-scale-in {
-    animation: scaleIn 0.4s ease forwards;
-  }
-
-  .stagger-1 {
-    animation-delay: 0.1s;
-  }
-  .stagger-2 {
-    animation-delay: 0.2s;
-  }
-  .stagger-3 {
-    animation-delay: 0.3s;
-  }
-  .stagger-4 {
-    animation-delay: 0.4s;
-  }
-  .stagger-5 {
-    animation-delay: 0.5s;
-  }
-  .stagger-6 {
-    animation-delay: 0.6s;
-  }
-
-  .opacity-0-start {
-    opacity: 0;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+body {
+  font-family:
+    "Golos Text",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+  background-color: var(--light-bg);
+  color: var(--dark);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+/* ---------- Шрифты ---------- */
+@font-face {
+  font-family: "Oswald";
+  src: url("/fonts/Oswald-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
 }
 
-@keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.92);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+@font-face {
+  font-family: "Oswald";
+  src: url("/fonts/Oswald-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-display: swap;
 }
 
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-12px);
-  }
+@font-face {
+  font-family: "Oswald";
+  src: url("/fonts/Oswald-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
 }
 
-@keyframes spin-slow {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+@font-face {
+  font-family: "Golos Text";
+  src: url("/fonts/GolosText-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
 }
 
-@keyframes marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
+@font-face {
+  font-family: "Golos Text";
+  src: url("/fonts/GolosText-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
 }
 
-.animate-float {
-  animation: float 4s ease-in-out infinite;
+@font-face {
+  font-family: "Golos Text";
+  src: url("/fonts/GolosText-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-display: swap;
 }
 
-.animate-spin-slow {
-  animation: spin-slow 12s linear infinite;
+.font-oswald {
+  font-family: "Oswald", sans-serif;
 }
 
-.animate-marquee {
-  animation: marquee 20s linear infinite;
-}
-
-/* Gradient mesh bg */
-.mesh-bg {
-  background:
-    radial-gradient(
-      ellipse at 20% 50%,
-      rgba(12, 184, 160, 0.15) 0%,
-      transparent 60%
-    ),
-    radial-gradient(
-      ellipse at 80% 20%,
-      rgba(255, 226, 39, 0.12) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      ellipse at 60% 80%,
-      rgba(12, 184, 160, 0.08) 0%,
-      transparent 50%
-    ),
-    #f4fafa;
-}
-
-.dark-mesh-bg {
-  background:
-    radial-gradient(
-      ellipse at 20% 50%,
-      rgba(12, 184, 160, 0.2) 0%,
-      transparent 60%
-    ),
-    radial-gradient(
-      ellipse at 80% 20%,
-      rgba(255, 226, 39, 0.08) 0%,
-      transparent 50%
-    ),
-    #0d1f1e;
-}
-
-/* Noise overlay */
-.noise::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events: none;
-  opacity: 0.4;
-}
-
-.hover-lift {
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-}
-.hover-lift:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(12, 184, 160, 0.2);
+/* ---------- Утилиты ---------- */
+.section-tag {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  background: rgba(12, 184, 160, 0.1);
+  color: var(--teal);
 }
 
 .btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 0.875rem;
   background: var(--yellow);
   color: var(--dark);
-  font-family: "Oswald", sans-serif;
-  font-weight: 600;
-  letter-spacing: 0.5px;
+  border: none;
+  cursor: pointer;
   transition: all 0.2s ease;
-  border-radius: 100px;
+  text-decoration: none;
 }
+
 .btn-primary:hover {
-  background: var(--yellow-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(255, 226, 39, 0.4);
+  opacity: 0.85;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(255, 226, 39, 0.35);
 }
 
-.btn-outline {
-  border: 2px solid var(--teal);
-  color: var(--teal);
-  font-family: "Oswald", sans-serif;
-  font-weight: 600;
-  transition: all 0.2s ease;
-  border-radius: 100px;
-}
-.btn-outline:hover {
-  background: var(--teal);
-  color: white;
-  transform: translateY(-2px);
-}
-
-.section-tag {
-  background: var(--teal-light);
-  color: var(--teal-dark);
-  font-family: "Golos Text", sans-serif;
-  font-weight: 600;
-  font-size: 0.75rem;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  border-radius: 100px;
-  padding: 4px 16px;
-  display: inline-block;
+.btn-primary:active {
+  transform: translateY(0);
 }
 
 .card-clean {
   background: white;
-  border-radius: 20px;
-  border: 1px solid rgba(12, 184, 160, 0.12);
-  transition: all 0.3s ease;
-}
-.card-clean:hover {
-  border-color: rgba(12, 184, 160, 0.35);
-  box-shadow: 0 12px 32px rgba(12, 184, 160, 0.12);
-  transform: translateY(-4px);
+  border-radius: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  transition: all 0.2s ease;
+  border: 1px solid var(--border);
 }
 
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
+.card-clean:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
 }
-::-webkit-scrollbar-track {
-  background: #f4fafa;
+
+.hover-lift {
+  transition: all 0.2s ease;
 }
-::-webkit-scrollbar-thumb {
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* ---------- Анимации ---------- */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.animate-float {
+  animation: float 2.5s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.8);
+  }
+}
+
+.animate-pulse-dot {
+  animation: pulse-dot 1.5s ease-in-out infinite;
+}
+
+/* ---------- Адаптивность ---------- */
+@media (max-width: 640px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .btn-primary {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.8rem;
+  }
+}
+
+/* ---------- Доступность ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ---------- Скрытие скроллбара (опционально) ---------- */
+/* .no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+} */
+
+/* ---------- Выделение текста ---------- */
+::selection {
   background: var(--teal);
-  border-radius: 3px;
+  color: white;
+}
+
+/* ---------- Фокус ---------- */
+:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
 }
