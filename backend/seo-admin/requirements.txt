@@ -1,5 +1,1 @@
-import asyncpg
-import os
-
-async def get_conn():
-    return await asyncpg.connect(os.environ["DATABASE_URL"])
+psycopg2-binary
