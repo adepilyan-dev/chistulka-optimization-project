@@ -1,48 +1,29 @@
-import * as React from "react"
-import * as AvatarPrimitive from "@radix-ui/react-avatar"
+// В отзывах клиентов
+<Avatar size="lg">
+  <AvatarImage src={review.avatar} alt={review.name} />
+  <AvatarFallback>{review.avatar}</AvatarFallback>
+</Avatar>
 
-import { cn } from "@/lib/utils"
+// С инициалами
+<Avatar size="md">
+  <AvatarImage src="https://example.com/avatar.jpg" />
+  <AvatarFallback>ЕМ</AvatarFallback>
+</Avatar>
 
-const Avatar = React.forwardRef<
-  React.ElementRef<typeof AvatarPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root>
->(({ className, ...props }, ref) => (
-  <AvatarPrimitive.Root
-    ref={ref}
-    className={cn(
-      "relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full",
-      className
-    )}
-    {...props}
-  />
-))
-Avatar.displayName = AvatarPrimitive.Root.displayName
+// В списке мастеров
+<div className="flex items-center gap-3">
+  <Avatar size="sm">
+    <AvatarImage src={master.photo} />
+    <AvatarFallback>{master.initials}</AvatarFallback>
+  </Avatar>
+  <div>
+    <p className="font-medium text-sm">{master.name}</p>
+    <p className="text-xs text-gray-500">{master.role}</p>
+  </div>
+</div>
 
-const AvatarImage = React.forwardRef<
-  React.ElementRef<typeof AvatarPrimitive.Image>,
-  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Image>
->(({ className, ...props }, ref) => (
-  <AvatarPrimitive.Image
-    ref={ref}
-    className={cn("aspect-square h-full w-full", className)}
-    {...props}
-  />
-))
-AvatarImage.displayName = AvatarPrimitive.Image.displayName
-
-const AvatarFallback = React.forwardRef<
-  React.ElementRef<typeof AvatarPrimitive.Fallback>,
-  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Fallback>
->(({ className, ...props }, ref) => (
-  <AvatarPrimitive.Fallback
-    ref={ref}
-    className={cn(
-      "flex h-full w-full items-center justify-center rounded-full bg-muted",
-      className
-    )}
-    {...props}
-  />
-))
-AvatarFallback.displayName = AvatarPrimitive.Fallback.displayName
-
-export { Avatar, AvatarImage, AvatarFallback }
+// С кастомными цветами
+<Avatar className="border-2 border-teal">
+  <AvatarImage src="/master.jpg" />
+  <AvatarFallback className="bg-teal-light text-teal">М</AvatarFallback>
+</Avatar>
