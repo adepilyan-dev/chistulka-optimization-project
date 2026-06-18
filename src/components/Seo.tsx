@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async";
 
-const SITE = "https://arenda-chistoty.online";
+const SITE = "https://arenda-chistoty.ru";
 const DEFAULT_IMAGE =
   "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/1f8a12d2-02a6-452c-a1cb-4fa8f342c646.jpg";
 
@@ -39,7 +39,12 @@ export default function Seo({
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
         itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Главная", item: SITE + "/" },
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Главная",
+            item: SITE + "/",
+          },
           ...breadcrumbs.map((b, i) => ({
             "@type": "ListItem",
             position: i + 2,
@@ -55,10 +60,11 @@ export default function Seo({
       <title>{title}</title>
       <meta name="description" content={description} />
       {keywords && <meta name="keywords" content={keywords} />}
-      {noindex
-        ? <meta name="robots" content="noindex, nofollow" />
-        : <meta name="robots" content="index, follow" />
-      }
+      {noindex ? (
+        <meta name="robots" content="noindex, nofollow" />
+      ) : (
+        <meta name="robots" content="index, follow" />
+      )}
       <link rel="canonical" href={url} />
 
       <meta property="og:type" content={type} />
@@ -66,7 +72,10 @@ export default function Seo({
       <meta property="og:description" content={description} />
       <meta property="og:url" content={url} />
       <meta property="og:image" content={image} />
+      <meta property="og:site_name" content="Аренда Чистоты" />
+      <meta property="og:locale" content="ru_RU" />
 
+      <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={image} />
@@ -75,7 +84,9 @@ export default function Seo({
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       )}
       {breadcrumbLd && (
-        <script type="application/ld+json">{JSON.stringify(breadcrumbLd)}</script>
+        <script type="application/ld+json">
+          {JSON.stringify(breadcrumbLd)}
+        </script>
       )}
     </Helmet>
   );
@@ -85,7 +96,35 @@ export function SeoNotFound() {
   return (
     <Helmet>
       <title>Страница не найдена | Аренда Чистоты</title>
+      <meta
+        name="description"
+        content="Страница не найдена на сайте Аренда Чистоты. Вернитесь на главную или выберите услугу."
+      />
       <meta name="robots" content="noindex, nofollow" />
+      <link rel="canonical" href={SITE + "/404"} />
+
+      <meta
+        property="og:title"
+        content="Страница не найдена | Аренда Чистоты"
+      />
+      <meta
+        property="og:description"
+        content="Страница не найдена на сайте Аренда Чистоты."
+      />
+      <meta property="og:url" content={SITE + "/404"} />
+      <meta property="og:image" content={DEFAULT_IMAGE} />
+      <meta property="og:site_name" content="Аренда Чистоты" />
+
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta
+        name="twitter:title"
+        content="Страница не найдена | Аренда Чистоты"
+      />
+      <meta
+        name="twitter:description"
+        content="Страница не найдена на сайте Аренда Чистоты."
+      />
+      <meta name="twitter:image" content={DEFAULT_IMAGE} />
     </Helmet>
   );
 }
