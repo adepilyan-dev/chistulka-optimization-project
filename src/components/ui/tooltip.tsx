@@ -1,28 +1,135 @@
-import * as React from "react"
-import * as TooltipPrimitive from "@radix-ui/react-tooltip"
+// ============================
+// Подсказки для иконок услуг
+// ============================
 
-import { cn } from "@/lib/utils"
+export function ServiceTooltip({
+  icon,
+  label,
+  price,
+  children,
+}: {
+  icon: string;
+  label: string;
+  price: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>{children}</TooltipTrigger>
+        <TooltipContent size="lg" variant="teal" side="bottom">
+          <div className="flex items-center gap-3">
+            <Icon name={icon} size={20} className="text-white" />
+            <div>
+              <p className="font-medium">{label}</p>
+              <p className="text-xs text-teal-100">{price}</p>
+            </div>
+          </div>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+}
 
-const TooltipProvider = TooltipPrimitive.Provider
+// Использование
+<ServiceTooltip icon="Sofa" label="Химчистка диванов" price="от 3 500 ₽">
+  <div className="w-12 h-12 rounded-xl bg-teal-light flex items-center justify-center cursor-pointer hover:bg-teal/20 transition-colors">
+    <Icon name="Sofa" size={22} className="text-teal" />
+  </div>
+</ServiceTooltip>;
 
-const Tooltip = TooltipPrimitive.Root
+// ============================
+// Подсказка для цены
+// ============================
 
-const TooltipTrigger = TooltipPrimitive.Trigger
+export function PriceTooltip({
+  children,
+  price,
+  description,
+}: {
+  children: React.ReactNode;
+  price: string;
+  description: string;
+}) {
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <span className="cursor-help border-b border-dashed border-gray-300">
+            {children}
+          </span>
+        </TooltipTrigger>
+        <TooltipContent size="sm">
+          <p className="font-semibold text-teal">{price}</p>
+          <p className="text-xs text-muted-foreground">{description}</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+}
 
-const TooltipContent = React.forwardRef<
-  React.ElementRef<typeof TooltipPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>
->(({ className, sideOffset = 4, ...props }, ref) => (
-  <TooltipPrimitive.Content
-    ref={ref}
-    sideOffset={sideOffset}
-    className={cn(
-      "z-50 overflow-hidden rounded-md border bg-popover px-3 py-1.5 text-sm text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
-      className
-    )}
-    {...props}
-  />
-))
-TooltipContent.displayName = TooltipPrimitive.Content.displayName
+// Использование
+<PriceTooltip
+  price="3 500 ₽"
+  description="Стандартная чистка дивана 2-местного"
+>
+  3 500 ₽
+</PriceTooltip>;
 
-export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider }
+// ============================
+// Подсказка для кнопки телефона
+// ============================
+
+export function PhoneTooltip() {
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            variant="teal"
+            className="rounded-full w-14 h-14 shadow-lg hover:scale-110 transition-transform"
+          >
+            <Icon name="Phone" size={24} className="text-white" />
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent variant="dark" side="left" sideOffset={8}>
+          <div className="space-y-1">
+            <p className="font-semibold">Звоните прямо сейчас</p>
+            <p className="text-xs text-gray-400">8 918 968-28-82</p>
+          </div>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+}
+
+// ============================
+// Подсказка с бейджем
+// ============================
+
+export function BadgeTooltip({
+  children,
+  badge,
+}: {
+  children: React.ReactNode;
+  badge: string;
+}) {
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>{children}</TooltipTrigger>
+        <TooltipContent size="sm" variant="teal" side="top">
+          <div className="flex items-center gap-1.5">
+            <Icon name="Zap" size={12} className="text-yellow-300" />
+            <span>{badge}</span>
+          </div>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+}
+
+// Использование
+<BadgeTooltip badge="Популярно">
+  <Badge variant="teal">Хит</Badge>
+</BadgeTooltip>;
