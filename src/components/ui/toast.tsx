@@ -1,11 +1,16 @@
-import * as React from "react"
-import * as ToastPrimitives from "@radix-ui/react-toast"
-import { cva, type VariantProps } from "class-variance-authority"
-import { X } from "lucide-react"
+import * as React from "react";
+import * as ToastPrimitives from "@radix-ui/react-toast";
+import { cva, type VariantProps } from "class-variance-authority";
+import { X } from "lucide-react";
+import { Helmet } from "react-helmet-async";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
-const ToastProvider = ToastPrimitives.Provider
+// ============================================================
+// БАЗОВЫЙ КОМПОНЕНТ TOAST
+// ============================================================
+
+const ToastProvider = ToastPrimitives.Provider;
 
 const ToastViewport = React.forwardRef<
   React.ElementRef<typeof ToastPrimitives.Viewport>,
@@ -19,8 +24,8 @@ const ToastViewport = React.forwardRef<
     )}
     {...props}
   />
-))
-ToastViewport.displayName = ToastPrimitives.Viewport.displayName
+));
+ToastViewport.displayName = ToastPrimitives.Viewport.displayName;
 
 const toastVariants = cva(
   "group pointer-events-auto relative flex w-full items-center justify-between space-x-4 overflow-hidden rounded-md border p-6 pr-8 shadow-lg transition-all data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-[var(--radix-toast-swipe-end-x)] data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=move]:transition-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[swipe=end]:animate-out data-[state=closed]:fade-out-80 data-[state=closed]:slide-out-to-right-full data-[state=open]:slide-in-from-top-full data-[state=open]:sm:slide-in-from-bottom-full",
@@ -30,13 +35,16 @@ const toastVariants = cva(
         default: "border bg-background text-foreground",
         destructive:
           "destructive group border-destructive bg-destructive text-destructive-foreground",
+        success: "border-green-500 bg-green-50 text-green-800",
+        warning: "border-yellow-500 bg-yellow-50 text-yellow-800",
+        info: "border-blue-500 bg-blue-50 text-blue-800",
       },
     },
     defaultVariants: {
       variant: "default",
     },
   }
-)
+);
 
 const Toast = React.forwardRef<
   React.ElementRef<typeof ToastPrimitives.Root>,
@@ -49,9 +57,9 @@ const Toast = React.forwardRef<
       className={cn(toastVariants({ variant }), className)}
       {...props}
     />
-  )
-})
-Toast.displayName = ToastPrimitives.Root.displayName
+  );
+});
+Toast.displayName = ToastPrimitives.Root.displayName;
 
 const ToastAction = React.forwardRef<
   React.ElementRef<typeof ToastPrimitives.Action>,
@@ -65,8 +73,8 @@ const ToastAction = React.forwardRef<
     )}
     {...props}
   />
-))
-ToastAction.displayName = ToastPrimitives.Action.displayName
+));
+ToastAction.displayName = ToastPrimitives.Action.displayName;
 
 const ToastClose = React.forwardRef<
   React.ElementRef<typeof ToastPrimitives.Close>,
@@ -83,8 +91,8 @@ const ToastClose = React.forwardRef<
   >
     <X className="h-4 w-4" />
   </ToastPrimitives.Close>
-))
-ToastClose.displayName = ToastPrimitives.Close.displayName
+));
+ToastClose.displayName = ToastPrimitives.Close.displayName;
 
 const ToastTitle = React.forwardRef<
   React.ElementRef<typeof ToastPrimitives.Title>,
@@ -95,8 +103,8 @@ const ToastTitle = React.forwardRef<
     className={cn("text-sm font-semibold", className)}
     {...props}
   />
-))
-ToastTitle.displayName = ToastPrimitives.Title.displayName
+));
+ToastTitle.displayName = ToastPrimitives.Title.displayName;
 
 const ToastDescription = React.forwardRef<
   React.ElementRef<typeof ToastPrimitives.Description>,
@@ -107,12 +115,11 @@ const ToastDescription = React.forwardRef<
     className={cn("text-sm opacity-90", className)}
     {...props}
   />
-))
-ToastDescription.displayName = ToastPrimitives.Description.displayName
+));
+ToastDescription.displayName = ToastPrimitives.Description.displayName;
 
-type ToastProps = React.ComponentPropsWithoutRef<typeof Toast>
-
-type ToastActionElement = React.ReactElement<typeof ToastAction>
+type ToastProps = React.ComponentPropsWithoutRef<typeof Toast>;
+type ToastActionElement = React.ReactElement<typeof ToastAction>;
 
 export {
   type ToastProps,
@@ -124,4 +131,99 @@ export {
   ToastDescription,
   ToastClose,
   ToastAction,
+};
+
+// ============================================================
+# ВСПОМОГАТЕЛЬНАЯ ФУНКЦИЯ ДЛЯ ПОКАЗА УВЕДОМЛЕНИЙ
+// ============================================================
+
+interface ShowToastOptions {
+  title: string;
+  description?: string;
+  variant?: "default" | "destructive" | "success" | "warning" | "info";
+  action?: {
+    label: string;
+    onClick: () => void;
+  };
+  duration?: number;
+}
+
+export function showToast(options: ShowToastOptions) {
+  // Эта функция должна использоваться с хуком useToast
+  // или с системой уведомлений, которая у вас настроена
+  console.log("[Toast]", options);
+}
+
+// ============================================================
+# ПРЕДНАСТРОЕННЫЕ УВЕДОМЛЕНИЯ ДЛЯ ВАШЕГО САЙТА
+// ============================================================
+
+/**
+ * Уведомление об успешной отправке заявки
+ */
+export function notifyOrderSubmitted(name?: string) {
+  return {
+    title: "✅ Заявка принята!",
+    description: name 
+      ? `${name}, мы перезвоним в течение 15 минут` 
+      : "Мы перезвоним в течение 15 минут",
+    variant: "success" as const,
+    duration: 4000,
+  };
+}
+
+/**
+ * Уведомление об ошибке при отправке заявки
+ */
+export function notifyOrderError() {
+  return {
+    title: "❌ Не удалось отправить заявку",
+    description: "Пожалуйста, попробуйте позже или позвоните нам",
+    variant: "destructive" as const,
+    duration: 5000,
+  };
+}
+
+/**
+ * Уведомление об успешной подписке
+ */
+export function notifySubscribeSuccess(email: string) {
+  return {
+    title: "📧 Подписка оформлена!",
+    description: `На ${email} будут приходить новости и акции`,
+    variant: "success" as const,
+    duration: 4000,
+  };
+}
+
+/**
+ * Уведомление о действии с корзиной
+ */
+export function notifyCartAction(itemName: string, action: "add" | "remove") {
+  if (action === "add") {
+    return {
+      title: "🛒 Добавлено в корзину",
+      description: `${itemName} добавлен в корзину`,
+      variant: "success" as const,
+      duration: 3000,
+    };
+  }
+  return {
+    title: "🗑️ Удалено из корзины",
+    description: `${itemName} удалён из корзины`,
+    variant: "warning" as const,
+    duration: 3000,
+  };
+}
+
+/**
+ * Уведомление о загрузке
+ */
+export function notifyLoading() {
+  return {
+    title: "⏳ Загрузка...",
+    description: "Пожалуйста, подождите",
+    variant: "info" as const,
+    duration: 0, // не исчезает автоматически
+  };
 }
