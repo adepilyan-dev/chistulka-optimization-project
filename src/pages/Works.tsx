@@ -4,6 +4,7 @@ import Icon from "@/components/ui/icon";
 import Seo from "@/components/Seo";
 import { WORKS, WORK_CATEGORIES, WorkCase } from "@/data/works";
 
+const SITE = "https://arenda-chistoty.ru";
 const ITEMS_PER_PAGE = 6;
 
 function WorkCard({ work, onClick }: { work: WorkCase; onClick: () => void }) {
@@ -49,14 +50,20 @@ function WorkCard({ work, onClick }: { work: WorkCase; onClick: () => void }) {
           }}
         >
           <span>{hovered ? "После" : "До"}</span>
-          <Icon name="ArrowLeftRight" size={12} />
+          <Icon name="ArrowLeftRight" size={12} aria-hidden="true" />
         </div>
       </div>
       <div className="p-4">
-        <h3 className="font-oswald font-bold text-base mb-1" style={{ color: "var(--dark)" }}>
+        <h3
+          className="font-oswald font-bold text-base mb-1"
+          style={{ color: "var(--dark)" }}
+        >
           {work.title}
         </h3>
-        <p className="text-xs mb-3 line-clamp-2" style={{ color: "var(--gray)" }}>
+        <p
+          className="text-xs mb-3 line-clamp-2"
+          style={{ color: "var(--gray)" }}
+        >
           {work.stain}
         </p>
         <button
@@ -64,7 +71,7 @@ function WorkCard({ work, onClick }: { work: WorkCase; onClick: () => void }) {
           style={{ color: "var(--teal)" }}
         >
           Подробнее
-          <Icon name="ChevronRight" size={14} />
+          <Icon name="ChevronRight" size={14} aria-hidden="true" />
         </button>
       </div>
     </div>
@@ -76,11 +83,15 @@ function WorkModal({ work, onClose }: { work: WorkCase; onClose: () => void }) {
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, []);
 
   useEffect(() => {
-    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
   }, [onClose]);
@@ -102,7 +113,6 @@ function WorkModal({ work, onClose }: { work: WorkCase; onClose: () => void }) {
             className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
             style={{ opacity: showAfter ? 0 : 1 }}
             loading="eager"
-            decoding="async"
             fetchPriority="high"
           />
           <img
@@ -117,6 +127,7 @@ function WorkModal({ work, onClose }: { work: WorkCase; onClose: () => void }) {
             onClick={onClose}
             className="absolute top-3 right-3 w-9 h-9 rounded-full flex items-center justify-center z-10"
             style={{ background: "rgba(0,0,0,0.5)" }}
+            aria-label="Закрыть"
           >
             <Icon name="X" size={18} style={{ color: "white" }} />
           </button>
@@ -125,7 +136,9 @@ function WorkModal({ work, onClose }: { work: WorkCase; onClose: () => void }) {
               onClick={() => setShowAfter(false)}
               className="px-5 py-2 text-sm font-semibold transition-all"
               style={{
-                background: !showAfter ? "var(--yellow)" : "rgba(255,255,255,0.85)",
+                background: !showAfter
+                  ? "var(--yellow)"
+                  : "rgba(255,255,255,0.85)",
                 color: "var(--dark)",
               }}
             >
@@ -135,7 +148,9 @@ function WorkModal({ work, onClose }: { work: WorkCase; onClose: () => void }) {
               onClick={() => setShowAfter(true)}
               className="px-5 py-2 text-sm font-semibold transition-all"
               style={{
-                background: showAfter ? "var(--yellow)" : "rgba(255,255,255,0.85)",
+                background: showAfter
+                  ? "var(--yellow)"
+                  : "rgba(255,255,255,0.85)",
                 color: "var(--dark)",
               }}
             >
@@ -147,12 +162,18 @@ function WorkModal({ work, onClose }: { work: WorkCase; onClose: () => void }) {
           <div className="flex items-center gap-2 mb-3">
             <span
               className="text-xs font-semibold px-3 py-1 rounded-full"
-              style={{ background: "var(--teal-light)", color: "var(--teal-dark)" }}
+              style={{
+                background: "var(--teal-light)",
+                color: "var(--teal-dark)",
+              }}
             >
               {work.categoryLabel}
             </span>
           </div>
-          <h2 className="font-oswald font-bold text-2xl mb-2" style={{ color: "var(--dark)" }}>
+          <h2
+            className="font-oswald font-bold text-2xl mb-2"
+            style={{ color: "var(--dark)" }}
+          >
             {work.title}
           </h2>
           <p className="text-sm mb-4" style={{ color: "var(--gray)" }}>
@@ -160,19 +181,36 @@ function WorkModal({ work, onClose }: { work: WorkCase; onClose: () => void }) {
           </p>
           <div className="grid grid-cols-2 gap-3 mb-5">
             <div className="rounded-xl p-3" style={{ background: "#fff3f3" }}>
-              <p className="text-xs font-semibold mb-1" style={{ color: "#c0392b" }}>Загрязнение</p>
-              <p className="text-sm" style={{ color: "var(--dark)" }}>{work.stain}</p>
+              <p
+                className="text-xs font-semibold mb-1"
+                style={{ color: "#c0392b" }}
+              >
+                Загрязнение
+              </p>
+              <p className="text-sm" style={{ color: "var(--dark)" }}>
+                {work.stain}
+              </p>
             </div>
-            <div className="rounded-xl p-3" style={{ background: "var(--teal-light)" }}>
-              <p className="text-xs font-semibold mb-1" style={{ color: "var(--teal-dark)" }}>Результат</p>
-              <p className="text-sm" style={{ color: "var(--dark)" }}>{work.result}</p>
+            <div
+              className="rounded-xl p-3"
+              style={{ background: "var(--teal-light)" }}
+            >
+              <p
+                className="text-xs font-semibold mb-1"
+                style={{ color: "var(--teal-dark)" }}
+              >
+                Результат
+              </p>
+              <p className="text-sm" style={{ color: "var(--dark)" }}>
+                {work.result}
+              </p>
             </div>
           </div>
           <a
-            href="tel:+79180000000"
+            href="tel:+79189682882"
             className="btn-primary w-full py-3 text-sm font-semibold flex items-center justify-center gap-2"
           >
-            <Icon name="Phone" size={16} />
+            <Icon name="Phone" size={16} aria-hidden="true" />
             Заказать такую же чистку
           </a>
         </div>
@@ -186,12 +224,16 @@ export default function Works() {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedWork, setSelectedWork] = useState<WorkCase | null>(null);
 
-  const filtered = activeCategory === "all"
-    ? WORKS
-    : WORKS.filter((w) => w.category === activeCategory);
+  const filtered =
+    activeCategory === "all"
+      ? WORKS
+      : WORKS.filter((w) => w.category === activeCategory);
 
   const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
-  const paginated = filtered.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
+  const paginated = filtered.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE,
+  );
 
   const handleCategory = (cat: string) => {
     setActiveCategory(cat);
@@ -210,37 +252,58 @@ export default function Works() {
           "@context": "https://schema.org",
           "@type": "LocalBusiness",
           name: "Аренда Чистоты",
-          description: "Профессиональная химчистка мебели с выездом на дом в Краснодаре",
+          description:
+            "Профессиональная химчистка мебели с выездом на дом в Краснодаре",
           telephone: "+79189682882",
-          url: "https://arenda-chistoty.online",
-          image: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/1f8a12d2-02a6-452c-a1cb-4fa8f342c646.jpg",
-          address: { "@type": "PostalAddress", addressLocality: "Краснодар", addressCountry: "RU" },
-          aggregateRating: { "@type": "AggregateRating", ratingValue: "4.98", reviewCount: "1240", bestRating: "5" },
-          hasMap: "https://arenda-chistoty.online/nashi-raboty",
+          url: `${SITE}`,
+          image:
+            "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/1f8a12d2-02a6-452c-a1cb-4fa8f342c646.jpg",
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: "Краснодар",
+            addressCountry: "RU",
+          },
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: "4.98",
+            reviewCount: "1240",
+            bestRating: "5",
+          },
+          hasMap: `${SITE}/nashi-raboty`,
         }}
       />
 
       <div style={{ background: "var(--light-bg)", minHeight: "100vh" }}>
         <div className="container max-w-5xl mx-auto px-4 py-8">
-
           {/* Хлебные крошки */}
-          <nav className="flex items-center gap-2 text-sm mb-6" style={{ color: "var(--gray)" }}>
-            <Link to="/" className="hover:text-teal transition-colors" style={{ color: "var(--teal)" }}>
+          <nav
+            className="flex items-center gap-2 text-sm mb-6"
+            style={{ color: "var(--gray)" }}
+            aria-label="Хлебные крошки"
+          >
+            <Link
+              to="/"
+              className="hover:text-teal transition-colors"
+              style={{ color: "var(--teal)" }}
+            >
               Главная
             </Link>
-            <Icon name="ChevronRight" size={14} />
+            <Icon name="ChevronRight" size={14} aria-hidden="true" />
             <span>Наши работы</span>
           </nav>
 
           {/* Заголовок */}
           <div className="mb-8">
             <span className="section-tag mb-3">Портфолио</span>
-            <h1 className="font-oswald font-bold text-3xl sm:text-4xl mb-3" style={{ color: "var(--dark)" }}>
+            <h1
+              className="font-oswald font-bold text-3xl sm:text-4xl mb-3"
+              style={{ color: "var(--dark)" }}
+            >
               Наши работы: реальные примеры химчистки мебели в Краснодаре
             </h1>
             <p className="text-base" style={{ color: "var(--gray)" }}>
-              Только честные фото «до» и «после» — без фотошопа и постановочных снимков.
-              Наведите на карточку, чтобы увидеть результат.
+              Только честные фото «до» и «после» — без фотошопа и постановочных
+              снимков. Наведите на карточку, чтобы увидеть результат.
             </p>
           </div>
 
@@ -254,7 +317,11 @@ export default function Works() {
                 style={
                   activeCategory === cat.key
                     ? { background: "var(--teal)", color: "white" }
-                    : { background: "white", color: "var(--gray)", border: "1px solid #e5e7eb" }
+                    : {
+                        background: "white",
+                        color: "var(--gray)",
+                        border: "1px solid #e5e7eb",
+                      }
                 }
               >
                 {cat.label}
@@ -266,12 +333,20 @@ export default function Works() {
           {paginated.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
               {paginated.map((work) => (
-                <WorkCard key={work.id} work={work} onClick={() => setSelectedWork(work)} />
+                <WorkCard
+                  key={work.id}
+                  work={work}
+                  onClick={() => setSelectedWork(work)}
+                />
               ))}
             </div>
           ) : (
             <div className="text-center py-20" style={{ color: "var(--gray)" }}>
-              <Icon name="ImageOff" size={48} className="mx-auto mb-4 opacity-30" />
+              <Icon
+                name="ImageOff"
+                size={48}
+                className="mx-auto mb-4 opacity-30"
+              />
               <p className="text-lg">Пока нет работ в этой категории</p>
             </div>
           )}
@@ -284,30 +359,38 @@ export default function Works() {
                 disabled={currentPage === 1}
                 className="w-9 h-9 rounded-full flex items-center justify-center transition-all disabled:opacity-30"
                 style={{ border: "1px solid #e5e7eb", color: "var(--gray)" }}
+                aria-label="Предыдущая страница"
               >
-                <Icon name="ChevronLeft" size={16} />
+                <Icon name="ChevronLeft" size={16} aria-hidden="true" />
               </button>
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                <button
-                  key={page}
-                  onClick={() => setCurrentPage(page)}
-                  className="w-9 h-9 rounded-full text-sm font-semibold transition-all"
-                  style={
-                    currentPage === page
-                      ? { background: "var(--teal)", color: "white" }
-                      : { border: "1px solid #e5e7eb", color: "var(--gray)" }
-                  }
-                >
-                  {page}
-                </button>
-              ))}
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                (page) => (
+                  <button
+                    key={page}
+                    onClick={() => setCurrentPage(page)}
+                    className="w-9 h-9 rounded-full text-sm font-semibold transition-all"
+                    style={
+                      currentPage === page
+                        ? { background: "var(--teal)", color: "white" }
+                        : { border: "1px solid #e5e7eb", color: "var(--gray)" }
+                    }
+                    aria-label={`Страница ${page}`}
+                    aria-current={currentPage === page ? "page" : undefined}
+                  >
+                    {page}
+                  </button>
+                ),
+              )}
               <button
-                onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                onClick={() =>
+                  setCurrentPage((p) => Math.min(totalPages, p + 1))
+                }
                 disabled={currentPage === totalPages}
                 className="w-9 h-9 rounded-full flex items-center justify-center transition-all disabled:opacity-30"
                 style={{ border: "1px solid #e5e7eb", color: "var(--gray)" }}
+                aria-label="Следующая страница"
               >
-                <Icon name="ChevronRight" size={16} />
+                <Icon name="ChevronRight" size={16} aria-hidden="true" />
               </button>
             </div>
           )}
@@ -316,7 +399,10 @@ export default function Works() {
           <div className="mb-12">
             <div className="text-center mb-6">
               <span className="section-tag mb-2">Видео</span>
-              <h2 className="font-oswald font-bold text-2xl sm:text-3xl mt-3" style={{ color: "var(--dark)" }}>
+              <h2
+                className="font-oswald font-bold text-2xl sm:text-3xl mt-3"
+                style={{ color: "var(--dark)" }}
+              >
                 Смотрите процесс чистки
               </h2>
             </div>
@@ -332,7 +418,11 @@ export default function Works() {
                     playsInline
                     preload="metadata"
                     className="w-full"
-                    style={{ aspectRatio: "16/9", objectFit: "cover", display: "block" }}
+                    style={{
+                      aspectRatio: "16/9",
+                      objectFit: "cover",
+                      display: "block",
+                    }}
                   />
                 </div>
               ))}
@@ -342,7 +432,10 @@ export default function Works() {
           {/* Блок CTA */}
           <div
             className="rounded-2xl p-8 text-center mb-12"
-            style={{ background: "linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%)" }}
+            style={{
+              background:
+                "linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%)",
+            }}
           >
             <h2 className="font-oswald font-bold text-2xl sm:text-3xl text-white mb-2">
               Хотите такой же результат?
@@ -351,10 +444,10 @@ export default function Works() {
               Выезд мастера бесплатно. Оценка стоимости на месте.
             </p>
             <a
-              href="tel:+79180000000"
+              href="tel:+79189682882"
               className="btn-primary inline-flex items-center gap-2 px-8 py-3 text-base"
             >
-              <Icon name="Phone" size={18} />
+              <Icon name="Phone" size={18} aria-hidden="true" />
               Заказать чистку
             </a>
           </div>
@@ -363,49 +456,72 @@ export default function Works() {
           <div className="prose max-w-none">
             <div
               className="rounded-2xl p-6 sm:p-8"
-              style={{ background: "white", border: "1px solid rgba(12,184,160,0.12)" }}
+              style={{
+                background: "white",
+                border: "1px solid rgba(12,184,160,0.12)",
+              }}
             >
-              <h2 className="font-oswald font-bold text-xl mb-4" style={{ color: "var(--dark)" }}>
+              <h2
+                className="font-oswald font-bold text-xl mb-4"
+                style={{ color: "var(--dark)" }}
+              >
                 О нашей технологии химчистки мебели
               </h2>
-              <div className="space-y-4 text-sm leading-relaxed" style={{ color: "var(--gray)" }}>
+              <div
+                className="space-y-4 text-sm leading-relaxed"
+                style={{ color: "var(--gray)" }}
+              >
                 <p>
-                  <strong style={{ color: "var(--dark)" }}>Химчистка диванов в Краснодаре</strong> — одна из наших
-                  ключевых услуг. Мы используем профессиональное оборудование итальянских и немецких
-                  производителей: аппараты горячей экстракции удаляют загрязнения из глубины ворса,
-                  а не только с поверхности. Результат сохраняется 6–12 месяцев при обычной
-                  эксплуатации.
+                  <strong style={{ color: "var(--dark)" }}>
+                    Химчистка диванов в Краснодаре
+                  </strong>{" "}
+                  — одна из наших ключевых услуг. Мы используем профессиональное
+                  оборудование итальянских и немецких производителей: аппараты
+                  горячей экстракции удаляют загрязнения из глубины ворса, а не
+                  только с поверхности. Результат сохраняется 6–12 месяцев при
+                  обычной эксплуатации.
                 </p>
                 <p>
-                  <strong style={{ color: "var(--dark)" }}>Химчистка матрасов</strong> — особенно важна для
-                  семей с детьми и аллергиков. В матрасе накапливаются пылевые клещи, споры плесени
-                  и органические загрязнения. После нашей обработки матрас проходит ультрафиолетовую
-                  санацию и дезинфицирующую обработку — безопасную для детей и домашних животных.
+                  <strong style={{ color: "var(--dark)" }}>
+                    Химчистка матрасов
+                  </strong>{" "}
+                  — особенно важна для семей с детьми и аллергиков. В матрасе
+                  накапливаются пылевые клещи, споры плесени и органические
+                  загрязнения. После нашей обработки матрас проходит
+                  ультрафиолетовую санацию и дезинфицирующую обработку —
+                  безопасную для детей и домашних животных.
                 </p>
                 <p>
-                  <strong style={{ color: "var(--dark)" }}>Химчистка кресел и мягкой мебели</strong> на деревянном
-                  каркасе требует особой аккуратности: мы защищаем деревянные элементы и фурнитуру
-                  при работе с влажными составами. Кожаную мебель дополнительно обрабатываем
-                  кондиционирующим составом, восстанавливающим эластичность кожи.
+                  <strong style={{ color: "var(--dark)" }}>
+                    Химчистка кресел и мягкой мебели
+                  </strong>{" "}
+                  на деревянном каркасе требует особой аккуратности: мы защищаем
+                  деревянные элементы и фурнитуру при работе с влажными
+                  составами. Кожаную мебель дополнительно обрабатываем
+                  кондиционирующим составом, восстанавливающим эластичность
+                  кожи.
                 </p>
                 <p>
-                  Все работы выполняем <strong style={{ color: "var(--dark)" }}>с выездом на дом в Краснодаре</strong>.
-                  Время высыхания — 2–4 часа. Принимаем заказы ежедневно с 8:00 до 21:00.
+                  Все работы выполняем{" "}
+                  <strong style={{ color: "var(--dark)" }}>
+                    с выездом на дом в Краснодаре
+                  </strong>
+                  . Время высыхания — 2–4 часа. Принимаем заказы ежедневно с
+                  8:00 до 21:00.
                 </p>
               </div>
             </div>
           </div>
-
         </div>
       </div>
 
       {/* Плавающая кнопка */}
       <a
-        href="tel:+79180000000"
+        href="tel:+79189682882"
         className="fixed bottom-6 right-6 z-50 btn-primary flex items-center gap-2 px-5 py-3 text-sm font-semibold shadow-xl"
         style={{ boxShadow: "0 8px 32px rgba(255,226,39,0.45)" }}
       >
-        <Icon name="Phone" size={16} />
+        <Icon name="Phone" size={16} aria-hidden="true" />
         Заказать выезд
       </a>
 
