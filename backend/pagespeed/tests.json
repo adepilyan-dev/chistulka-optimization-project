@@ -1,0 +1,12 @@
+{
+  "tests": [
+    {
+      "name": "PageSpeed — mobile check",
+      "method": "GET",
+      "path": "/?strategy=mobile",
+      "expectedStatus": 200,
+      "expectedBody": {"scores": {}},
+      "bodyMatcher": "partial"
+    }
+  ]
+}
