@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { Helmet } from "react-helmet-async";
 
 // ============ УТИЛИТЫ ============
 
@@ -14,8 +15,10 @@ export function useInView(threshold = 0.12) {
   const [inView, setInView] = useState(false);
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setInView(true); },
-      { threshold }
+      ([entry]) => {
+        if (entry.isIntersecting) setInView(true);
+      },
+      { threshold },
     );
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
@@ -35,6 +38,80 @@ export const NAV_LINKS = [
   { label: "Контакты", href: "#contacts" },
 ];
 
+// ============================================================
+// МИКРОРАЗМЕТКА ДЛЯ УСЛУГ (ItemList)
+// ============================================================
+
+const servicesLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Услуги химчистки мебели в Краснодаре",
+  description:
+    "Профессиональная химчистка диванов, кресел, матрасов, ковров, стульев и автосалонов с выездом на дом.",
+  itemListElement: SERVICES.map((service, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    item: {
+      "@type": "Service",
+      name: service.title,
+      description: service.desc,
+      provider: {
+        "@type": "LocalBusiness",
+        name: "Аренда Чистоты",
+        telephone: "+79189682882",
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: "Краснодар",
+          addressRegion: "Краснодарский край",
+          addressCountry: "RU",
+        },
+      },
+      areaServed: {
+        "@type": "City",
+        name: "Краснодар",
+      },
+    },
+  })),
+};
+
+// ============================================================
+// МИКРОРАЗМЕТКА ДЛЯ ЧАСТЫХ ВОПРОСОВ (FAQPage)
+// ============================================================
+
+const faqLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQ_ITEMS.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.a,
+    },
+  })),
+};
+
+// ============================================================
+// МИКРОРАЗМЕТКА ДЛЯ РЕЙТИНГА (AggregateRating)
+// ============================================================
+
+const ratingLd = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: "Аренда Чистоты",
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: "4.98",
+    reviewCount: "1240",
+    bestRating: "5",
+    ratingCount: "1240",
+  },
+};
+
+// ============================================================
+// ДАННЫЕ С ИСПРАВЛЕННЫМИ ИЗОБРАЖЕНИЯМИ (width/height добавлены)
+// ============================================================
+
 export const SERVICES = [
   {
     icon: "Sofa",
@@ -43,6 +120,9 @@ export const SERVICES = [
     color: "#0cb8a0",
     badge: "Хит",
     img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/bcb4a8aa-0dfd-4cad-bef1-70049379a194.jpg",
+    width: 400,
+    height: 300,
+    link: "/uslugi/himchistka-divanov",
   },
   {
     icon: "ArmchairIcon",
@@ -51,6 +131,9 @@ export const SERVICES = [
     color: "#c9a800",
     badge: null,
     img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/32dbcd93-9d05-4cd0-97be-b92950779a37.jpg",
+    width: 400,
+    height: 300,
+    link: "/uslugi/himchistka-kresel",
   },
   {
     icon: "BedDouble",
@@ -59,6 +142,9 @@ export const SERVICES = [
     color: "#0cb8a0",
     badge: "Популярно",
     img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/157e0325-e980-40bb-ad12-0ac0666b29c4.jpg",
+    width: 400,
+    height: 300,
+    link: "/uslugi/himchistka-matrasov",
   },
   {
     icon: "LayoutGrid",
@@ -67,6 +153,9 @@ export const SERVICES = [
     color: "#c9a800",
     badge: null,
     img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/6892c9d8-2c73-4645-9fd6-399caee62037.jpg",
+    width: 400,
+    height: 300,
+    link: "/uslugi/himchistka-kovrov",
   },
   {
     icon: "Armchair",
@@ -75,6 +164,9 @@ export const SERVICES = [
     color: "#0cb8a0",
     badge: null,
     img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/e34f7bce-a582-4425-a8e4-da241d6b65e3.jpg",
+    width: 400,
+    height: 300,
+    link: "/uslugi/himchistka-stulev",
   },
   {
     icon: "Car",
@@ -83,6 +175,9 @@ export const SERVICES = [
     color: "#c9a800",
     badge: null,
     img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/bcb5b240-69f5-4098-908b-011a606d4c63.jpg",
+    width: 400,
+    height: 300,
+    link: "/uslugi/himchistka-avtosalona",
   },
 ];
 
@@ -92,6 +187,10 @@ export const STATS = [
   { num: "99%", label: "пятен выводим" },
   { num: "2–4 ч", label: "время высыхания" },
 ];
+
+// ============================================================
+// ОТЗЫВЫ С МИКРОРАЗМЕТКОЙ (уже добавлены отдельно)
+// ============================================================
 
 export const REVIEWS = [
   {
@@ -124,14 +223,64 @@ export const REVIEWS = [
   },
 ];
 
+// ============================================================
+// ГАЛЕРЕЯ С WIDTH/HEIGHT
+// ============================================================
+
 export const GALLERY_ITEMS = [
-  { label: "Угловой диван после чистки", tag: "Диван", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/51340069-99b0-4850-915a-6563a587e2b6.jpg", ratio: "4/3" },
-  { label: "Диван до чистки", tag: "Диван", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/38109181-291f-43d2-acbc-d8059547943b.jpg", ratio: "4/3" },
-  { label: "Матрас после чистки", tag: "Матрас", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/041e747b-9a0e-4bea-9335-238eabfa4473.jpg", ratio: "4/3" },
-  { label: "Матрас до чистки", tag: "Матрас", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/4bc0afcd-6c3b-4c6e-89d0-51569d1ef36e.jpg", ratio: "4/3" },
-  { label: "Диван после чистки", tag: "Диван", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/19a85ebd-07f4-41ee-b669-283901cc5d56.jpg", ratio: "4/3" },
-  { label: "Диван на подлокотниках", tag: "Диван", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/de8a7092-f0d1-4176-91fc-8f045dbc7bb0.jpg", ratio: "4/3" },
+  {
+    label: "Угловой диван после чистки",
+    tag: "Диван",
+    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/51340069-99b0-4850-915a-6563a587e2b6.jpg",
+    ratio: "4/3",
+    width: 400,
+    height: 300,
+  },
+  {
+    label: "Диван до чистки",
+    tag: "Диван",
+    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/38109181-291f-43d2-acbc-d8059547943b.jpg",
+    ratio: "4/3",
+    width: 400,
+    height: 300,
+  },
+  {
+    label: "Матрас после чистки",
+    tag: "Матрас",
+    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/041e747b-9a0e-4bea-9335-238eabfa4473.jpg",
+    ratio: "4/3",
+    width: 400,
+    height: 300,
+  },
+  {
+    label: "Матрас до чистки",
+    tag: "Матрас",
+    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/4bc0afcd-6c3b-4c6e-89d0-51569d1ef36e.jpg",
+    ratio: "4/3",
+    width: 400,
+    height: 300,
+  },
+  {
+    label: "Диван после чистки",
+    tag: "Диван",
+    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/19a85ebd-07f4-41ee-b669-283901cc5d56.jpg",
+    ratio: "4/3",
+    width: 400,
+    height: 300,
+  },
+  {
+    label: "Диван на подлокотниках",
+    tag: "Диван",
+    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/de8a7092-f0d1-4176-91fc-8f045dbc7bb0.jpg",
+    ratio: "4/3",
+    width: 400,
+    height: 300,
+  },
 ];
+
+// ============================================================
+// КАЛЬКУЛЯТОР (ДАННЫЕ)
+// ============================================================
 
 export const FURNITURE_ITEMS = [
   { id: "sofa_2", label: "Диван 2-местный", emoji: "🛋️", price: 3500 },
@@ -229,3 +378,22 @@ export const FURNITURE_TYPES = [
   { key: "auto", label: "Авто", emoji: "🚗" },
   { key: "other", label: "Другое", emoji: "✨" },
 ];
+
+// ============================================================
+// КОМПОНЕНТ ДЛЯ ВСТАВКИ ВСЕЙ МИКРОРАЗМЕТКИ (использовать в App.tsx)
+// ============================================================
+
+export function SchemaOrg() {
+  return (
+    <Helmet>
+      {/* Услуги */}
+      <script type="application/ld+json">{JSON.stringify(servicesLd)}</script>
+
+      {/* FAQ */}
+      <script type="application/ld+json">{JSON.stringify(faqLd)}</script>
+
+      {/* Рейтинг */}
+      <script type="application/ld+json">{JSON.stringify(ratingLd)}</script>
+    </Helmet>
+  );
+}
