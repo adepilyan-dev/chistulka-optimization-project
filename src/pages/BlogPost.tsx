@@ -58,6 +58,8 @@ export default function BlogPost() {
               src="https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/11571f12-8820-4684-967e-430f28b0c7da.jpg"
               alt="Аренда Чистоты"
               className="h-9 w-auto object-contain"
+              loading="eager"
+              decoding="async"
             />
           </Link>
           <Link to="/#blog" className="flex items-center gap-2 text-sm font-semibold" style={{ color: "var(--teal)" }}>
@@ -83,7 +85,7 @@ export default function BlogPost() {
         </h1>
 
         <div className="rounded-3xl overflow-hidden mb-8 shadow-sm">
-          <img src={post.img} alt={post.title} className="w-full h-auto object-cover" />
+          <img src={post.img} alt={post.title} className="w-full h-auto object-cover" loading="eager" decoding="async" fetchPriority="high" />
         </div>
 
         <article className="bg-white rounded-3xl p-6 md:p-10 shadow-sm space-y-5">

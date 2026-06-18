@@ -83,6 +83,8 @@ export default function ServiceDistrictPage() {
               src="https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/11571f12-8820-4684-967e-430f28b0c7da.jpg"
               alt="Аренда Чистоты"
               className="h-9 w-auto object-contain"
+              loading="eager"
+              decoding="async"
             />
           </Link>
           <Link to={`/uslugi/${service.slug}`} className="flex items-center gap-2 text-sm font-semibold" style={{ color: "var(--teal)" }}>
@@ -140,6 +142,9 @@ export default function ServiceDistrictPage() {
               src={service.img}
               alt={`${service.title} ${d.name}`}
               className="w-full h-full object-cover"
+              loading="eager"
+              decoding="async"
+              fetchPriority="high"
             />
           </div>
         </div>

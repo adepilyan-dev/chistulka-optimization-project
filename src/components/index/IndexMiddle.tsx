@@ -43,6 +43,7 @@ export function About() {
                     alt="Химчистка дивана на дому в Краснодаре"
                     className="w-full h-full object-cover"
                     fetchPriority="high"
+                    decoding="async"
                   />
                 </div>
                 <div className="rounded-2xl p-5" style={{ background: "#ffe227" }}>
@@ -57,6 +58,7 @@ export function About() {
                     alt="Химчистка матраса"
                     className="w-full h-full object-cover"
                     fetchPriority="high"
+                    decoding="async"
                   />
                 </div>
               </div>
@@ -156,7 +158,7 @@ export function HowWeWork() {
             { src: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/b8f3b941-b079-4a94-8843-d814bf91c83a.jpg", alt: "Профессиональная химчистка мебели на дому" },
           ].map((photo) => (
             <div key={photo.src} className="rounded-2xl overflow-hidden" style={{ aspectRatio: "4/3" }}>
-              <img src={photo.src} alt={photo.alt} className="w-full h-full object-cover" loading="lazy" />
+              <img src={photo.src} alt={photo.alt} className="w-full h-full object-cover" loading="lazy" decoding="async" />
             </div>
           ))}
         </div>

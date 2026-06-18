@@ -102,6 +102,8 @@ export default function DistrictPage() {
               src="https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/11571f12-8820-4684-967e-430f28b0c7da.jpg"
               alt="Аренда Чистоты"
               className="h-9 w-auto object-contain"
+              loading="eager"
+              decoding="async"
             />
           </Link>
           <Link to="/" className="flex items-center gap-2 text-sm font-semibold" style={{ color: "var(--teal)" }}>
@@ -155,7 +157,7 @@ export default function DistrictPage() {
             </div>
           </div>
           <div className="rounded-3xl overflow-hidden shadow-lg aspect-[4/3]">
-            <img src={HERO_IMG} alt={`Химчистка мебели ${d.name}`} className="w-full h-full object-cover" />
+            <img src={HERO_IMG} alt={`Химчистка мебели ${d.name}`} className="w-full h-full object-cover" loading="eager" decoding="async" fetchPriority="high" />
           </div>
         </div>
 
@@ -192,7 +194,7 @@ export default function DistrictPage() {
                 className="bg-white rounded-2xl overflow-hidden shadow-sm hover-lift group"
               >
                 <div className="aspect-[4/3] overflow-hidden">
-                  <img src={s.img} alt={`${s.title} ${d.name}`} className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" />
+                  <img src={s.img} alt={`${s.title} ${d.name}`} className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" decoding="async" />
                 </div>
                 <div className="p-4 flex items-center justify-between">
                   <p className="font-oswald font-semibold text-sm" style={{ color: "var(--dark)" }}>{s.title}</p>

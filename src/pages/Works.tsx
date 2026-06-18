@@ -22,12 +22,16 @@ function WorkCard({ work, onClick }: { work: WorkCase; onClick: () => void }) {
           alt={`До — ${work.title}`}
           className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
           style={{ opacity: hovered ? 0 : 1 }}
+          loading="lazy"
+          decoding="async"
         />
         <img
           src={work.afterImg}
           alt={`После — ${work.title}`}
           className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
           style={{ opacity: hovered ? 1 : 0 }}
+          loading="lazy"
+          decoding="async"
         />
         <div className="absolute top-3 left-3 flex gap-1.5">
           <span
@@ -97,12 +101,17 @@ function WorkModal({ work, onClose }: { work: WorkCase; onClose: () => void }) {
             alt="До"
             className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
             style={{ opacity: showAfter ? 0 : 1 }}
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
           />
           <img
             src={work.afterImg}
             alt="После"
             className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
             style={{ opacity: showAfter ? 1 : 0 }}
+            loading="lazy"
+            decoding="async"
           />
           <button
             onClick={onClose}

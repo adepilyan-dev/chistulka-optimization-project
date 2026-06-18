@@ -242,6 +242,7 @@ export function Services() {
                     alt={`${s.title} в Краснодаре`}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     loading="lazy"
+                    decoding="async"
                   />
                   {s.badge && (
                     <span className="absolute top-3 right-3 text-xs font-bold px-2.5 py-1 rounded-full" style={{ background: s.color === "#c9a800" ? "#ffe227" : "var(--teal)", color: s.color === "#c9a800" ? "var(--dark)" : "white" }}>
