@@ -1,12 +1,7 @@
 User-agent: *
 Allow: /
 
-# Запрещаем технические страницы (если они есть)
 Disallow: /hello-world/
 Disallow: /sample-page/
-
-# Указываем путь к карте сайта (только один!)
-Sitemap: https://arenda-chistoty.ru/sitemap.xml
-
-# Указываем основной зеркало сайта (для Яндекса)
-Host: https://arenda-chistoty.ru
+Host: https://arenda-chistoty.online
+Sitemap: https://arenda-chistoty.online/sitemap-index.xml
