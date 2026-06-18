@@ -1,111 +1,53 @@
-// ============================
-// Табы услуг
-// ============================
+import * as React from "react"
+import * as TabsPrimitive from "@radix-ui/react-tabs"
 
-export function ServiceTabs() {
-  return (
-    <Tabs defaultValue="sofa" className="w-full">
-      <TabsList variant="pills" fullWidth className="mb-6">
-        <TabsTrigger value="sofa" fullWidth>
-          <Icon name="Sofa" size={16} className="mr-2" />
-          Диваны
-        </TabsTrigger>
-        <TabsTrigger value="chair" fullWidth>
-          <Icon name="Armchair" size={16} className="mr-2" />
-          Кресла
-        </TabsTrigger>
-        <TabsTrigger value="mattress" fullWidth>
-          <Icon name="Bed" size={16} className="mr-2" />
-          Матрасы
-        </TabsTrigger>
-        <TabsTrigger value="carpet" fullWidth>
-          <Icon name="LayoutGrid" size={16} className="mr-2" />
-          Ковры
-        </TabsTrigger>
-      </TabsList>
+import { cn } from "@/lib/utils"
 
-      <TabsContent value="sofa">
-        <ServiceList type="sofa" />
-      </TabsContent>
-      <TabsContent value="chair">
-        <ServiceList type="chair" />
-      </TabsContent>
-      <TabsContent value="mattress">
-        <ServiceList type="mattress" />
-      </TabsContent>
-      <TabsContent value="carpet">
-        <ServiceList type="carpet" />
-      </TabsContent>
-    </Tabs>
-  );
-}
+const Tabs = TabsPrimitive.Root
 
-// ============================
-// Табы с подчеркиванием
-// ============================
+const TabsList = React.forwardRef<
+  React.ElementRef<typeof TabsPrimitive.List>,
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>
+>(({ className, ...props }, ref) => (
+  <TabsPrimitive.List
+    ref={ref}
+    className={cn(
+      "inline-flex h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground",
+      className
+    )}
+    {...props}
+  />
+))
+TabsList.displayName = TabsPrimitive.List.displayName
 
-export function NavigationTabs() {
-  return (
-    <Tabs defaultValue="about" className="w-full">
-      <TabsList variant="underline" className="w-full justify-start">
-        <TabsTrigger value="about">О компании</TabsTrigger>
-        <TabsTrigger value="reviews">Отзывы</TabsTrigger>
-        <TabsTrigger value="works">Наши работы</TabsTrigger>
-        <TabsTrigger value="faq">Вопросы</TabsTrigger>
-      </TabsList>
-      <TabsContent value="about">
-        <p className="text-muted-foreground">Информация о компании...</p>
-      </TabsContent>
-      <TabsContent value="reviews">
-        <ReviewsList />
-      </TabsContent>
-      <TabsContent value="works">
-        <WorksGallery />
-      </TabsContent>
-      <TabsContent value="faq">
-        <FaqList />
-      </TabsContent>
-    </Tabs>
-  );
-}
+const TabsTrigger = React.forwardRef<
+  React.ElementRef<typeof TabsPrimitive.Trigger>,
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>
+>(({ className, ...props }, ref) => (
+  <TabsPrimitive.Trigger
+    ref={ref}
+    className={cn(
+      "inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm",
+      className
+    )}
+    {...props}
+  />
+))
+TabsTrigger.displayName = TabsPrimitive.Trigger.displayName
 
-// ============================
-// Вертикальные табы в профиле
-// ============================
+const TabsContent = React.forwardRef<
+  React.ElementRef<typeof TabsPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>
+>(({ className, ...props }, ref) => (
+  <TabsPrimitive.Content
+    ref={ref}
+    className={cn(
+      "mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+      className
+    )}
+    {...props}
+  />
+))
+TabsContent.displayName = TabsPrimitive.Content.displayName
 
-export function ProfileTabs() {
-  return (
-    <Tabs defaultValue="orders" orientation="vertical" className="flex gap-6">
-      <TabsList
-        orientation="vertical"
-        variant="outline"
-        className="w-48 h-auto"
-      >
-        <TabsTrigger value="orders" className="justify-start gap-2">
-          <Icon name="Package" size={16} />
-          Заказы
-        </TabsTrigger>
-        <TabsTrigger value="settings" className="justify-start gap-2">
-          <Icon name="Settings" size={16} />
-          Настройки
-        </TabsTrigger>
-        <TabsTrigger value="notifications" className="justify-start gap-2">
-          <Icon name="Bell" size={16} />
-          Уведомления
-        </TabsTrigger>
-      </TabsList>
-
-      <div className="flex-1">
-        <TabsContent value="orders" className="mt-0">
-          <OrdersList />
-        </TabsContent>
-        <TabsContent value="settings" className="mt-0">
-          <SettingsForm />
-        </TabsContent>
-        <TabsContent value="notifications" className="mt-0">
-          <NotificationsSettings />
-        </TabsContent>
-      </div>
-    </Tabs>
-  );
-}
+export { Tabs, TabsList, TabsTrigger, TabsContent }
