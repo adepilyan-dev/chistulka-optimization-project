@@ -1,5 +1,5 @@
 import json
-import os
+import os  # Добавьте импорт os, если его нет
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -38,9 +38,17 @@ def handler(event: dict, context) -> dict:
     </div>
     """
 
-    email_from = "arenda-chistoty.ru@yandex.ru"
-    email_to = "arenda-chistoty.ru@yandex.ru"
-    password = "zupzltohyohpbcgu"
+    # Получаем данные из переменных окружения
+    email_from = os.environ.get("EMAIL_FROM", "arenda-chistoty.ru@yandex.ru")
+    email_to = os.environ.get("EMAIL_TO", "arenda-chistoty.ru@yandex.ru")
+    password = os.environ.get("EMAIL_PASSWORD")
+
+    if not password:
+        return {
+            "statusCode": 500,
+            "headers": cors_headers,
+            "body": json.dumps({"error": "Не настроена отправка почты"}),
+        }
 
     msg = MIMEMultipart("alternative")
     msg["Subject"] = f"Заявка с сайта: {name} — {phone}"
@@ -48,9 +56,16 @@ def handler(event: dict, context) -> dict:
     msg["To"] = email_to
     msg.attach(MIMEText(html, "html", "utf-8"))
 
-    with smtplib.SMTP_SSL("smtp.yandex.ru", 465) as server:
-        server.login(email_from, password)
-        server.sendmail(email_from, email_to, msg.as_string())
+    try:
+        with smtplib.SMTP_SSL("smtp.yandex.ru", 465) as server:
+            server.login(email_from, password)
+            server.sendmail(email_from, email_to, msg.as_string())
+    except Exception as e:
+        return {
+            "statusCode": 500,
+            "headers": cors_headers,
+            "body": json.dumps({"error": f"Ошибка отправки: {str(e)}"}),
+        }
 
     return {
         "statusCode": 200,
