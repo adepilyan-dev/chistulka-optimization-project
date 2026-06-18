@@ -1,69 +1,92 @@
-import * as React from "react"
-import { OTPInput, OTPInputContext } from "input-otp"
-import { Dot } from "lucide-react"
+// Код подтверждения заявки
+function VerificationCode() {
+  const [code, setCode] = React.useState("");
+  const [error, setError] = React.useState(false);
+  const [timer, setTimer] = React.useState(60);
 
-import { cn } from "@/lib/utils"
+  React.useEffect(() => {
+    if (timer > 0) {
+      const interval = setInterval(() => setTimer((t) => t - 1), 1000);
+      return () => clearInterval(interval);
+    }
+  }, [timer]);
 
-const InputOTP = React.forwardRef<
-  React.ElementRef<typeof OTPInput>,
-  React.ComponentPropsWithoutRef<typeof OTPInput>
->(({ className, containerClassName, ...props }, ref) => (
-  <OTPInput
-    ref={ref}
-    containerClassName={cn(
-      "flex items-center gap-2 has-[:disabled]:opacity-50",
-      containerClassName
-    )}
-    className={cn("disabled:cursor-not-allowed", className)}
-    {...props}
-  />
-))
-InputOTP.displayName = "InputOTP"
-
-const InputOTPGroup = React.forwardRef<
-  React.ElementRef<"div">,
-  React.ComponentPropsWithoutRef<"div">
->(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("flex items-center", className)} {...props} />
-))
-InputOTPGroup.displayName = "InputOTPGroup"
-
-const InputOTPSlot = React.forwardRef<
-  React.ElementRef<"div">,
-  React.ComponentPropsWithoutRef<"div"> & { index: number }
->(({ index, className, ...props }, ref) => {
-  const inputOTPContext = React.useContext(OTPInputContext)
-  const { char, hasFakeCaret, isActive } = inputOTPContext.slots[index]
+  const handleComplete = (value: string) => {
+    setCode(value);
+    // Проверка кода
+    if (value === "123456") {
+      setError(false);
+      // Успешно
+    } else {
+      setError(true);
+    }
+  };
 
   return (
-    <div
-      ref={ref}
-      className={cn(
-        "relative flex h-10 w-10 items-center justify-center border-y border-r border-input text-sm transition-all first:rounded-l-md first:border-l last:rounded-r-md",
-        isActive && "z-10 ring-2 ring-ring ring-offset-background",
-        className
+    <div className="space-y-6">
+      <div className="text-center">
+        <p className="text-sm text-gray-500">
+          Введите код из SMS, отправленный на ваш номер
+        </p>
+        <p className="text-xs text-gray-400 mt-1">
+          Код действителен {timer} секунд
+        </p>
+      </div>
+
+      <InputOTP
+        maxLength={6}
+        onChange={handleComplete}
+        error={error}
+        size="lg"
+        className="justify-center"
+      >
+        <InputOTPGroup>
+          <InputOTPSlot index={0} />
+          <InputOTPSlot index={1} />
+          <InputOTPSlot index={2} />
+        </InputOTPGroup>
+        <InputOTPSeparator />
+        <InputOTPGroup>
+          <InputOTPSlot index={3} />
+          <InputOTPSlot index={4} />
+          <InputOTPSlot index={5} />
+        </InputOTPGroup>
+      </InputOTP>
+
+      {error && (
+        <p className="text-sm text-destructive text-center">
+          Неверный код. Попробуйте снова.
+        </p>
       )}
-      {...props}
-    >
-      {char}
-      {hasFakeCaret && (
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <div className="h-4 w-px animate-caret-blink bg-foreground duration-1000" />
-        </div>
-      )}
+
+      <Button
+        variant="teal"
+        className="w-full"
+        disabled={code.length !== 6 || error}
+      >
+        Подтвердить
+      </Button>
+
+      <button
+        className="w-full text-sm text-teal hover:underline"
+        onClick={() => setTimer(60)}
+        disabled={timer > 0}
+      >
+        {timer > 0
+          ? `Отправить повторно через ${timer}с`
+          : "Отправить код повторно"}
+      </button>
     </div>
-  )
-})
-InputOTPSlot.displayName = "InputOTPSlot"
+  );
+}
 
-const InputOTPSeparator = React.forwardRef<
-  React.ElementRef<"div">,
-  React.ComponentPropsWithoutRef<"div">
->(({ ...props }, ref) => (
-  <div ref={ref} role="separator" {...props}>
-    <Dot />
-  </div>
-))
-InputOTPSeparator.displayName = "InputOTPSeparator"
-
-export { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator }
+// В модалке подтверждения
+<Dialog>
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>Подтверждение заявки</DialogTitle>
+      <DialogDescription>Введите 6-значный код из SMS</DialogDescription>
+    </DialogHeader>
+    <VerificationCode />
+  </DialogContent>
+</Dialog>;
