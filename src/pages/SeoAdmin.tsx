@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Icon from "@/components/ui/icon";
 
 const API_URL = "https://functions.poehali.dev/0cb39cbb-0651-41ab-bd6f-8c9932206449";
+const INDEXNOW_URL = "https://functions.poehali.dev/ecd240df-f369-4051-8134-8b010135c891";
 
 interface PageSeo {
   page_key: string;
@@ -18,7 +19,7 @@ interface SeoData {
   robots: string;
 }
 
-type Tab = "pages" | "robots" | "sitemap";
+type Tab = "pages" | "robots" | "sitemap" | "indexnow";
 
 export default function SeoAdmin() {
   const [password, setPassword] = useState("");
@@ -33,6 +34,8 @@ export default function SeoAdmin() {
   const [robots, setRobots] = useState("");
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [indexNowLoading, setIndexNowLoading] = useState(false);
+  const [indexNowResult, setIndexNowResult] = useState<{ urls_sent: number; results: { endpoint: string; status: number; error?: string }[] } | null>(null);
 
   const headers = { "Content-Type": "application/json", Authorization: `Bearer ${password}` };
 
@@ -97,6 +100,18 @@ export default function SeoAdmin() {
     setSaving(false);
     setSaved(true);
     setTimeout(() => setSaved(false), 3000);
+  }
+
+  async function sendIndexNow() {
+    setIndexNowLoading(true);
+    setIndexNowResult(null);
+    try {
+      const res = await fetch(INDEXNOW_URL, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({}) });
+      const json = await res.json();
+      setIndexNowResult(json);
+    } finally {
+      setIndexNowLoading(false);
+    }
   }
 
   const titleLen = form.title.length;
@@ -170,6 +185,7 @@ export default function SeoAdmin() {
             { key: "pages", label: "Страницы", icon: "FileText" },
             { key: "robots", label: "Robots.txt", icon: "Bot" },
             { key: "sitemap", label: "Sitemap", icon: "Map" },
+            { key: "indexnow", label: "IndexNow", icon: "Zap" },
           ] as { key: Tab; label: string; icon: string }[]).map((t) => (
             <button
               key={t.key}
@@ -444,6 +460,50 @@ export default function SeoAdmin() {
                   ))}
                 </div>
               </div>
+            </div>
+          </div>
+        )}
+        {/* Вкладка: IndexNow */}
+        {tab === "indexnow" && (
+          <div className="max-w-2xl">
+            <div className="rounded-2xl p-6" style={{ background: "#1e293b", border: "1px solid rgba(255,255,255,0.06)" }}>
+              <div className="flex items-center gap-3 mb-2">
+                <Icon name="Zap" size={18} style={{ color: "#facc15" }} />
+                <h2 className="font-bold">IndexNow</h2>
+              </div>
+              <p className="text-sm mb-6" style={{ color: "rgba(255,255,255,0.45)" }}>
+                Моментально уведомляет Яндекс об обновлениях сайта. Нажмите кнопку после публикации новых страниц или изменений.
+              </p>
+
+              <button
+                onClick={sendIndexNow}
+                disabled={indexNowLoading}
+                className="flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold transition-all disabled:opacity-40"
+                style={{ background: "#facc15", color: "#0f172a" }}
+              >
+                <Icon name={indexNowLoading ? "Loader" : "Send"} size={16} className={indexNowLoading ? "animate-spin" : ""} />
+                {indexNowLoading ? "Отправляем..." : "Отправить все URL в Яндекс"}
+              </button>
+
+              {indexNowResult && (
+                <div className="mt-6 space-y-4">
+                  <div className="flex items-center gap-2 text-sm font-semibold" style={{ color: "var(--teal)" }}>
+                    <Icon name="CheckCircle" size={16} />
+                    Отправлено {indexNowResult.urls_sent} URL
+                  </div>
+                  <div className="space-y-2">
+                    {indexNowResult.results.map((r) => (
+                      <div key={r.endpoint} className="flex items-center justify-between px-4 py-3 rounded-xl text-sm" style={{ background: "#0f172a", border: `1px solid ${r.status === 202 || r.status === 200 ? "rgba(12,184,160,0.3)" : "rgba(255,100,100,0.3)"}` }}>
+                        <span style={{ color: "rgba(255,255,255,0.5)" }}>{r.endpoint.replace("https://", "")}</span>
+                        <span className="font-bold" style={{ color: r.status === 202 || r.status === 200 ? "var(--teal)" : "#f87171" }}>
+                          {r.status === 202 || r.status === 200 ? `✓ ${r.status}` : `✗ ${r.status}`}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-xs" style={{ color: "rgba(255,255,255,0.3)" }}>202 — URL приняты в очередь на обход</p>
+                </div>
+              )}
             </div>
           </div>
         )}

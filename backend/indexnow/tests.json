@@ -1,0 +1,13 @@
+{
+  "tests": [
+    {
+      "name": "IndexNow — отправка всех URL",
+      "method": "POST",
+      "path": "/",
+      "body": {},
+      "expectedStatus": 200,
+      "expectedBody": {"success": true},
+      "bodyMatcher": "partial"
+    }
+  ]
+}
