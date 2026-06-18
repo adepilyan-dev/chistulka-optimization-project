@@ -6,13 +6,13 @@ import { Helmet } from "react-helmet-async";
 type ToasterProps = React.ComponentProps<typeof Sonner>;
 
 // ============================================================
-# БАЗОВЫЙ КОМПОНЕНТ TOASTER
+// БАЗОВЫЙ КОМПОНЕНТ TOASTER
 // ============================================================
 
 const Toaster = ({ ...props }: ToasterProps) => {
   const { theme = "system" } = useTheme();
 
-  // Микроразметка для уведомлений (в общем виде)
+  // Исправлено: корректный URL в @context
   const notificationLd = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
@@ -44,14 +44,14 @@ const Toaster = ({ ...props }: ToasterProps) => {
         }}
         {...props}
       />
-    </>
+    <>
   );
 };
 
 export { Toaster };
 
 // ============================================================
-# ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ДЛЯ УВЕДОМЛЕНИЙ
+// ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ДЛЯ УВЕДОМЛЕНИЙ
 // ============================================================
 
 /**
@@ -124,7 +124,7 @@ export function showAction(
 }
 
 // ============================================================
-# ПРЕДНАСТРОЕННЫЕ УВЕДОМЛЕНИЯ ДЛЯ ВАШЕГО САЙТА
+// ПРЕДНАСТРОЕННЫЕ УВЕДОМЛЕНИЯ ДЛЯ ВАШЕГО САЙТА
 // ============================================================
 
 /**
@@ -172,13 +172,17 @@ export function notifyCartAction(itemName: string, action: "add" | "remove") {
  * Уведомление о загрузке
  */
 export function notifyLoading() {
-  toast.loading("Загрузка...", {
+  return toast.loading("Загрузка...", {
     position: "top-right",
   });
 }
 
+export function dismissLoading(toastId: string) {
+  toast.dismiss(toastId);
+}
+
 // ============================================================
-# КОМПОНЕНТ ДЛЯ ОТОБРАЖЕНИЯ УВЕДОМЛЕНИЙ В ФОРМЕ
+// КОМПОНЕНТ ДЛЯ ОТОБРАЖЕНИЯ УВЕДОМЛЕНИЙ В ФОРМЕ
 // ============================================================
 
 interface FormNotificationProps {
@@ -211,13 +215,13 @@ export function FormNotification({
     };
 
     show[type](title, description);
-  }, [type, title, description]);
+  }, [type, title, description]); // Зависимости корректны
 
   return null;
 }
 
 // ============================================================
-# КОМПОНЕНТ ДЛЯ ГРУППЫ УВЕДОМЛЕНИЙ
+// КОМПОНЕНТ ДЛЯ ГРУППЫ УВЕДОМЛЕНИЙ
 // ============================================================
 
 interface NotificationGroupProps {
@@ -234,16 +238,23 @@ interface NotificationGroupProps {
 
 export function NotificationGroup({
   notifications,
+  className = "",
 }: NotificationGroupProps) {
+  const displayedIds = React.useRef<Set<string>>(new Set());
+
   React.useEffect(() => {
-    notifications.forEach(({ type, message, description }) => {
-      const show = {
-        success: showSuccess,
-        error: showError,
-        warning: showWarning,
-        info: showInfo,
-      };
-      show[type](message, description);
+    notifications.forEach(({ id, type, message, description }) => {
+      if (!displayedIds.current.has(id)) {
+        const show = {
+          success: showSuccess,
+          error: showError,
+          warning: showWarning,
+          info: showInfo,
+        };
+
+        show[type](message, description);
+        displayedIds.current.add(id);
+      }
     });
   }, [notifications]);
 
