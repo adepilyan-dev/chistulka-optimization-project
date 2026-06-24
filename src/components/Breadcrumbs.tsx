@@ -1,95 +1,68 @@
-// ============================
-// Хлебные крошки на странице услуги + района
-// ============================
+import { Link } from "react-router-dom";
+import Icon from "@/components/ui/icon";
 
-export function ServiceDistrictPage() {
-  // URL: /uslugi/himchistka-divanov/tsentralnyy-okrug
-  const { serviceSlug, districtSlug } = useParams();
-
-  const service = SERVICES_DATA.find((s) => s.slug === serviceSlug);
-  const district = DISTRICTS.find((d) => d.slug === districtSlug);
-
-  return (
-    <div className="container mx-auto px-4 py-8">
-      <Breadcrumbs
-        items={[
-          { label: "Услуги", href: "/uslugi", icon: "Briefcase" },
-          {
-            label: service?.shortTitle || "Услуга",
-            href: `/uslugi/${serviceSlug}`,
-            icon: "Sofa",
-          },
-          { label: district?.name || "Район", icon: "MapPin" },
-        ]}
-        separator={
-          <Icon name="ChevronRight" size={14} className="text-gray-300" />
-        }
-        className="mb-8"
-      />
-
-      <h1 className="font-oswald text-3xl font-bold text-teal">
-        {service?.title} в {district?.name}
-      </h1>
-    </div>
-  );
+interface BreadcrumbItem {
+  label: string;
+  href?: string;
 }
 
-// ============================
-// Хлебные крошки на странице блога
-// ============================
-
-export function BlogPostPage() {
-  const { slug } = useParams();
-  const post = getPostBySlug(slug);
-
-  return (
-    <div className="container mx-auto px-4 py-8">
-      <Breadcrumbs
-        items={[
-          { label: "Блог", href: "/blog", icon: "Newspaper" },
-          {
-            label: post?.category || "Статьи",
-            href: `/blog/category/${post?.category}`,
-          },
-          { label: post?.title || "Статья" },
-        ]}
-        maxItems={3}
-        homeLabel="🏠"
-        showHomeIcon={false}
-      />
-
-      <article>
-        <h1 className="font-oswald text-3xl font-bold">{post?.title}</h1>
-      </article>
-    </div>
-  );
+interface BreadcrumbsProps {
+  items?: BreadcrumbItem[];
 }
 
-// ============================
-// Хлебные крошки с длинным путём
-// ============================
+export default function Breadcrumbs({ items = [] }: BreadcrumbsProps) {
+  // Если items пуст, показываем только "Главная"
+  if (!items || items.length === 0) {
+    return (
+      <nav
+        aria-label="Хлебные крошки"
+        className="flex items-center flex-wrap gap-1 text-sm mb-6"
+      >
+        <span style={{ color: "var(--gray)" }}>Главная</span>
+      </nav>
+    );
+  }
 
-export function DeepPage() {
   return (
-    <Breadcrumbs
-      items={[
-        { label: "Каталог", href: "/catalog" },
-        { label: "Мебель", href: "/catalog/furniture" },
-        { label: "Мягкая мебель", href: "/catalog/furniture/soft" },
-        { label: "Диваны", href: "/catalog/furniture/soft/sofas" },
-        {
-          label: "Угловые диваны",
-          href: "/catalog/furniture/soft/sofas/corner",
-        },
-        {
-          label: "Диван угловой 3-местный",
-          href: "/catalog/furniture/soft/sofas/corner/3seat",
-        },
-        { label: "Чехол для дивана" },
-      ]}
-      maxItems={4}
-      ellipsis
-      separator={<span className="text-teal-300 mx-0.5">/</span>}
-    />
+    <nav
+      aria-label="Хлебные крошки"
+      className="flex items-center flex-wrap gap-1 text-sm mb-6"
+    >
+      <Link
+        to="/"
+        className="transition-colors hover:opacity-80"
+        style={{ color: "var(--teal)" }}
+      >
+        Главная
+      </Link>
+      {items.map((item, i) => {
+        const isLast = i === items.length - 1;
+        return (
+          <span key={i} className="flex items-center gap-1">
+            <Icon
+              name="ChevronRight"
+              size={14}
+              style={{ color: "var(--gray)" }}
+            />
+            {item.href && !isLast ? (
+              <Link
+                to={item.href}
+                className="transition-colors hover:opacity-80"
+                style={{ color: "var(--teal)" }}
+              >
+                {item.label}
+              </Link>
+            ) : (
+              <span
+                style={{ color: "var(--gray)" }}
+                aria-current={isLast ? "page" : undefined}
+              >
+                {item.label}
+              </span>
+            )}
+          </span>
+        );
+      })}
+    </nav>
   );
 }
