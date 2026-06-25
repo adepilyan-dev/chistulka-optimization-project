@@ -212,11 +212,11 @@ export default function Works() {
           name: "Аренда Чистоты",
           description: "Профессиональная химчистка мебели с выездом на дом в Краснодаре",
           telephone: "+79189682882",
-          url: "https://arenda-chistoty.online",
+          url: "https://arenda-chistoty.ru",
           image: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/1f8a12d2-02a6-452c-a1cb-4fa8f342c646.jpg",
           address: { "@type": "PostalAddress", addressLocality: "Краснодар", addressCountry: "RU" },
           aggregateRating: { "@type": "AggregateRating", ratingValue: "4.98", reviewCount: "1240", bestRating: "5" },
-          hasMap: "https://arenda-chistoty.online/nashi-raboty",
+          hasMap: "https://arenda-chistoty.ru/nashi-raboty",
         }}
       />
 

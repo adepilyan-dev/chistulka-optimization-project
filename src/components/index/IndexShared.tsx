@@ -89,7 +89,7 @@ export const SERVICES = [
 export const STATS = [
   { num: "3 000+", label: "предметов мебели" },
   { num: "10 лет", label: "на рынке" },
-  { num: "большинство", label: "пятен выводим" },
+  { num: "сложные", label: "пятна выводим" },
   { num: "2–4 ч", label: "время высыхания" },
 ];
 
