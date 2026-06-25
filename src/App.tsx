@@ -10,7 +10,6 @@ import Privacy from "./pages/Privacy";
 import BlogPost from "./pages/BlogPost";
 import CookiePolicy from "./pages/CookiePolicy";
 import ServicePage from "./pages/ServicePage";
-import DistrictPage from "./pages/DistrictPage";
 import ServiceDistrictPage from "./pages/ServiceDistrictPage";
 import NotFound from "./pages/NotFound";
 import Works from "./pages/Works";
@@ -36,14 +35,7 @@ function AppInner() {
         <Route path="/cookie-policy" element={<CookiePolicy />} />
         <Route path="/uslugi/:slug" element={<ServicePage />} />
         <Route path="/uslugi/:slug/:district" element={<ServiceDistrictPage />} />
-        <Route path="/himchistka-divanov" element={<ServiceRedirect />} />
-        <Route path="/himchistka-kresel" element={<ServiceRedirect />} />
-        <Route path="/himchistka-matrasov" element={<ServiceRedirect />} />
-        <Route path="/himchistka-kovrov" element={<ServiceRedirect />} />
-        <Route path="/himchistka-stulyev" element={<ServiceRedirect />} />
-        <Route path="/himchistka-stulev" element={<ServiceRedirect />} />
-        <Route path="/himchistka-avtosalona" element={<ServiceRedirect />} />
-        <Route path="/himchistka-:district" element={<DistrictPage />} />
+        <Route path="/himchistka-:slug" element={<ServiceRedirect />} />
         <Route path="/nashi-raboty" element={<Works />} />
         <Route path="/seo-panel" element={<SeoAdmin />} />
         <Route path="/landing" element={<Landing />} />

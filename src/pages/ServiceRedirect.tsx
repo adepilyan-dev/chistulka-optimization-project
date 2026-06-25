@@ -1,25 +1,26 @@
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { getServiceBySlug } from "@/data/services";
+import { getDistrictBySlug } from "@/data/districts";
 import ServicePage from "./ServicePage";
+import DistrictPage from "./DistrictPage";
 
-const PATH_TO_SLUG: Record<string, string> = {
-  "/himchistka-divanov": "himchistka-divanov",
-  "/himchistka-kresel": "himchistka-kresel",
-  "/himchistka-matrasov": "himchistka-matrasov",
-  "/himchistka-kovrov": "himchistka-kovrov",
-  "/himchistka-stulyev": "himchistka-stulev",
-  "/himchistka-stulev": "himchistka-stulev",
-  "/himchistka-avtosalona": "himchistka-avtosalona",
-};
-
-export default function ServiceRedirect() {
-  const { pathname } = useLocation();
-  const slug = PATH_TO_SLUG[pathname];
+export default function HimchistkaRouter() {
+  const { slug } = useParams<{ slug: string }>();
 
   if (!slug) return <Navigate to="/" replace />;
 
-  const service = getServiceBySlug(slug);
-  if (!service) return <Navigate to="/" replace />;
+  const SLUG_ALIASES: Record<string, string> = { stulyev: "stulev" };
+  const normalizedSlug = SLUG_ALIASES[slug] ?? slug;
+  const serviceSlug = `himchistka-${normalizedSlug}`;
+  const service = getServiceBySlug(serviceSlug);
+  if (service) {
+    return <ServicePage overrideSlug={serviceSlug} overridePath={`/himchistka-${slug}`} />;
+  }
 
-  return <ServicePage overrideSlug={slug} overridePath={pathname} />;
+  const district = getDistrictBySlug(slug);
+  if (district) {
+    return <DistrictPage />;
+  }
+
+  return <Navigate to="/" replace />;
 }
