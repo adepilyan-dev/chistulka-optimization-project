@@ -189,6 +189,18 @@ export default function ServicePage({ overrideSlug, overridePath }: Props) {
           </div>
         </div>
 
+        {/* SEO-текст */}
+        {service.seoText && service.seoText.length > 0 && (
+          <div className="mb-12 space-y-6">
+            {service.seoText.map((block) => (
+              <div key={block.heading}>
+                <h2 className="font-oswald font-bold text-xl mb-3" style={{ color: "var(--dark)" }}>{block.heading}</h2>
+                <p className="text-sm leading-relaxed" style={{ color: "var(--gray)" }}>{block.body}</p>
+              </div>
+            ))}
+          </div>
+        )}
+
         {/* CTA */}
         <div className="rounded-3xl p-5 sm:p-8 md:p-10 mb-8 md:mb-12 text-center" style={{ background: "var(--teal)" }}>
           <h2 className="font-oswald font-bold text-white text-2xl md:text-3xl mb-3">
