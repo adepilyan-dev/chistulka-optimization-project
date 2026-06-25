@@ -1,171 +1,131 @@
-// ============================
-// Мобильное меню
-// ============================
+import * as SheetPrimitive from "@radix-ui/react-dialog"
+import { cva, type VariantProps } from "class-variance-authority"
+import { X } from "lucide-react"
+import * as React from "react"
 
-export function MobileMenu() {
-  return (
-    <Sheet>
-      <SheetTrigger asChild>
-        <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-          <Icon name="Menu" size={24} />
-        </button>
-      </SheetTrigger>
-      <SheetContent side="left" size="sm">
-        <SheetHeader>
-          <img src="/logo.png" alt="Аренда Чистоты" className="h-8 w-auto" />
-          <SheetDescription>Химчистка мебели в Краснодаре</SheetDescription>
-        </SheetHeader>
-        <div className="py-6 space-y-4">
-          {NAV_LINKS.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="block py-2 text-base font-medium hover:text-teal transition-colors"
-            >
-              {link.label}
-            </a>
-          ))}
-          <hr />
-          <a
-            href="tel:+79189682882"
-            className="block py-2 text-base font-medium text-teal"
-          >
-            <Icon name="Phone" size={16} className="inline mr-2" />8 918
-            968-28-82
-          </a>
-          <Button variant="teal" className="w-full mt-4">
-            Вызвать мастера
-          </Button>
-        </div>
-      </SheetContent>
-    </Sheet>
-  );
+import { cn } from "@/lib/utils"
+
+const Sheet = SheetPrimitive.Root
+
+const SheetTrigger = SheetPrimitive.Trigger
+
+const SheetClose = SheetPrimitive.Close
+
+const SheetPortal = SheetPrimitive.Portal
+
+const SheetOverlay = React.forwardRef<
+  React.ElementRef<typeof SheetPrimitive.Overlay>,
+  React.ComponentPropsWithoutRef<typeof SheetPrimitive.Overlay>
+>(({ className, ...props }, ref) => (
+  <SheetPrimitive.Overlay
+    className={cn(
+      "fixed inset-0 z-50 bg-black/80  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+      className
+    )}
+    {...props}
+    ref={ref}
+  />
+))
+SheetOverlay.displayName = SheetPrimitive.Overlay.displayName
+
+const sheetVariants = cva(
+  "fixed z-50 gap-4 bg-background p-6 shadow-lg transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500",
+  {
+    variants: {
+      side: {
+        top: "inset-x-0 top-0 border-b data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top",
+        bottom:
+          "inset-x-0 bottom-0 border-t data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom",
+        left: "inset-y-0 left-0 h-full w-3/4 border-r data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left sm:max-w-sm",
+        right:
+          "inset-y-0 right-0 h-full w-3/4  border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right sm:max-w-sm",
+      },
+    },
+    defaultVariants: {
+      side: "right",
+    },
+  }
+)
+
+interface SheetContentProps
+  extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Content>,
+  VariantProps<typeof sheetVariants> { }
+
+const SheetContent = React.forwardRef<
+  React.ElementRef<typeof SheetPrimitive.Content>,
+  SheetContentProps
+>(({ side = "right", className, children, ...props }, ref) => (
+  <SheetPortal>
+    <SheetOverlay />
+    <SheetPrimitive.Content
+      ref={ref}
+      className={cn(sheetVariants({ side }), className)}
+      {...props}
+    >
+      {children}
+      <SheetPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
+        <X className="h-4 w-4" />
+        <span className="sr-only">Close</span>
+      </SheetPrimitive.Close>
+    </SheetPrimitive.Content>
+  </SheetPortal>
+))
+SheetContent.displayName = SheetPrimitive.Content.displayName
+
+const SheetHeader = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div
+    className={cn(
+      "flex flex-col space-y-2 text-center sm:text-left",
+      className
+    )}
+    {...props}
+  />
+)
+SheetHeader.displayName = "SheetHeader"
+
+const SheetFooter = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div
+    className={cn(
+      "flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2",
+      className
+    )}
+    {...props}
+  />
+)
+SheetFooter.displayName = "SheetFooter"
+
+const SheetTitle = React.forwardRef<
+  React.ElementRef<typeof SheetPrimitive.Title>,
+  React.ComponentPropsWithoutRef<typeof SheetPrimitive.Title>
+>(({ className, ...props }, ref) => (
+  <SheetPrimitive.Title
+    ref={ref}
+    className={cn("text-lg font-semibold text-foreground", className)}
+    {...props}
+  />
+))
+SheetTitle.displayName = SheetPrimitive.Title.displayName
+
+const SheetDescription = React.forwardRef<
+  React.ElementRef<typeof SheetPrimitive.Description>,
+  React.ComponentPropsWithoutRef<typeof SheetPrimitive.Description>
+>(({ className, ...props }, ref) => (
+  <SheetPrimitive.Description
+    ref={ref}
+    className={cn("text-sm text-muted-foreground", className)}
+    {...props}
+  />
+))
+SheetDescription.displayName = SheetPrimitive.Description.displayName
+
+export {
+  Sheet, SheetClose,
+  SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetOverlay, SheetPortal, SheetTitle, SheetTrigger
 }
 
-// ============================
-// Корзина/заказ
-// ============================
-
-export function OrderSheet() {
-  const [items, setItems] = React.useState([
-    { id: 1, name: "Диван 3-местный", price: 4500, quantity: 1 },
-    { id: 2, name: "Кресло", price: 2500, quantity: 2 },
-  ]);
-
-  const total = items.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0,
-  );
-
-  return (
-    <Sheet>
-      <SheetTrigger asChild>
-        <Button variant="outline" className="relative">
-          <Icon name="ShoppingCart" size={18} />
-          <span className="ml-2">Корзина</span>
-          {items.length > 0 && (
-            <Badge variant="teal" className="absolute -top-2 -right-2 text-xs">
-              {items.length}
-            </Badge>
-          )}
-        </Button>
-      </SheetTrigger>
-      <SheetContent size="lg">
-        <SheetHeader>
-          <SheetTitle className="font-oswald">Ваш заказ</SheetTitle>
-          <SheetDescription>{items.length} позиций в корзине</SheetDescription>
-        </SheetHeader>
-        <div className="py-4 space-y-3">
-          {items.map((item) => (
-            <div
-              key={item.id}
-              className="flex items-center justify-between p-3 bg-gray-50 rounded-xl"
-            >
-              <div>
-                <p className="font-medium">{item.name}</p>
-                <p className="text-sm text-muted-foreground">
-                  {item.quantity} × {item.price} ₽
-                </p>
-              </div>
-              <p className="font-semibold">
-                {(item.price * item.quantity).toLocaleString()} ₽
-              </p>
-            </div>
-          ))}
-        </div>
-        <div className="border-t pt-4">
-          <div className="flex justify-between text-lg font-bold">
-            <span>Итого</span>
-            <span className="text-teal">{total.toLocaleString()} ₽</span>
-          </div>
-        </div>
-        <SheetFooter className="mt-4">
-          <SheetClose asChild>
-            <Button variant="outline" className="w-full sm:w-auto">
-              Продолжить
-            </Button>
-          </SheetClose>
-          <Button variant="teal" className="w-full sm:w-auto">
-            <Icon name="Calendar" size={16} className="mr-2" />
-            Оформить заказ
-          </Button>
-        </SheetFooter>
-      </SheetContent>
-    </Sheet>
-  );
-}
-
-// ============================
-// Форма заявки в Sheet
-// ============================
-
-export function OrderFormSheet() {
-  return (
-    <Sheet>
-      <SheetTrigger asChild>
-        <Button
-          variant="teal"
-          size="lg"
-          className="w-full font-oswald text-base"
-        >
-          <Icon name="Calendar" size={18} className="mr-2" />
-          Вызвать мастера
-        </Button>
-      </SheetTrigger>
-      <SheetContent size="lg" side="bottom">
-        <SheetHeader>
-          <SheetTitle className="font-oswald text-2xl text-teal">
-            Вызвать мастера
-          </SheetTitle>
-          <SheetDescription>
-            Заполните форму, и мы перезвоним в течение 15 минут
-          </SheetDescription>
-        </SheetHeader>
-        <div className="py-6 space-y-4">
-          <div className="space-y-2">
-            <Label required>Ваше имя</Label>
-            <Input placeholder="Например, Елена" size="lg" />
-          </div>
-          <div className="space-y-2">
-            <Label required>Телефон</Label>
-            <Input placeholder="8 918 968-28-82" size="lg" />
-          </div>
-          <div className="space-y-2">
-            <Label>Адрес (необязательно)</Label>
-            <Input placeholder="ул. Примерная, д. 1" size="lg" />
-          </div>
-        </div>
-        <SheetFooter>
-          <SheetClose asChild>
-            <Button variant="outline" className="w-full sm:w-auto">
-              Отмена
-            </Button>
-          </SheetClose>
-          <Button variant="teal" className="w-full sm:w-auto">
-            Отправить заявку
-          </Button>
-        </SheetFooter>
-      </SheetContent>
-    </Sheet>
-  );
-}

@@ -39,6 +39,6 @@ Disallow: /akcii-i-skidki.html
 Disallow: /uslugi/khimchistka-kovrov.html
 Disallow: /uslugi/khimchistka-salona-avto.html
 
-Host: https://arenda-chistoty.ru
-Sitemap: https://arenda-chistoty.ru/sitemap.xml'
+Host: https://arenda-chistoty.online
+Sitemap: https://arenda-chistoty.online/sitemap.xml'
 );

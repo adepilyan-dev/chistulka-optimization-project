@@ -1,152 +1,43 @@
-// ============================
-// Фильтры в галерее
-// ============================
+import * as React from "react"
+import * as TogglePrimitive from "@radix-ui/react-toggle"
+import { cva, type VariantProps } from "class-variance-authority"
 
-export function GalleryFilters() {
-  const [filters, setFilters] = React.useState({
-    sofa: false,
-    chair: false,
-    mattress: false,
-    carpet: false,
-  });
+import { cn } from "@/lib/utils"
 
-  return (
-    <div className="flex flex-wrap gap-2">
-      <Toggle
-        pressed={filters.sofa}
-        onPressedChange={(pressed) => setFilters({ ...filters, sofa: pressed })}
-        icon={<Icon name="Sofa" size={16} />}
-        label="Диваны"
-        variant="outlineTeal"
-      />
-      <Toggle
-        pressed={filters.chair}
-        onPressedChange={(pressed) =>
-          setFilters({ ...filters, chair: pressed })
-        }
-        icon={<Icon name="Armchair" size={16} />}
-        label="Кресла"
-        variant="outlineTeal"
-      />
-      <Toggle
-        pressed={filters.mattress}
-        onPressedChange={(pressed) =>
-          setFilters({ ...filters, mattress: pressed })
-        }
-        icon={<Icon name="Bed" size={16} />}
-        label="Матрасы"
-        variant="outlineTeal"
-      />
-      <Toggle
-        pressed={filters.carpet}
-        onPressedChange={(pressed) =>
-          setFilters({ ...filters, carpet: pressed })
-        }
-        icon={<Icon name="LayoutGrid" size={16} />}
-        label="Ковры"
-        variant="outlineTeal"
-      />
-    </div>
-  );
-}
-
-// ============================
-// Переключатель вида
-// ============================
-
-export function ViewToggle() {
-  const [view, setView] = React.useState<"grid" | "list">("grid");
-
-  return (
-    <div className="flex gap-1 p-1 bg-gray-100 rounded-lg">
-      <Toggle
-        pressed={view === "grid"}
-        onPressedChange={() => setView("grid")}
-        size="iconSm"
-        icon={<Icon name="LayoutGrid" size={16} />}
-        className="data-[state=on]:bg-teal-500 data-[state=on]:text-white"
-        aria-label="Сетка"
-      />
-      <Toggle
-        pressed={view === "list"}
-        onPressedChange={() => setView("list")}
-        size="iconSm"
-        icon={<Icon name="List" size={16} />}
-        className="data-[state=on]:bg-teal-500 data-[state=on]:text-white"
-        aria-label="Список"
-      />
-    </div>
-  );
-}
-
-// ============================
-// Выбор дополнительной услуги
-// ============================
-
-export function ExtraServiceToggle({
-  service,
-  onToggle,
-  selected,
-}: {
-  service: { id: string; label: string; price: string; icon: string };
-  onToggle: (id: string) => void;
-  selected: boolean;
-}) {
-  return (
-    <Toggle
-      pressed={selected}
-      onPressedChange={() => onToggle(service.id)}
-      variant={selected ? "teal" : "outline"}
-      size="lg"
-      fullWidth
-      className="justify-between px-4"
-    >
-      <span className="flex items-center gap-2">
-        <Icon name={service.icon} size={16} />
-        {service.label}
-      </span>
-      <span className="text-sm font-medium">{service.price}</span>
-    </Toggle>
-  );
-}
-
-// Использование
-export function ExtraServices() {
-  const [selected, setSelected] = React.useState<string[]>([]);
-
-  const services = [
-    { id: "express", label: "Экспресс-сушка", price: "+800 ₽", icon: "Zap" },
-    {
-      id: "deodorant",
-      label: "Устранение запахов",
-      price: "+500 ₽",
-      icon: "Wind",
+const toggleVariants = cva(
+  "inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors hover:bg-muted hover:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=on]:bg-accent data-[state=on]:text-accent-foreground",
+  {
+    variants: {
+      variant: {
+        default: "bg-transparent",
+        outline:
+          "border border-input bg-transparent hover:bg-accent hover:text-accent-foreground",
+      },
+      size: {
+        default: "h-10 px-3",
+        sm: "h-9 px-2.5",
+        lg: "h-11 px-5",
+      },
     },
-    { id: "disinfect", label: "Дезинфекция", price: "+400 ₽", icon: "Shield" },
-  ];
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  }
+)
 
-  const handleToggle = (id: string) => {
-    setSelected((prev) =>
-      prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id],
-    );
-  };
+const Toggle = React.forwardRef<
+  React.ElementRef<typeof TogglePrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof TogglePrimitive.Root> &
+    VariantProps<typeof toggleVariants>
+>(({ className, variant, size, ...props }, ref) => (
+  <TogglePrimitive.Root
+    ref={ref}
+    className={cn(toggleVariants({ variant, size, className }))}
+    {...props}
+  />
+))
 
-  return (
-    <div className="space-y-3">
-      <p className="text-sm font-medium">Дополнительные услуги</p>
-      {services.map((service) => (
-        <ExtraServiceToggle
-          key={service.id}
-          service={service}
-          selected={selected.includes(service.id)}
-          onToggle={handleToggle}
-        />
-      ))}
-      {selected.length > 0 && (
-        <p className="text-sm text-teal font-medium">
-          Выбрано: {selected.length} услуги
-        </p>
-      )}
-    </div>
-  );
-}
+Toggle.displayName = TogglePrimitive.Root.displayName
+
+export { Toggle, toggleVariants }

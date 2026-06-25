@@ -14,10 +14,8 @@ export function useInView(threshold = 0.12) {
   const [inView, setInView] = useState(false);
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setInView(true);
-      },
-      { threshold },
+      ([entry]) => { if (entry.isIntersecting) setInView(true); },
+      { threshold }
     );
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
@@ -41,8 +39,6 @@ export const SERVICES = [
   {
     icon: "Sofa",
     title: "Химчистка диванов",
-    shortTitle: "Диваны",
-    slug: "himchistka-divanov",
     desc: "Удаляем пятна, запахи и аллергены. Ткань, велюр, замша, кожа — работаем с любым материалом.",
     color: "#0cb8a0",
     badge: "Хит",
@@ -51,8 +47,6 @@ export const SERVICES = [
   {
     icon: "ArmchairIcon",
     title: "Химчистка кресел",
-    shortTitle: "Кресла",
-    slug: "himchistka-kresel",
     desc: "Офисные, обеденные, игровые кресла. Глубокая чистка без разборки, сушка за 2–4 часа.",
     color: "#c9a800",
     badge: null,
@@ -61,8 +55,6 @@ export const SERVICES = [
   {
     icon: "BedDouble",
     title: "Химчистка матрасов",
-    shortTitle: "Матрасы",
-    slug: "himchistka-matrasov",
     desc: "Устраняем клещей, грибок, пятна и неприятные запахи. Безопасно для детей и аллергиков.",
     color: "#0cb8a0",
     badge: "Популярно",
@@ -71,8 +63,6 @@ export const SERVICES = [
   {
     icon: "LayoutGrid",
     title: "Химчистка ковров",
-    shortTitle: "Ковры",
-    slug: "himchistka-kovrov",
     desc: "Шерсть, синтетика, ковры ручной работы. Выездная чистка на дому или в нашем цеху.",
     color: "#c9a800",
     badge: null,
@@ -81,8 +71,6 @@ export const SERVICES = [
   {
     icon: "Armchair",
     title: "Химчистка стульев",
-    shortTitle: "Стулья",
-    slug: "himchistka-stulev",
     desc: "Обеденные группы, барные стулья, пуфики. Быстро — один стул от 15 минут.",
     color: "#0cb8a0",
     badge: null,
@@ -91,17 +79,12 @@ export const SERVICES = [
   {
     icon: "Car",
     title: "Химчистка автосалона",
-    shortTitle: "Автосалон",
-    slug: "himchistka-avtosalona",
     desc: "Сиденья, потолок, дверные панели. Профессиональное оборудование и безопасные средства.",
     color: "#c9a800",
     badge: null,
     img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/bcb5b240-69f5-4098-908b-011a606d4c63.jpg",
   },
 ];
-
-// Алиас для совместимости с импортом SERVICES_DATA
-export const SERVICES_DATA = SERVICES;
 
 export const STATS = [
   { num: "3 000+", label: "предметов мебели" },
@@ -142,42 +125,12 @@ export const REVIEWS = [
 ];
 
 export const GALLERY_ITEMS = [
-  {
-    label: "Угловой диван после чистки",
-    tag: "Диван",
-    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/51340069-99b0-4850-915a-6563a587e2b6.jpg",
-    ratio: "4/3",
-  },
-  {
-    label: "Диван до чистки",
-    tag: "Диван",
-    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/38109181-291f-43d2-acbc-d8059547943b.jpg",
-    ratio: "4/3",
-  },
-  {
-    label: "Матрас после чистки",
-    tag: "Матрас",
-    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/041e747b-9a0e-4bea-9335-238eabfa4473.jpg",
-    ratio: "4/3",
-  },
-  {
-    label: "Матрас до чистки",
-    tag: "Матрас",
-    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/4bc0afcd-6c3b-4c6e-89d0-51569d1ef36e.jpg",
-    ratio: "4/3",
-  },
-  {
-    label: "Диван после чистки",
-    tag: "Диван",
-    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/19a85ebd-07f4-41ee-b669-283901cc5d56.jpg",
-    ratio: "4/3",
-  },
-  {
-    label: "Диван на подлокотниках",
-    tag: "Диван",
-    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/de8a7092-f0d1-4176-91fc-8f045dbc7bb0.jpg",
-    ratio: "4/3",
-  },
+  { label: "Угловой диван после чистки", tag: "Диван", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/51340069-99b0-4850-915a-6563a587e2b6.jpg", ratio: "4/3" },
+  { label: "Диван до чистки", tag: "Диван", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/38109181-291f-43d2-acbc-d8059547943b.jpg", ratio: "4/3" },
+  { label: "Матрас после чистки", tag: "Матрас", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/041e747b-9a0e-4bea-9335-238eabfa4473.jpg", ratio: "4/3" },
+  { label: "Матрас до чистки", tag: "Матрас", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/4bc0afcd-6c3b-4c6e-89d0-51569d1ef36e.jpg", ratio: "4/3" },
+  { label: "Диван после чистки", tag: "Диван", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/19a85ebd-07f4-41ee-b669-283901cc5d56.jpg", ratio: "4/3" },
+  { label: "Диван на подлокотниках", tag: "Диван", img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/de8a7092-f0d1-4176-91fc-8f045dbc7bb0.jpg", ratio: "4/3" },
 ];
 
 export const FURNITURE_ITEMS = [
@@ -275,38 +228,4 @@ export const FURNITURE_TYPES = [
   { key: "carpet", label: "Ковёр", emoji: "🏡" },
   { key: "auto", label: "Авто", emoji: "🚗" },
   { key: "other", label: "Другое", emoji: "✨" },
-];
-
-// ============ РАЙОНЫ КРАСНОДАРА ============
-
-export const DISTRICTS = [
-  // Округа
-  { slug: "tsentralnyy-okrug", name: "Центральный округ", type: "district" },
-  { slug: "prikubanskiy-okrug", name: "Прикубанский округ", type: "district" },
-  { slug: "karasunsky-okrug", name: "Карасунский округ", type: "district" },
-  { slug: "zapadnyy-okrug", name: "Западный округ", type: "district" },
-  // Микрорайоны
-  { slug: "yubileynyy", name: "Юбилейный", type: "micro" },
-  { slug: "gidrostroiteley", name: "Гидростроителей", type: "micro" },
-  { slug: "cheremushki", name: "Черемушки", type: "micro" },
-  { slug: "festivalnyy", name: "Фестивальный", type: "micro" },
-  { slug: "pashkovskiy", name: "Пашковский", type: "micro" },
-  { slug: "komsomolskiy", name: "Комсомольский", type: "micro" },
-  { slug: "rossiyskiy", name: "Российский", type: "micro" },
-  { slug: "enka", name: "Энка", type: "micro" },
-  { slug: "9y-kilometr", name: "9-й километр", type: "micro" },
-  { slug: "hbk", name: "ХБК", type: "micro" },
-  { slug: "vitaminkombnat", name: "Витаминкомбинат", type: "micro" },
-  { slug: "molodezhnyy", name: "Молодёжный", type: "micro" },
-  { slug: "slavyanskiy", name: "Славянский", type: "micro" },
-  { slug: "dubinka", name: "Дубинка", type: "micro" },
-  { slug: "40-let-pobedy", name: "40 лет Победы", type: "micro" },
-  { slug: "aviagorodok", name: "Авиагородок", type: "micro" },
-  { slug: "krasnaya-ploshchad", name: "Красная площадь", type: "micro" },
-  { slug: "geroev", name: "Героев", type: "micro" },
-  { slug: "solnechnyy", name: "Солнечный", type: "micro" },
-  { slug: "kolosistyy", name: "Колосистый", type: "micro" },
-  { slug: "kalinino", name: "Калинино", type: "micro" },
-  { slug: "starokorsunska", name: "СтароКорсунская", type: "micro" },
-  { slug: "lenina-poselok", name: "Ленина посёлок", type: "micro" },
 ];
