@@ -75,7 +75,7 @@ const SEO_LD = [
         { "@type": "Offer", itemOffered: { "@type": "Service", name: "Химчистка матрасов в Краснодаре", url: "https://arenda-chistoty.ru/uslugi/himchistka-matrasov" } },
         { "@type": "Offer", itemOffered: { "@type": "Service", name: "Химчистка ковров в Краснодаре", url: "https://arenda-chistoty.ru/uslugi/himchistka-kovrov" } },
         { "@type": "Offer", itemOffered: { "@type": "Service", name: "Химчистка автосалона в Краснодаре", url: "https://arenda-chistoty.ru/uslugi/himchistka-avtosalona" } },
-        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Химчистка стульев в Краснодаре", url: "https://arenda-chistoty.ru/uslugi/himchistka-stulyev" } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Химчистка стульев в Краснодаре", url: "https://arenda-chistoty.ru/uslugi/himchistka-stulev" } },
       ],
     },
   },

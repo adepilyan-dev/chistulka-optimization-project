@@ -7,7 +7,8 @@ const PATH_TO_SLUG: Record<string, string> = {
   "/himchistka-kresel": "himchistka-kresel",
   "/himchistka-matrasov": "himchistka-matrasov",
   "/himchistka-kovrov": "himchistka-kovrov",
-  "/himchistka-stulyev": "himchistka-stulyev",
+  "/himchistka-stulyev": "himchistka-stulev",
+  "/himchistka-stulev": "himchistka-stulev",
   "/himchistka-avtosalona": "himchistka-avtosalona",
 };
 

@@ -41,6 +41,7 @@ function AppInner() {
         <Route path="/himchistka-matrasov" element={<ServiceRedirect />} />
         <Route path="/himchistka-kovrov" element={<ServiceRedirect />} />
         <Route path="/himchistka-stulyev" element={<ServiceRedirect />} />
+        <Route path="/himchistka-stulev" element={<ServiceRedirect />} />
         <Route path="/himchistka-avtosalona" element={<ServiceRedirect />} />
         <Route path="/himchistka-:district" element={<DistrictPage />} />
         <Route path="/nashi-raboty" element={<Works />} />

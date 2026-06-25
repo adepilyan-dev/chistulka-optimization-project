@@ -297,7 +297,7 @@ export default function Reviews() {
               { label: "Химчистка кресел", href: "/uslugi/himchistka-kresel" },
               { label: "Химчистка матрасов", href: "/uslugi/himchistka-matrasov" },
               { label: "Химчистка ковров", href: "/uslugi/himchistka-kovrov" },
-              { label: "Химчистка стульев", href: "/uslugi/himchistka-stulyev" },
+              { label: "Химчистка стульев", href: "/uslugi/himchistka-stulev" },
               { label: "Химчистка автосалона", href: "/uslugi/himchistka-avtosalona" },
             ].map((s) => (
               <Link
