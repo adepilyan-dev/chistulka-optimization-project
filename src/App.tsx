@@ -17,6 +17,7 @@ import Works from "./pages/Works";
 import SeoAdmin from "./pages/SeoAdmin";
 import Landing from "./pages/Landing";
 import Reviews from "./pages/Reviews";
+import ServiceRedirect from "./pages/ServiceRedirect";
 import CookieBanner from "./components/CookieBanner";
 import { useYandexMetrika } from "./hooks/useYandexMetrika";
 import { SeoNotFound } from "./components/Seo";
@@ -35,6 +36,12 @@ function AppInner() {
         <Route path="/cookie-policy" element={<CookiePolicy />} />
         <Route path="/uslugi/:slug" element={<ServicePage />} />
         <Route path="/uslugi/:slug/:district" element={<ServiceDistrictPage />} />
+        <Route path="/himchistka-divanov" element={<ServiceRedirect />} />
+        <Route path="/himchistka-kresel" element={<ServiceRedirect />} />
+        <Route path="/himchistka-matrasov" element={<ServiceRedirect />} />
+        <Route path="/himchistka-kovrov" element={<ServiceRedirect />} />
+        <Route path="/himchistka-stulyev" element={<ServiceRedirect />} />
+        <Route path="/himchistka-avtosalona" element={<ServiceRedirect />} />
         <Route path="/himchistka-:district" element={<DistrictPage />} />
         <Route path="/nashi-raboty" element={<Works />} />
         <Route path="/seo-panel" element={<SeoAdmin />} />

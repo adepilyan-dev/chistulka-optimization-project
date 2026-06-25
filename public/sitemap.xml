@@ -25,6 +25,44 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- Короткие URL услуг (алиасы) -->
+  <url>
+    <loc>https://arenda-chistoty.ru/himchistka-divanov</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://arenda-chistoty.ru/himchistka-kresel</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://arenda-chistoty.ru/himchistka-matrasov</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://arenda-chistoty.ru/himchistka-kovrov</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://arenda-chistoty.ru/himchistka-stulyev</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://arenda-chistoty.ru/himchistka-avtosalona</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.95</priority>
+  </url>
+
   <!-- Услуги -->
   <url>
     <loc>https://arenda-chistoty.ru/uslugi/himchistka-divanov</loc>

@@ -7,8 +7,14 @@ import { getServiceBySlug, SERVICES_DATA } from "@/data/services";
 import { DISTRICTS } from "@/data/districts";
 import { ymGoal } from "@/hooks/useYandexMetrika";
 
-export default function ServicePage() {
-  const { slug } = useParams();
+interface Props {
+  overrideSlug?: string;
+  overridePath?: string;
+}
+
+export default function ServicePage({ overrideSlug, overridePath }: Props) {
+  const params = useParams();
+  const slug = overrideSlug ?? params.slug;
   const service = getServiceBySlug(slug);
 
   useEffect(() => {
@@ -51,7 +57,7 @@ export default function ServicePage() {
         title={service.seoTitle}
         description={service.seoDescription}
         keywords={service.keywords}
-        path={`/uslugi/${service.slug}`}
+        path={overridePath ?? `/uslugi/${service.slug}`}
         image={service.img}
         jsonLd={jsonLd}
         breadcrumbs={[
