@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async";
 
-const SITE = "https://arenda-chistoty.online";
+const SITE = "https://arenda-chistoty.ru";
 const DEFAULT_IMAGE =
   "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/1f8a12d2-02a6-452c-a1cb-4fa8f342c646.jpg";
 
