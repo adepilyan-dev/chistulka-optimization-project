@@ -416,9 +416,78 @@ export function Contacts() {
 }
 
 export function Footer() {
+  const mainDistricts = DISTRICTS.filter((d) => d.type === "district");
+  const microDistricts = DISTRICTS.filter((d) => d.type === "micro").slice(0, 8);
+
   return (
-    <footer className="py-10" style={{ background: "var(--dark)" }}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+    <footer style={{ background: "var(--dark)" }}>
+      {/* SEO-блок со ссылками */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-12 pb-8 border-b" style={{ borderColor: "rgba(255,255,255,0.07)" }}>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wider mb-4" style={{ color: "rgba(255,255,255,0.3)" }}>Услуги</p>
+            <ul className="space-y-2">
+              {SERVICES_DATA.map((s) => (
+                <li key={s.slug}>
+                  <Link to={`/uslugi/${s.slug}`} className="text-sm transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.45)" }}>
+                    {s.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wider mb-4" style={{ color: "rgba(255,255,255,0.3)" }}>Районы</p>
+            <ul className="space-y-2">
+              {mainDistricts.map((d) => (
+                <li key={d.slug}>
+                  <Link to={`/himchistka-${d.slug}`} className="text-sm transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.45)" }}>
+                    {d.name}
+                  </Link>
+                </li>
+              ))}
+              {microDistricts.map((d) => (
+                <li key={d.slug}>
+                  <Link to={`/himchistka-${d.slug}`} className="text-sm transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.45)" }}>
+                    {d.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wider mb-4" style={{ color: "rgba(255,255,255,0.3)" }}>Полезное</p>
+            <ul className="space-y-2">
+              {BLOG_POSTS.slice(0, 5).map((p) => (
+                <li key={p.slug}>
+                  <Link to={`/blog/${p.slug}`} className="text-sm transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.45)" }}>
+                    {p.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wider mb-4" style={{ color: "rgba(255,255,255,0.3)" }}>Компания</p>
+            <ul className="space-y-2">
+              {[
+                { label: "Наши работы", to: "/nashi-raboty" },
+                { label: "Отзывы клиентов", to: "/otzyvy" },
+                { label: "Политика конфиденциальности", to: "/privacy" },
+                { label: "Политика Cookie", to: "/cookie-policy" },
+              ].map((l) => (
+                <li key={l.to}>
+                  <Link to={l.to} className="text-sm transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.45)" }}>
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex flex-wrap justify-center gap-5">
             {NAV_LINKS.map((l) => (
@@ -428,6 +497,9 @@ export function Footer() {
             ))}
             <Link to="/nashi-raboty" className="text-sm transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.4)" }}>
               Наши работы
+            </Link>
+            <Link to="/otzyvy" className="text-sm transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.4)" }}>
+              Отзывы
             </Link>
           </div>
           <div className="flex flex-col items-center md:items-end gap-2">

@@ -16,6 +16,7 @@ import NotFound from "./pages/NotFound";
 import Works from "./pages/Works";
 import SeoAdmin from "./pages/SeoAdmin";
 import Landing from "./pages/Landing";
+import Reviews from "./pages/Reviews";
 import CookieBanner from "./components/CookieBanner";
 import { useYandexMetrika } from "./hooks/useYandexMetrika";
 import { SeoNotFound } from "./components/Seo";
@@ -38,6 +39,7 @@ function AppInner() {
         <Route path="/nashi-raboty" element={<Works />} />
         <Route path="/seo-panel" element={<SeoAdmin />} />
         <Route path="/landing" element={<Landing />} />
+        <Route path="/otzyvy" element={<Reviews />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<><SeoNotFound /><NotFoundContent /></>} />
       </Routes>
