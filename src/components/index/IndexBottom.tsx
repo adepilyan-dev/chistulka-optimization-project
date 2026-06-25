@@ -269,12 +269,13 @@ export function Zones() {
 function ContactForm({ inView }: { inView: boolean }) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [consent, setConsent] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
-    if (!name || !phone) return;
+    if (!name || !phone || !consent) return;
     setLoading(true);
     setError(false);
     try {
@@ -337,7 +338,7 @@ function ContactForm({ inView }: { inView: boolean }) {
         <button
           onClick={handleSubmit}
           className="w-full btn-primary py-3.5 font-oswald font-semibold text-base disabled:opacity-50"
-          disabled={!name || !phone || loading}
+          disabled={!name || !phone || !consent || loading}
         >
           {loading ? "Отправляем..." : "Вызвать мастера"}
         </button>
@@ -346,9 +347,19 @@ function ContactForm({ inView }: { inView: boolean }) {
             Не удалось отправить заявку. Позвоните нам: <a href="tel:+79189682882" style={{ color: "#e53e3e" }}>8 918 968-28-82</a>
           </p>
         )}
-        <p className="text-xs text-center" style={{ color: "var(--gray)" }}>
-          Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности
-        </p>
+        <label className="flex items-start gap-2 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={consent}
+            onChange={(e) => setConsent(e.target.checked)}
+            className="mt-0.5 shrink-0 accent-teal-500"
+            style={{ width: 15, height: 15 }}
+          />
+          <span className="text-xs leading-snug" style={{ color: "var(--gray)" }}>
+            Я даю согласие на обработку{" "}
+            <a href="/privacy" className="underline" style={{ color: "var(--teal)" }}>персональных данных</a>
+          </span>
+        </label>
       </div>
     </div>
   );

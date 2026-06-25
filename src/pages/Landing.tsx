@@ -90,12 +90,13 @@ function Timer() {
 function LeadForm({ compact = false }: { compact?: boolean }) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [consent, setConsent] = useState(false);
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   const handleSubmit = async () => {
-    if (!name || !phone) return;
+    if (!name || !phone || !consent) return;
     setLoading(true);
     setError(false);
     try {
@@ -149,7 +150,7 @@ function LeadForm({ compact = false }: { compact?: boolean }) {
         />
         <button
           onClick={handleSubmit}
-          disabled={!name || !phone || loading}
+          disabled={!name || !phone || !consent || loading}
           className="w-full btn-primary py-3 font-oswald font-semibold text-base disabled:opacity-50 whitespace-nowrap"
           style={compact ? { minWidth: 200 } : {}}
         >
@@ -161,9 +162,19 @@ function LeadForm({ compact = false }: { compact?: boolean }) {
           Ошибка. Позвоните: <a href={`tel:${PHONE}`} style={{ color: "#e53e3e" }}>{PHONE_DISPLAY}</a>
         </p>
       )}
-      <p className="text-xs text-center" style={{ color: "var(--gray)" }}>
-        Нажимая кнопку, вы соглашаетесь с <a href="/privacy" className="underline">политикой конфиденциальности</a>
-      </p>
+      <label className="flex items-start gap-2 cursor-pointer mt-1">
+        <input
+          type="checkbox"
+          checked={consent}
+          onChange={(e) => setConsent(e.target.checked)}
+          className="mt-0.5 shrink-0 accent-teal-500"
+          style={{ width: 15, height: 15 }}
+        />
+        <span className="text-xs leading-snug" style={{ color: "var(--gray)" }}>
+          Я даю согласие на обработку{" "}
+          <a href="/privacy" className="underline" style={{ color: "var(--teal)" }}>персональных данных</a>
+        </span>
+      </label>
     </div>
   );
 }
