@@ -1,5 +1,7 @@
+import { useState } from "react";
 import Icon from "@/components/ui/icon";
 import type { IndexNowResult } from "./seoAdminTypes";
+import { INDEXNOW_URL } from "./seoAdminTypes";
 
 // ── Robots ────────────────────────────────────────────────────────────────────
 
@@ -56,6 +58,21 @@ export function SeoAdminRobots({ robots, setRobots, saving, saved, onSave }: Rob
 // ── Sitemap ───────────────────────────────────────────────────────────────────
 
 export function SeoAdminSitemap() {
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState<IndexNowResult | null>(null);
+
+  async function sendIndexNow() {
+    setLoading(true);
+    setResult(null);
+    try {
+      const res = await fetch(INDEXNOW_URL, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({}) });
+      const json = await res.json();
+      setResult(json);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <div className="max-w-2xl">
       <div className="rounded-2xl p-6" style={{ background: "#1e293b", border: "1px solid rgba(255,255,255,0.06)" }}>
@@ -112,8 +129,8 @@ export function SeoAdminSitemap() {
           <p className="text-xs font-semibold mb-3" style={{ color: "rgba(255,255,255,0.4)" }}>Статистика sitemap</p>
           <div className="grid grid-cols-3 gap-3">
             {[
-              { label: "Страниц всего", value: "33" },
-              { label: "Услуги", value: "6" },
+              { label: "Страниц всего", value: "39" },
+              { label: "Услуги", value: "12" },
               { label: "Районы", value: "20" },
             ].map((s) => (
               <div key={s.label} className="text-center p-3 rounded-lg" style={{ background: "#0f172a" }}>
@@ -122,6 +139,46 @@ export function SeoAdminSitemap() {
               </div>
             ))}
           </div>
+        </div>
+
+        <div className="mt-6 pt-6 border-t" style={{ borderColor: "rgba(255,255,255,0.07)" }}>
+          <p className="text-xs font-semibold mb-3" style={{ color: "rgba(255,255,255,0.4)" }}>Быстрая отправка в Яндекс</p>
+          <p className="text-xs mb-4" style={{ color: "rgba(255,255,255,0.3)" }}>
+            После публикации изменений отправьте все URL в Яндекс через IndexNow — страницы попадут в индекс быстрее.
+          </p>
+          <button
+            onClick={sendIndexNow}
+            disabled={loading}
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all disabled:opacity-40"
+            style={{ background: "#facc15", color: "#0f172a" }}
+          >
+            <Icon name={loading ? "Loader" : "Zap"} size={15} className={loading ? "animate-spin" : ""} />
+            {loading ? "Отправляем..." : "Отправить sitemap в Яндекс"}
+          </button>
+
+          {result && (
+            <div className="mt-4 space-y-3">
+              <div className="flex items-center gap-2 text-sm font-semibold" style={{ color: "var(--teal)" }}>
+                <Icon name="CheckCircle" size={15} />
+                Отправлено {result.urls_sent} URL
+              </div>
+              <div className="space-y-1.5">
+                {result.results.map((r) => (
+                  <div
+                    key={r.endpoint}
+                    className="flex items-center justify-between px-3 py-2 rounded-lg text-xs"
+                    style={{ background: "#0f172a", border: `1px solid ${r.status === 202 || r.status === 200 ? "rgba(12,184,160,0.3)" : "rgba(255,100,100,0.3)"}` }}
+                  >
+                    <span style={{ color: "rgba(255,255,255,0.5)" }}>{r.endpoint.replace("https://", "")}</span>
+                    <span className="font-bold" style={{ color: r.status === 202 || r.status === 200 ? "var(--teal)" : "#f87171" }}>
+                      {r.status === 202 || r.status === 200 ? `✓ ${r.status}` : `✗ ${r.status}`}
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <p className="text-xs" style={{ color: "rgba(255,255,255,0.25)" }}>202 — URL приняты в очередь на обход</p>
+            </div>
+          )}
         </div>
       </div>
     </div>
