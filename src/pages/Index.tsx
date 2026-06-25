@@ -2,7 +2,6 @@ import Seo from "@/components/Seo";
 import { Navbar, Hero, Marquee, Services, Calculator } from "@/components/index/IndexTop";
 import { About, HowWeWork, TrustRatings, Reviews } from "@/components/index/IndexMiddle";
 import { Gallery, Blog, Faq, Contacts, Footer, FloatingActions } from "@/components/index/IndexBottom";
-import { SeoTextBlock } from "@/components/index/SeoTextBlock";
 import { useIndexNow } from "@/hooks/useIndexNow";
 
 const SEO_LD = [
@@ -136,7 +135,6 @@ export default function Index() {
       <Gallery />
       <Blog />
       <Faq />
-      <SeoTextBlock />
       <Contacts />
       <Footer />
       <FloatingActions />
