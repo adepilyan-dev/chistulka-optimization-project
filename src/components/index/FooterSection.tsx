@@ -1,15 +1,11 @@
 import { Link } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 import { BLOG_POSTS } from "@/data/blog";
-import { DISTRICTS } from "@/data/districts";
 import { SERVICES_DATA } from "@/data/services";
 import { ymGoal } from "@/hooks/useYandexMetrika";
 import { NAV_LINKS } from "@/components/index/IndexShared";
 
 export function Footer() {
-  const mainDistricts = DISTRICTS.filter((d) => d.type === "district");
-  const microDistricts = DISTRICTS.filter((d) => d.type === "micro").slice(0, 8);
-
   return (
     <footer style={{ background: "var(--dark)" }}>
       {/* SEO-блок со ссылками */}
@@ -28,22 +24,13 @@ export function Footer() {
             </ul>
           </div>
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wider mb-4" style={{ color: "rgba(255,255,255,0.3)" }}>Районы</p>
+            <p className="text-xs font-semibold uppercase tracking-wider mb-4" style={{ color: "rgba(255,255,255,0.3)" }}>Контакты</p>
             <ul className="space-y-2">
-              {mainDistricts.map((d) => (
-                <li key={d.slug}>
-                  <Link to={`/himchistka-${d.slug}`} className="text-sm transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.45)" }}>
-                    {d.name}
-                  </Link>
-                </li>
-              ))}
-              {microDistricts.map((d) => (
-                <li key={d.slug}>
-                  <Link to={`/himchistka-${d.slug}`} className="text-sm transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.45)" }}>
-                    {d.name}
-                  </Link>
-                </li>
-              ))}
+              <li><a href="tel:+79189682882" className="text-sm transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.45)" }}>8 918 968-28-82</a></li>
+              <li><span className="text-sm" style={{ color: "rgba(255,255,255,0.45)" }}>Краснодар, весь город</span></li>
+              <li><span className="text-sm" style={{ color: "rgba(255,255,255,0.45)" }}>Пн–Вс, 9:00–22:00</span></li>
+              <li><a href="https://wa.me/79189682882" target="_blank" rel="noopener noreferrer" className="text-sm transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.45)" }}>WhatsApp</a></li>
+              <li><a href="https://vk.com/club239497134" target="_blank" rel="noopener noreferrer" className="text-sm transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.45)" }}>ВКонтакте</a></li>
             </ul>
           </div>
           <div>
