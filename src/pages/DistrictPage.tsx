@@ -17,7 +17,8 @@ const BENEFITS = [
 ];
 
 export default function DistrictPage() {
-  const { district } = useParams();
+  const params = useParams();
+  const district = params.district ?? params.slug;
   const d = getDistrictBySlug(district);
 
   useEffect(() => {
