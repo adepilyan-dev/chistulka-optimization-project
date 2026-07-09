@@ -28,7 +28,7 @@ export default function DistrictPage() {
   if (!d) return <Navigate to="/" replace />;
 
   const seoTitle = `Химчистка мебели ${d.nameGen} Краснодара — выезд на дом | Аренда Чистоты`;
-  const seoDescription = `Химчистка мебели ${d.nameGen} Краснодара с выездом на дом в день заявки. ${d.description} Диваны, кресла, матрасы, ковры — сушка 2–4 часа. ☎ 8 918 968-28-82`;
+  const seoDescription = `Химчистка мебели ${d.nameGen} Краснодара с выездом на дом в день заявки. ${d.description} Диваны, кресла, матрасы, ковры — сушка 2–4 часа. ☎ 8(918)968-28-82`;
   const n = d.name;
   const keywords = [
     // Общие
@@ -146,7 +146,7 @@ export default function DistrictPage() {
                 className="btn-primary flex items-center justify-center gap-2 px-6 py-3 font-semibold"
               >
                 <Icon name="Phone" size={18} />
-                8 918 968-28-82
+                8(918)968-28-82
               </a>
               <a
                 href="/#contacts"
@@ -219,7 +219,7 @@ export default function DistrictPage() {
             style={{ color: "var(--teal)" }}
           >
             <Icon name="Phone" size={18} />
-            8 918 968-28-82
+            8(918)968-28-82
           </a>
         </div>
 
@@ -260,7 +260,7 @@ export default function DistrictPage() {
           <div className="flex gap-4">
             <Link to="/privacy" style={{ color: "var(--gray)" }} className="hover:underline">Конфиденциальность</Link>
             <Link to="/cookie-policy" style={{ color: "var(--gray)" }} className="hover:underline">Cookie</Link>
-            <a href="tel:+79189682882" style={{ color: "var(--teal)" }} className="font-medium">8 918 968-28-82</a>
+            <a href="tel:+79189682882" style={{ color: "var(--teal)" }} className="font-medium">8(918)968-28-82</a>
           </div>
         </div>
       </footer>

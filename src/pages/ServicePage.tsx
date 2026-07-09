@@ -214,7 +214,7 @@ export default function ServicePage({ overrideSlug, overridePath }: Props) {
             style={{ color: "var(--teal)" }}
           >
             <Icon name="Phone" size={18} />
-            8 918 968-28-82
+            8(918)968-28-82
           </a>
         </div>
 
@@ -274,7 +274,7 @@ export default function ServicePage({ overrideSlug, overridePath }: Props) {
           <div className="flex gap-4">
             <Link to="/privacy" style={{ color: "var(--gray)" }} className="hover:underline">Конфиденциальность</Link>
             <Link to="/cookie-policy" style={{ color: "var(--gray)" }} className="hover:underline">Cookie</Link>
-            <a href="tel:+79189682882" style={{ color: "var(--teal)" }} className="font-medium">8 918 968-28-82</a>
+            <a href="tel:+79189682882" style={{ color: "var(--teal)" }} className="font-medium">8(918)968-28-82</a>
           </div>
         </div>
       </footer>

@@ -19,7 +19,7 @@ export default function ServiceDistrictPage() {
   if (!service || !d) return <Navigate to="/" replace />;
 
   const seoTitle = `${service.title} ${d.nameGen} Краснодара — выезд на дом | Аренда Чистоты`;
-  const seoDescription = `${service.title} ${d.nameGen} Краснодара с выездом мастера на дом. ${service.desc} Работаем ${d.nameGen} без доплат за выезд. ☎ 8 918 968-28-82`;
+  const seoDescription = `${service.title} ${d.nameGen} Краснодара с выездом мастера на дом. ${service.desc} Работаем ${d.nameGen} без доплат за выезд. ☎ 8(918)968-28-82`;
   const keywords = [
     `${service.title.toLowerCase()} ${d.name}`,
     `${service.title.toLowerCase()} ${d.name} краснодар`,
@@ -126,7 +126,7 @@ export default function ServiceDistrictPage() {
                 className="btn-primary flex items-center justify-center gap-2 px-6 py-3 font-semibold"
               >
                 <Icon name="Phone" size={18} />
-                8 918 968-28-82
+                8(918)968-28-82
               </a>
               <a
                 href="/#contacts"
@@ -230,7 +230,7 @@ export default function ServiceDistrictPage() {
             style={{ color: "var(--teal)" }}
           >
             <Icon name="Phone" size={18} />
-            8 918 968-28-82
+            8(918)968-28-82
           </a>
         </div>
 

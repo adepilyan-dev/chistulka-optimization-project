@@ -5,7 +5,7 @@ import { WORKS } from "@/data/works";
 
 const FORM_URL = "https://functions.poehali.dev/e0c4663b-8df6-4eed-958d-8a57089eb58a";
 const PHONE = "+79189682882";
-const PHONE_DISPLAY = "8 918 968-28-82";
+const PHONE_DISPLAY = "8(918)968-28-82";
 
 const SERVICES = [
   { icon: "Sofa", label: "Диван", price: "от 3 500 ₽" },

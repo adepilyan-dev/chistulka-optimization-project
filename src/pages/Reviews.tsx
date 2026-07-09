@@ -4,7 +4,7 @@ import Seo from "@/components/Seo";
 import { REVIEWS } from "@/components/index/IndexShared";
 
 const PHONE = "+79189682882";
-const PHONE_DISPLAY = "8 918 968-28-82";
+const PHONE_DISPLAY = "8(918)968-28-82";
 const FORM_URL = "https://functions.poehali.dev/e0c4663b-8df6-4eed-958d-8a57089eb58a";
 
 const ALL_REVIEWS = [
@@ -136,7 +136,7 @@ export default function Reviews() {
     <div className="min-h-screen" style={{ background: "var(--light-bg)" }}>
       <Seo
         title="Отзывы о химчистке мебели в Краснодаре | Аренда Чистоты"
-        description="Реальные отзывы клиентов о химчистке диванов, кресел, матрасов и ковров в Краснодаре. Рейтинг 4.98 из 5 по 1240 отзывам. ☎ 8 918 968-28-82"
+        description="Реальные отзывы клиентов о химчистке диванов, кресел, матрасов и ковров в Краснодаре. Рейтинг 4.98 из 5 по 1240 отзывам. ☎ 8(918)968-28-82"
         path="/otzyvy"
         keywords="отзывы химчистка мебели краснодар, отзывы аренда чистоты, химчистка диванов отзывы краснодар, отзывы клиентов химчистка мебели"
         jsonLd={jsonLd}

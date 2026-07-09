@@ -231,7 +231,7 @@ function ContactForm({ inView }: { inView: boolean }) {
         </button>
         {error && (
           <p className="text-xs text-center font-semibold" style={{ color: "#e53e3e" }}>
-            Не удалось отправить заявку. Позвоните нам: <a href="tel:+79189682882" style={{ color: "#e53e3e" }}>8 918 968-28-82</a>
+            Не удалось отправить заявку. Позвоните нам: <a href="tel:+79189682882" style={{ color: "#e53e3e" }}>8(918)968-28-82</a>
           </p>
         )}
         <label className="flex items-start gap-2 cursor-pointer">
@@ -268,7 +268,7 @@ export function Contacts() {
             </p>
             <div className={`space-y-4 ${inView ? "animate-fade-up stagger-3" : "opacity-0"}`}>
               {[
-                { icon: "Phone", label: "Телефон", value: "8 918 968-28-82", sub: "Звоните в любое время", link: "tel:+79189682882", goal: "phone_click" },
+                { icon: "Phone", label: "Телефон", value: "8(918)968-28-82", sub: "Звоните в любое время", link: "tel:+79189682882", goal: "phone_click" },
                 { icon: "MessageSquare", label: "WhatsApp", value: "Написать в WhatsApp", sub: "Онлайн 9:00–22:00", link: "https://wa.me/79189682882", goal: "whatsapp_click" },
                 { icon: "MessageCircle", label: "MAX", value: "Написать в MAX", sub: "Онлайн 9:00–22:00", link: "https://max.ru/u/f9LHodD0cOIhDoRH_6LXfcSUOHBuL1Ox9Kjst5F3mN4736vAC4pXtz-GKzc", goal: "max_click" },
                 { icon: "Users", label: "ВКонтакте", value: "Группа ВКонтакте", sub: "Отзывы и акции", link: "https://vk.com/club239497134", goal: "vk_click" },

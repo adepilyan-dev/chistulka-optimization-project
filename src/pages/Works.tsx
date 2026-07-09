@@ -169,7 +169,7 @@ function WorkModal({ work, onClose }: { work: WorkCase; onClose: () => void }) {
             </div>
           </div>
           <a
-            href="tel:+79180000000"
+            href="tel:+79189682882"
             className="btn-primary w-full py-3 text-sm font-semibold flex items-center justify-center gap-2"
           >
             <Icon name="Phone" size={16} />
@@ -351,7 +351,7 @@ export default function Works() {
               Выезд мастера бесплатно. Оценка стоимости на месте.
             </p>
             <a
-              href="tel:+79180000000"
+              href="tel:+79189682882"
               className="btn-primary inline-flex items-center gap-2 px-8 py-3 text-base"
             >
               <Icon name="Phone" size={18} />
@@ -401,7 +401,7 @@ export default function Works() {
 
       {/* Плавающая кнопка */}
       <a
-        href="tel:+79180000000"
+        href="tel:+79189682882"
         className="fixed bottom-6 right-6 z-50 btn-primary flex items-center gap-2 px-5 py-3 text-sm font-semibold shadow-xl"
         style={{ boxShadow: "0 8px 32px rgba(255,226,39,0.45)" }}
       >

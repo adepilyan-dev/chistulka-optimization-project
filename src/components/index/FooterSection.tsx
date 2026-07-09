@@ -26,7 +26,7 @@ export function Footer() {
           <div>
             <p className="text-xs font-semibold uppercase tracking-wider mb-4" style={{ color: "rgba(255,255,255,0.3)" }}>Контакты</p>
             <ul className="space-y-2">
-              <li><a href="tel:+79189682882" className="text-sm transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.45)" }}>8 918 968-28-82</a></li>
+              <li><a href="tel:+79189682882" className="text-sm transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.45)" }}>8(918)968-28-82</a></li>
               <li><span className="text-sm" style={{ color: "rgba(255,255,255,0.45)" }}>Краснодар, весь город</span></li>
               <li><span className="text-sm" style={{ color: "rgba(255,255,255,0.45)" }}>Пн–Вс, 9:00–22:00</span></li>
               <li><a href="https://wa.me/79189682882" target="_blank" rel="noopener noreferrer" className="text-sm transition-colors hover:text-white" style={{ color: "rgba(255,255,255,0.45)" }}>WhatsApp</a></li>
