@@ -28,7 +28,7 @@ export default function DistrictPage() {
   if (!d) return <Navigate to="/" replace />;
 
   const seoTitle = `Химчистка мебели ${d.nameGen} Краснодара — выезд на дом | Аренда Чистоты`;
-  const seoDescription = `★4.98 из 5 (1240 отзывов) Химчистка мебели ${d.nameGen} Краснодара с выездом на дом. Диваны, кресла, матрасы, ковры. Сушка 2–4 часа. Недорого. ☎ 8 918 968-28-82`;
+  const seoDescription = `Химчистка мебели ${d.nameGen} Краснодара с выездом на дом в день заявки. ${d.description} Диваны, кресла, матрасы, ковры — сушка 2–4 часа. ☎ 8 918 968-28-82`;
   const n = d.name;
   const keywords = [
     // Общие

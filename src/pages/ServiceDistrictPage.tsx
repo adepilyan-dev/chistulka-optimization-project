@@ -19,7 +19,7 @@ export default function ServiceDistrictPage() {
   if (!service || !d) return <Navigate to="/" replace />;
 
   const seoTitle = `${service.title} ${d.nameGen} Краснодара — выезд на дом | Аренда Чистоты`;
-  const seoDescription = `★4.98 из 5 (1240 отзывов) ${service.title} ${d.nameGen} Краснодара с выездом на дом. ${service.seoDescription.split(".")[1] ?? "Быстро, качественно, без предоплаты."} ☎ 8 918 968-28-82`;
+  const seoDescription = `${service.title} ${d.nameGen} Краснодара с выездом мастера на дом. ${service.desc} Работаем ${d.nameGen} без доплат за выезд. ☎ 8 918 968-28-82`;
   const keywords = [
     `${service.title.toLowerCase()} ${d.name}`,
     `${service.title.toLowerCase()} ${d.name} краснодар`,
