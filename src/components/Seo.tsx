@@ -1,8 +1,7 @@
 import { Helmet } from "react-helmet-async";
 
 const SITE = "https://arenda-chistoty.ru";
-const DEFAULT_IMAGE =
-  "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/1f8a12d2-02a6-452c-a1cb-4fa8f342c646.jpg";
+const DEFAULT_IMAGE = `${SITE}/og-image.jpg`;
 
 interface BreadcrumbItem {
   label: string;
@@ -20,6 +19,24 @@ interface SeoProps {
   jsonLd?: object;
   breadcrumbs?: BreadcrumbItem[];
 }
+
+const ORGANIZATION_LD = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Аренда Чистоты",
+  url: SITE,
+  logo: DEFAULT_IMAGE,
+  image: DEFAULT_IMAGE,
+  telephone: "+79189682882",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Краснодар",
+    addressCountry: "RU",
+  },
+  sameAs: [
+    "https://vk.com/club239497134",
+  ],
+};
 
 export default function Seo({
   title,
@@ -66,11 +83,16 @@ export default function Seo({
       <meta property="og:description" content={description} />
       <meta property="og:url" content={url} />
       <meta property="og:image" content={image} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta property="og:site_name" content="Аренда Чистоты" />
 
+      <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={image} />
 
+      <script type="application/ld+json">{JSON.stringify(ORGANIZATION_LD)}</script>
       {jsonLd && (
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       )}

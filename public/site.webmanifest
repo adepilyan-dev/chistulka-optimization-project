@@ -1,0 +1,22 @@
+{
+  "name": "Аренда Чистоты — химчистка мебели в Краснодаре",
+  "short_name": "Аренда Чистоты",
+  "description": "Химчистка диванов, кресел, матрасов и ковров в Краснодаре с выездом на дом",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0cb8a0",
+  "lang": "ru",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
