@@ -43,7 +43,7 @@ export const SERVICES = [
     desc: "Удаляем пятна, запахи и аллергены. Ткань, велюр, замша, кожа — работаем с любым материалом.",
     color: "#0cb8a0",
     badge: "Хит",
-    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/bcb4a8aa-0dfd-4cad-bef1-70049379a194.jpg",
+    img: "/images/service-divan.webp",
   },
   {
     icon: "ArmchairIcon",
@@ -51,7 +51,7 @@ export const SERVICES = [
     desc: "Офисные, обеденные, игровые кресла. Глубокая чистка без разборки, сушка за 2–4 часа.",
     color: "#c9a800",
     badge: null,
-    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/32dbcd93-9d05-4cd0-97be-b92950779a37.jpg",
+    img: "/images/service-kreslo.webp",
   },
   {
     icon: "BedDouble",
@@ -59,7 +59,7 @@ export const SERVICES = [
     desc: "Устраняем клещей, грибок, пятна и неприятные запахи. Безопасно для детей и аллергиков.",
     color: "#0cb8a0",
     badge: "Популярно",
-    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/157e0325-e980-40bb-ad12-0ac0666b29c4.jpg",
+    img: "/images/service-matras.webp",
   },
   {
     icon: "LayoutGrid",
@@ -67,7 +67,7 @@ export const SERVICES = [
     desc: "Шерсть, синтетика, ковры ручной работы. Выездная чистка на дому или в нашем цеху.",
     color: "#c9a800",
     badge: null,
-    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/6892c9d8-2c73-4645-9fd6-399caee62037.jpg",
+    img: "/images/service-kovry.webp",
   },
   {
     icon: "Armchair",
@@ -75,7 +75,7 @@ export const SERVICES = [
     desc: "Обеденные группы, барные стулья, пуфики. Быстро — один стул от 15 минут.",
     color: "#0cb8a0",
     badge: null,
-    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/e34f7bce-a582-4425-a8e4-da241d6b65e3.jpg",
+    img: "/images/service-stulya.webp",
   },
   {
     icon: "Car",
@@ -83,7 +83,7 @@ export const SERVICES = [
     desc: "Сиденья, потолок, дверные панели. Профессиональное оборудование и безопасные средства.",
     color: "#c9a800",
     badge: null,
-    img: "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/bcb5b240-69f5-4098-908b-011a606d4c63.jpg",
+    img: "/images/service-auto.webp",
   },
 ];
 

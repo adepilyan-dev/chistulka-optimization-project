@@ -248,6 +248,8 @@ export function Services() {
                     src={s.img}
                     alt={`${s.title} в Краснодаре`}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    width={700}
+                    height={700}
                     loading="lazy"
                     decoding="async"
                   />
