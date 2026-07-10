@@ -15,10 +15,22 @@ export function Blog() {
               Советы по чистоте
             </h2>
           </div>
-          <button onClick={() => scrollToId("contacts")} className={`btn-primary px-6 py-2.5 text-sm font-oswald flex items-center gap-2 ${inView ? "animate-fade-up stagger-2" : "opacity-0"}`}>
-            <Icon name="MessageCircle" size={16} />
-            Задать вопрос
-          </button>
+          <div className={`flex flex-wrap items-center gap-3 ${inView ? "animate-fade-up stagger-2" : "opacity-0"}`}>
+            <a
+              href="https://dzen.ru/profile/editor/arenda-chistoty.ru/publications?state=published"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-6 py-2.5 text-sm font-oswald font-semibold rounded-full border transition-all hover:bg-gray-50"
+              style={{ color: "var(--dark)", borderColor: "var(--border)" }}
+            >
+              <Icon name="Rss" size={16} />
+              Читать в Дзен
+            </a>
+            <button onClick={() => scrollToId("contacts")} className="btn-primary px-6 py-2.5 text-sm font-oswald flex items-center gap-2">
+              <Icon name="MessageCircle" size={16} />
+              Задать вопрос
+            </button>
+          </div>
         </div>
         <div className="grid md:grid-cols-3 gap-6">
           {BLOG_POSTS.map((post, i) => (
