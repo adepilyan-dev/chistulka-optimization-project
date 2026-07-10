@@ -7,6 +7,8 @@ import { getDistrictBySlug, DISTRICTS } from "@/data/districts";
 import { SERVICES_DATA } from "@/data/services";
 import { ymGoal } from "@/hooks/useYandexMetrika";
 import logo from "@/assets/logo.webp";
+import { useMaxConsent } from "@/hooks/useMaxConsent";
+import ConsentCheckbox from "@/components/ConsentCheckbox";
 
 const HERO_IMG = "https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/1f8a12d2-02a6-452c-a1cb-4fa8f342c646.jpg";
 
@@ -21,6 +23,7 @@ export default function DistrictPage() {
   const params = useParams();
   const district = params.district ?? params.slug;
   const d = getDistrictBySlug(district);
+  const { consent, setConsent, openMax } = useMaxConsent();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -155,7 +158,7 @@ export default function DistrictPage() {
                 href="https://max.ru/u/f9LHodD0cOIhDoRH_6LXfcSUOHBuL1Ox9Kjst5F3mN4736vAC4pXtz-GKzc"
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() => ymGoal("max_click")}
+                onClick={(e) => openMax(e, () => ymGoal("max_click"))}
                 className="flex items-center justify-center gap-2 px-6 py-3 font-semibold rounded-full border transition-all hover:bg-gray-50"
                 style={{ color: "var(--teal)", borderColor: "var(--teal)" }}
               >
@@ -163,6 +166,7 @@ export default function DistrictPage() {
                 Оставить заявку
               </a>
             </div>
+            <ConsentCheckbox checked={consent} onChange={setConsent} className="mt-3" />
           </div>
           <div className="rounded-3xl overflow-hidden shadow-lg aspect-[4/3]">
             <img src={HERO_IMG} alt={`Химчистка мебели ${d.name}`} className="w-full h-full object-cover" loading="eager" decoding="async" fetchPriority="high" />

@@ -3,10 +3,11 @@ import Icon from "@/components/ui/icon";
 import Seo from "@/components/Seo";
 import { REVIEWS } from "@/components/index/IndexShared";
 import logo from "@/assets/logo.webp";
+import { useMaxConsent, MAX_LINK } from "@/hooks/useMaxConsent";
+import ConsentCheckbox from "@/components/ConsentCheckbox";
 
 const PHONE = "+79189682882";
 const PHONE_DISPLAY = "8(918)968-28-82";
-const MAX_LINK = "https://max.ru/u/f9LHodD0cOIhDoRH_6LXfcSUOHBuL1Ox9Kjst5F3mN4736vAC4pXtz-GKzc";
 
 const ALL_REVIEWS = [
   ...REVIEWS,
@@ -110,6 +111,7 @@ function StarRating({ rating }: { rating: number }) {
 }
 
 export default function Reviews() {
+  const { consent, setConsent, openMax } = useMaxConsent();
   return (
     <div className="min-h-screen" style={{ background: "var(--light-bg)" }}>
       <Seo
@@ -217,17 +219,19 @@ export default function Reviews() {
           </h2>
           <p className="text-white/80 text-sm mb-8">Выезд в день заявки · Без предоплаты · Сушка 2–4 часа</p>
 
-          <div className="max-w-sm mx-auto">
+          <div className="max-w-sm mx-auto space-y-3">
             <a
               href={MAX_LINK}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={openMax}
               className="w-full py-3 rounded-xl font-oswald font-semibold text-base flex items-center justify-center gap-2"
               style={{ background: "var(--dark)", color: "white" }}
             >
               <Icon name="MessageCircle" size={18} />
               Написать в MAX
             </a>
+            <ConsentCheckbox checked={consent} onChange={setConsent} center light />
           </div>
         </div>
 

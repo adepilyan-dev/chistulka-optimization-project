@@ -7,11 +7,14 @@ import { getServiceBySlug, SERVICES_DATA } from "@/data/services";
 import { getDistrictBySlug, DISTRICTS } from "@/data/districts";
 import { ymGoal } from "@/hooks/useYandexMetrika";
 import logo from "@/assets/logo.webp";
+import { useMaxConsent } from "@/hooks/useMaxConsent";
+import ConsentCheckbox from "@/components/ConsentCheckbox";
 
 export default function ServiceDistrictPage() {
   const { slug, district } = useParams();
   const service = getServiceBySlug(slug);
   const d = getDistrictBySlug(district);
+  const { consent, setConsent, openMax } = useMaxConsent();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -135,7 +138,7 @@ export default function ServiceDistrictPage() {
                 href="https://max.ru/u/f9LHodD0cOIhDoRH_6LXfcSUOHBuL1Ox9Kjst5F3mN4736vAC4pXtz-GKzc"
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() => ymGoal("max_click")}
+                onClick={(e) => openMax(e, () => ymGoal("max_click"))}
                 className="flex items-center justify-center gap-2 px-6 py-3 font-semibold rounded-full border transition-all hover:bg-gray-50"
                 style={{ color: "var(--teal)", borderColor: "var(--teal)" }}
               >
@@ -143,6 +146,7 @@ export default function ServiceDistrictPage() {
                 Оставить заявку
               </a>
             </div>
+            <ConsentCheckbox checked={consent} onChange={setConsent} className="mt-3" />
           </div>
           <div className="rounded-3xl overflow-hidden shadow-lg aspect-[4/3]">
             <img

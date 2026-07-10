@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import Icon from "@/components/ui/icon";
 import { ymGoal } from "@/hooks/useYandexMetrika";
+import { useMaxConsent, MAX_LINK } from "@/hooks/useMaxConsent";
+import ConsentCheckbox from "@/components/ConsentCheckbox";
 import { WORKS } from "@/data/works";
 
-const MAX_LINK = "https://max.ru/u/f9LHodD0cOIhDoRH_6LXfcSUOHBuL1Ox9Kjst5F3mN4736vAC4pXtz-GKzc";
 const PHONE = "+79189682882";
 const PHONE_DISPLAY = "8(918)968-28-82";
 
@@ -88,6 +89,7 @@ function Timer() {
 }
 
 function LeadForm({ compact = false }: { compact?: boolean }) {
+  const { consent, setConsent, openMax } = useMaxConsent();
   return (
     <div className={compact ? "" : "text-center"}>
       {!compact && (
@@ -95,17 +97,20 @@ function LeadForm({ compact = false }: { compact?: boolean }) {
           🎁 Скидка 10% при заявке с сайта
         </p>
       )}
-      <a
-        href={MAX_LINK}
-        target="_blank"
-        rel="noopener noreferrer"
-        onClick={() => ymGoal("max_click")}
-        className="w-full btn-primary py-3 font-oswald font-semibold text-base whitespace-nowrap flex items-center justify-center gap-2"
-        style={compact ? { minWidth: 200 } : {}}
-      >
-        <Icon name="MessageCircle" size={18} />
-        Написать в MAX
-      </a>
+      <div className={compact ? "flex flex-col sm:flex-row items-start gap-3" : "space-y-2"}>
+        <a
+          href={MAX_LINK}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={(e) => openMax(e, () => ymGoal("max_click"))}
+          className="w-full btn-primary py-3 font-oswald font-semibold text-base whitespace-nowrap flex items-center justify-center gap-2"
+          style={compact ? { minWidth: 200 } : {}}
+        >
+          <Icon name="MessageCircle" size={18} />
+          Написать в MAX
+        </a>
+        <ConsentCheckbox checked={consent} onChange={setConsent} center={!compact} />
+      </div>
     </div>
   );
 }

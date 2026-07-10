@@ -7,6 +7,8 @@ import { getServiceBySlug, SERVICES_DATA } from "@/data/services";
 import { DISTRICTS } from "@/data/districts";
 import logo from "@/assets/logo.webp";
 import { ymGoal } from "@/hooks/useYandexMetrika";
+import { useMaxConsent } from "@/hooks/useMaxConsent";
+import ConsentCheckbox from "@/components/ConsentCheckbox";
 
 interface Props {
   overrideSlug?: string;
@@ -17,6 +19,7 @@ export default function ServicePage({ overrideSlug, overridePath }: Props) {
   const params = useParams();
   const slug = overrideSlug ?? params.slug;
   const service = getServiceBySlug(slug);
+  const { consent, setConsent, openMax } = useMaxConsent();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -118,7 +121,7 @@ export default function ServicePage({ overrideSlug, overridePath }: Props) {
                 href="https://max.ru/u/f9LHodD0cOIhDoRH_6LXfcSUOHBuL1Ox9Kjst5F3mN4736vAC4pXtz-GKzc"
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() => ymGoal("max_click")}
+                onClick={(e) => openMax(e, () => ymGoal("max_click"))}
                 className="flex items-center justify-center gap-2 px-6 py-3 font-semibold rounded-full border transition-all hover:bg-gray-50"
                 style={{ color: "var(--teal)", borderColor: "var(--teal)" }}
               >
@@ -126,6 +129,7 @@ export default function ServicePage({ overrideSlug, overridePath }: Props) {
                 Оставить заявку
               </a>
             </div>
+            <ConsentCheckbox checked={consent} onChange={setConsent} className="mt-3" />
           </div>
           <div className="rounded-3xl overflow-hidden shadow-lg aspect-[4/3]">
             <img

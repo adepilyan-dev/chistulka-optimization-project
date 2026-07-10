@@ -4,6 +4,8 @@ import Icon from "@/components/ui/icon";
 import { DISTRICTS } from "@/data/districts";
 import { SERVICES_DATA } from "@/data/services";
 import { ymGoal } from "@/hooks/useYandexMetrika";
+import { useMaxConsent, MAX_LINK } from "@/hooks/useMaxConsent";
+import ConsentCheckbox from "@/components/ConsentCheckbox";
 import { useInView, FAQ_ITEMS } from "@/components/index/IndexShared";
 
 export function Faq() {
@@ -153,9 +155,8 @@ export function Zones() {
   );
 }
 
-const MAX_LINK = "https://max.ru/u/f9LHodD0cOIhDoRH_6LXfcSUOHBuL1Ox9Kjst5F3mN4736vAC4pXtz-GKzc";
-
 function ContactForm({ inView }: { inView: boolean }) {
+  const { consent, setConsent, openMax } = useMaxConsent();
   return (
     <div className={`rounded-3xl p-8 flex flex-col items-center justify-center text-center gap-4 ${inView ? "animate-scale-in stagger-4" : "opacity-0"}`} style={{ background: "var(--light-bg)", border: "1px solid rgba(12,184,160,0.15)", minHeight: 280 }}>
       <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ background: "var(--teal-light)" }}>
@@ -167,12 +168,14 @@ function ContactForm({ inView }: { inView: boolean }) {
         href={MAX_LINK}
         target="_blank"
         rel="noopener noreferrer"
-        onClick={() => ymGoal("max_click")}
-        className="w-full btn-primary py-3.5 font-oswald font-semibold text-base flex items-center justify-center gap-2"
+        onClick={(e) => openMax(e, () => ymGoal("max_click"))}
+        className="w-full btn-primary py-3.5 font-oswald font-semibold text-base flex items-center justify-center gap-2 disabled:opacity-50"
+        aria-disabled={!consent}
       >
         <Icon name="MessageCircle" size={18} />
         Написать в MAX
       </a>
+      <ConsentCheckbox checked={consent} onChange={setConsent} />
     </div>
   );
 }

@@ -5,10 +5,13 @@ import Seo from "@/components/Seo";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { getPostBySlug, BLOG_POSTS } from "@/data/blog";
 import logo from "@/assets/logo.webp";
+import { useMaxConsent } from "@/hooks/useMaxConsent";
+import ConsentCheckbox from "@/components/ConsentCheckbox";
 
 export default function BlogPost() {
   const { slug } = useParams();
   const post = getPostBySlug(slug);
+  const { consent, setConsent, openMax } = useMaxConsent();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -123,15 +126,19 @@ export default function BlogPost() {
             <p className="text-sm font-medium" style={{ color: "var(--dark)" }}>
               Нужна химчистка мебели? Вызовите мастера прямо сейчас.
             </p>
-            <a
-              href="https://max.ru/u/f9LHodD0cOIhDoRH_6LXfcSUOHBuL1Ox9Kjst5F3mN4736vAC4pXtz-GKzc"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-primary px-6 py-2.5 text-sm font-oswald whitespace-nowrap flex items-center gap-2"
-            >
-              <Icon name="MessageCircle" size={16} />
-              Вызвать мастера
-            </a>
+            <div className="flex flex-col items-end gap-2">
+              <a
+                href="https://max.ru/u/f9LHodD0cOIhDoRH_6LXfcSUOHBuL1Ox9Kjst5F3mN4736vAC4pXtz-GKzc"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={openMax}
+                className="btn-primary px-6 py-2.5 text-sm font-oswald whitespace-nowrap flex items-center gap-2"
+              >
+                <Icon name="MessageCircle" size={16} />
+                Вызвать мастера
+              </a>
+              <ConsentCheckbox checked={consent} onChange={setConsent} />
+            </div>
           </div>
         </article>
 
