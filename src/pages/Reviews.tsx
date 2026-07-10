@@ -209,6 +209,48 @@ export default function Reviews() {
           ))}
         </div>
 
+        {/* Оставить отзыв */}
+        <div className="bg-white rounded-3xl p-8 md:p-12 text-center shadow-sm mb-6">
+          <h2 className="font-oswald font-bold text-2xl md:text-3xl mb-2" style={{ color: "var(--dark)" }}>
+            Уже заказывали у нас?
+          </h2>
+          <p className="text-sm mb-8" style={{ color: "var(--gray)" }}>
+            Оставьте отзыв на удобной площадке — это помогает нам расти и другим клиентам сделать выбор
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <a
+              href="https://yandex.ru/maps/org/arenda_chistoty"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-all hover:opacity-90"
+              style={{ background: "#FF4433", color: "white" }}
+            >
+              <Icon name="MapPin" size={16} />
+              Яндекс Карты
+            </a>
+            <a
+              href="https://zoon.ru"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-all hover:opacity-90"
+              style={{ background: "#FF8C00", color: "white" }}
+            >
+              <Icon name="Star" size={16} />
+              Zoon.ru
+            </a>
+            <a
+              href="https://profi.ru"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-all hover:opacity-90"
+              style={{ background: "#6C47FF", color: "white" }}
+            >
+              <Icon name="Award" size={16} />
+              Профи.ру
+            </a>
+          </div>
+        </div>
+
         {/* CTA */}
         <div
           className="rounded-3xl p-8 md:p-12 text-center"
