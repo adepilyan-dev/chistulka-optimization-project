@@ -1,3 +1,41 @@
+# Кеширование статики в браузере
+<IfModule mod_expires.c>
+  ExpiresActive On
+
+  # HTML — не кешируем, всегда проверяем свежую версию
+  ExpiresByType text/html "access plus 0 seconds"
+
+  # JS/CSS со сборки — год (в имени файла есть хеш, меняется при каждом билде)
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType text/javascript "access plus 1 year"
+  ExpiresByType text/css "access plus 1 year"
+
+  # Изображения и шрифты
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType image/x-icon "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType font/woff "access plus 1 year"
+
+  # Манифест и sitemap — сутки
+  ExpiresByType application/manifest+json "access plus 1 day"
+  ExpiresByType application/xml "access plus 1 day"
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(js|css|jpg|jpeg|png|webp|svg|ico|woff|woff2)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+  <FilesMatch "\.(xml|json)$">
+    Header set Cache-Control "public, max-age=86400"
+  </FilesMatch>
+</IfModule>
+
 # SPA fallback: все запросы, не совпавшие с реальным файлом, отдаём index.html
 RewriteEngine On
 RewriteBase /
