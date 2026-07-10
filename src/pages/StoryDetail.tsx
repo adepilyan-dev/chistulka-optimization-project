@@ -101,7 +101,7 @@ export default function StoryDetail() {
             style={{ opacity: showAfter ? 0 : 1 }}
             loading="eager"
             decoding="async"
-            fetchPriority="high"
+            fetchpriority="high"
           />
           <img
             src={story.afterImg}

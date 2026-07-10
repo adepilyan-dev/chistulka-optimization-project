@@ -138,7 +138,7 @@ export default function ServicePage({ overrideSlug, overridePath }: Props) {
               className="w-full h-full object-cover"
               loading="eager"
               decoding="async"
-              fetchPriority="high"
+              fetchpriority="high"
             />
           </div>
         </div>

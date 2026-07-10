@@ -91,7 +91,7 @@ export default function BlogPost() {
         </h1>
 
         <div className="rounded-3xl overflow-hidden mb-8 shadow-sm">
-          <img src={post.img} alt={post.title} className="w-full h-auto object-cover" loading="eager" decoding="async" fetchPriority="high" />
+          <img src={post.img} alt={post.title} className="w-full h-auto object-cover" loading="eager" decoding="async" fetchpriority="high" />
         </div>
 
         <article className="bg-white rounded-3xl p-6 md:p-10 shadow-sm space-y-5">

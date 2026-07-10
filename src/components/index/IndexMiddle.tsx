@@ -44,7 +44,7 @@ export function About() {
                     className="w-full h-full object-cover"
                     width={700}
                     height={933}
-                    fetchPriority="high"
+                    fetchpriority="high"
                     decoding="async"
                   />
                 </div>

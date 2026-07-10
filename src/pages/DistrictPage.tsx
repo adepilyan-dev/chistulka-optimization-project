@@ -169,7 +169,7 @@ export default function DistrictPage() {
             <ConsentCheckbox checked={consent} onChange={setConsent} className="mt-3" />
           </div>
           <div className="rounded-3xl overflow-hidden shadow-lg aspect-[4/3]">
-            <img src={HERO_IMG} alt={`Химчистка мебели ${d.name}`} className="w-full h-full object-cover" loading="eager" decoding="async" fetchPriority="high" />
+            <img src={HERO_IMG} alt={`Химчистка мебели ${d.name}`} className="w-full h-full object-cover" loading="eager" decoding="async" fetchpriority="high" />
           </div>
         </div>
 

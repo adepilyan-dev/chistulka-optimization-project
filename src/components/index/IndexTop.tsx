@@ -34,7 +34,7 @@ export function Navbar() {
             width={140}
             height={40}
             className="h-10 w-auto object-contain"
-            fetchPriority="high"
+            fetchpriority="high"
           />
         </a>
         <div className="hidden lg:flex items-center gap-6">
@@ -169,7 +169,7 @@ export function Hero() {
                 className="w-full h-full object-cover"
                 width={900}
                 height={675}
-                fetchPriority="high"
+                fetchpriority="high"
                 decoding="async"
               />
               <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, rgba(12,184,160,0.12) 0%, transparent 60%)" }} />

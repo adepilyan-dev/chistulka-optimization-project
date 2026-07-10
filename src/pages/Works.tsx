@@ -103,7 +103,7 @@ function WorkModal({ work, onClose }: { work: WorkCase; onClose: () => void }) {
             style={{ opacity: showAfter ? 0 : 1 }}
             loading="eager"
             decoding="async"
-            fetchPriority="high"
+            fetchpriority="high"
           />
           <img
             src={work.afterImg}
