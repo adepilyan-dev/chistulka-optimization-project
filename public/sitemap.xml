@@ -25,6 +25,50 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- Истории клиентов -->
+  <url>
+    <loc>https://arenda-chistoty.ru/istorii-klientov</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://arenda-chistoty.ru/istorii-klientov/kot-porabotal-nad-divanom</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://arenda-chistoty.ru/istorii-klientov/ofis-30-kresel-za-vyhodnye</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://arenda-chistoty.ru/istorii-klientov/detskiy-matras-posle-bolezni</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://arenda-chistoty.ru/istorii-klientov/sovetskiy-sherstyanoy-kover</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://arenda-chistoty.ru/istorii-klientov/kozhaniy-salon-kia-sorento</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://arenda-chistoty.ru/istorii-klientov/restoran-vosem-divanov-za-noch</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
   <!-- Короткие URL услуг (алиасы) -->
   <url>
     <loc>https://arenda-chistoty.ru/himchistka-divanov</loc>

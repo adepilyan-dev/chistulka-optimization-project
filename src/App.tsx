@@ -22,6 +22,8 @@ const SeoAdmin = lazy(() => import("./pages/SeoAdmin"));
 const Landing = lazy(() => import("./pages/Landing"));
 const Reviews = lazy(() => import("./pages/Reviews"));
 const ServiceRedirect = lazy(() => import("./pages/ServiceRedirect"));
+const Stories = lazy(() => import("./pages/Stories"));
+const StoryDetail = lazy(() => import("./pages/StoryDetail"));
 
 const queryClient = new QueryClient();
 
@@ -42,6 +44,8 @@ function AppInner() {
           <Route path="/seo-panel" element={<SeoAdmin />} />
           <Route path="/landing" element={<Landing />} />
           <Route path="/otzyvy" element={<Reviews />} />
+          <Route path="/istorii-klientov" element={<Stories />} />
+          <Route path="/istorii-klientov/:slug" element={<StoryDetail />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<><SeoNotFound /><NotFoundContent /></>} />
         </Routes>

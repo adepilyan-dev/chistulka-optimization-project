@@ -50,6 +50,7 @@ export function Footer() {
             <ul className="space-y-2">
               {[
                 { label: "Наши работы", to: "/nashi-raboty" },
+                { label: "Истории клиентов", to: "/istorii-klientov" },
                 { label: "Отзывы клиентов", to: "/otzyvy" },
                 { label: "Политика конфиденциальности", to: "/privacy" },
                 { label: "Политика Cookie", to: "/cookie-policy" },
