@@ -204,7 +204,7 @@ export function Hero() {
 }
 
 export function Marquee() {
-  const items = ["Химчистка диванов", "Химчистка кресел", "Химчистка матрасов", "Чистка ковров", "Автохимчистка", "Удаление пятен"];
+  const items = ["Химчистка диванов", "Химчистка кресел", "Химчистка матрасов", "Чистка ковров", "Автохимчистка", "Удаление пятен", "Химчистка для бизнеса", "После пожара"];
   const doubled = [...items, ...items];
   return (
     <div className="overflow-hidden py-4" style={{ background: "var(--teal)" }}>
