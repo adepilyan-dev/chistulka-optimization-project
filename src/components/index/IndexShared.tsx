@@ -27,6 +27,7 @@ export function useInView(threshold = 0.12) {
 
 export const NAV_LINKS = [
   { label: "Услуги", href: "#services" },
+  { label: "Акции", href: "#promos" },
   { label: "О нас", href: "#about" },
   { label: "Цены", href: "#prices" },
   { label: "Отзывы", href: "#reviews" },
