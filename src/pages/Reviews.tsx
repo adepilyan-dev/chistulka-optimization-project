@@ -6,7 +6,7 @@ import logo from "@/assets/logo.webp";
 
 const PHONE = "+79189682882";
 const PHONE_DISPLAY = "8(918)968-28-82";
-const FORM_URL = "https://functions.poehali.dev/e0c4663b-8df6-4eed-958d-8a57089eb58a";
+const MAX_LINK = "https://max.ru/u/f9LHodD0cOIhDoRH_6LXfcSUOHBuL1Ox9Kjst5F3mN4736vAC4pXtz-GKzc";
 
 const ALL_REVIEWS = [
   ...REVIEWS,
@@ -109,30 +109,7 @@ function StarRating({ rating }: { rating: number }) {
   );
 }
 
-import { useState } from "react";
-
 export default function Reviews() {
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [consent, setConsent] = useState(false);
-  const [sent, setSent] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  const handleSubmit = async () => {
-    if (!name || !phone || !consent) return;
-    setLoading(true);
-    try {
-      const res = await fetch(FORM_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, phone }),
-      });
-      if (res.ok) setSent(true);
-    } catch (e) {
-      console.error(e);
-    } finally { setLoading(false); }
-  };
-
   return (
     <div className="min-h-screen" style={{ background: "var(--light-bg)" }}>
       <Seo
@@ -240,53 +217,18 @@ export default function Reviews() {
           </h2>
           <p className="text-white/80 text-sm mb-8">Выезд в день заявки · Без предоплаты · Сушка 2–4 часа</p>
 
-          {sent ? (
-            <div className="bg-white/20 rounded-2xl p-6 max-w-sm mx-auto">
-              <p className="text-white font-semibold text-lg">✅ Заявка принята!</p>
-              <p className="text-white/80 text-sm mt-1">Перезвоним в течение 15 минут</p>
-            </div>
-          ) : (
-            <div className="max-w-sm mx-auto space-y-3">
-              <input
-                type="text"
-                placeholder="Ваше имя"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl text-sm outline-none"
-                style={{ border: "none", background: "white", color: "var(--dark)" }}
-              />
-              <input
-                type="tel"
-                placeholder="Номер телефона"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
-                className="w-full px-4 py-3 rounded-xl text-sm outline-none"
-                style={{ border: "none", background: "white", color: "var(--dark)" }}
-              />
-              <button
-                onClick={handleSubmit}
-                disabled={!name || !phone || !consent || loading}
-                className="w-full py-3 rounded-xl font-oswald font-semibold text-base disabled:opacity-50"
-                style={{ background: "var(--dark)", color: "white" }}
-              >
-                {loading ? "Отправляем..." : "Вызвать мастера"}
-              </button>
-              <label className="flex items-start gap-2 cursor-pointer justify-center">
-                <input
-                  type="checkbox"
-                  checked={consent}
-                  onChange={(e) => setConsent(e.target.checked)}
-                  className="mt-0.5 shrink-0"
-                  style={{ width: 15, height: 15 }}
-                />
-                <span className="text-xs leading-snug text-white/70">
-                  Я даю согласие на обработку{" "}
-                  <a href="/privacy" className="underline text-white/90">персональных данных</a>
-                </span>
-              </label>
-            </div>
-          )}
+          <div className="max-w-sm mx-auto">
+            <a
+              href={MAX_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full py-3 rounded-xl font-oswald font-semibold text-base flex items-center justify-center gap-2"
+              style={{ background: "var(--dark)", color: "white" }}
+            >
+              <Icon name="MessageCircle" size={18} />
+              Написать в MAX
+            </a>
+          </div>
         </div>
 
         {/* Ссылки на услуги */}

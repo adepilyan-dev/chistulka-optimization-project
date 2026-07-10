@@ -3,7 +3,7 @@ import Icon from "@/components/ui/icon";
 import { ymGoal } from "@/hooks/useYandexMetrika";
 import { WORKS } from "@/data/works";
 
-const FORM_URL = "https://functions.poehali.dev/e0c4663b-8df6-4eed-958d-8a57089eb58a";
+const MAX_LINK = "https://max.ru/u/f9LHodD0cOIhDoRH_6LXfcSUOHBuL1Ox9Kjst5F3mN4736vAC4pXtz-GKzc";
 const PHONE = "+79189682882";
 const PHONE_DISPLAY = "8(918)968-28-82";
 
@@ -88,93 +88,24 @@ function Timer() {
 }
 
 function LeadForm({ compact = false }: { compact?: boolean }) {
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [consent, setConsent] = useState(false);
-  const [sent, setSent] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-
-  const handleSubmit = async () => {
-    if (!name || !phone || !consent) return;
-    setLoading(true);
-    setError(false);
-    try {
-      const res = await fetch(FORM_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, phone }),
-      });
-      if (res.ok) {
-        setSent(true);
-        ymGoal("form_submit");
-      } else setError(true);
-    } catch { setError(true); }
-    finally { setLoading(false); }
-  };
-
-  if (sent) {
-    return (
-      <div className="flex flex-col items-center gap-3 py-6 text-center">
-        <div className="w-16 h-16 rounded-full flex items-center justify-center text-3xl" style={{ background: "rgba(12,184,160,0.15)" }}>✅</div>
-        <p className="font-oswald font-bold text-xl" style={{ color: "var(--dark)" }}>Заявка принята!</p>
-        <p className="text-sm" style={{ color: "var(--gray)" }}>Перезвоним в течение 15 минут</p>
-      </div>
-    );
-  }
-
   return (
-    <div className={compact ? "" : "space-y-3"}>
+    <div className={compact ? "" : "text-center"}>
       {!compact && (
         <p className="text-xs font-semibold mb-3 text-center" style={{ color: "var(--teal)" }}>
           🎁 Скидка 10% при заявке с сайта
         </p>
       )}
-      <div className={compact ? "flex flex-col sm:flex-row gap-3" : "space-y-3"}>
-        <input
-          type="text"
-          placeholder="Ваше имя"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="w-full px-4 py-3 rounded-xl text-sm outline-none"
-          style={{ border: "1.5px solid var(--border)", background: "white", color: "var(--dark)", fontFamily: "'Golos Text', sans-serif" }}
-        />
-        <input
-          type="tel"
-          placeholder="Номер телефона"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
-          className="w-full px-4 py-3 rounded-xl text-sm outline-none"
-          style={{ border: "1.5px solid var(--border)", background: "white", color: "var(--dark)", fontFamily: "'Golos Text', sans-serif" }}
-        />
-        <button
-          onClick={handleSubmit}
-          disabled={!name || !phone || !consent || loading}
-          className="w-full btn-primary py-3 font-oswald font-semibold text-base disabled:opacity-50 whitespace-nowrap"
-          style={compact ? { minWidth: 200 } : {}}
-        >
-          {loading ? "Отправляем..." : "Вызвать мастера"}
-        </button>
-      </div>
-      {error && (
-        <p className="text-xs text-center" style={{ color: "#e53e3e" }}>
-          Ошибка. Позвоните: <a href={`tel:${PHONE}`} style={{ color: "#e53e3e" }}>{PHONE_DISPLAY}</a>
-        </p>
-      )}
-      <label className="flex items-start gap-2 cursor-pointer mt-1">
-        <input
-          type="checkbox"
-          checked={consent}
-          onChange={(e) => setConsent(e.target.checked)}
-          className="mt-0.5 shrink-0 accent-teal-500"
-          style={{ width: 15, height: 15 }}
-        />
-        <span className="text-xs leading-snug" style={{ color: "var(--gray)" }}>
-          Я даю согласие на обработку{" "}
-          <a href="/privacy" className="underline" style={{ color: "var(--teal)" }}>персональных данных</a>
-        </span>
-      </label>
+      <a
+        href={MAX_LINK}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={() => ymGoal("max_click")}
+        className="w-full btn-primary py-3 font-oswald font-semibold text-base whitespace-nowrap flex items-center justify-center gap-2"
+        style={compact ? { minWidth: 200 } : {}}
+      >
+        <Icon name="MessageCircle" size={18} />
+        Написать в MAX
+      </a>
     </div>
   );
 }

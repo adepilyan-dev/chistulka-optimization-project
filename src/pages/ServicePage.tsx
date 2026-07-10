@@ -115,10 +115,14 @@ export default function ServicePage({ overrideSlug, overridePath }: Props) {
                 Позвонить
               </a>
               <a
-                href="/#contacts"
+                href="https://max.ru/u/f9LHodD0cOIhDoRH_6LXfcSUOHBuL1Ox9Kjst5F3mN4736vAC4pXtz-GKzc"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => ymGoal("max_click")}
                 className="flex items-center justify-center gap-2 px-6 py-3 font-semibold rounded-full border transition-all hover:bg-gray-50"
                 style={{ color: "var(--teal)", borderColor: "var(--teal)" }}
               >
+                <Icon name="MessageCircle" size={18} />
                 Оставить заявку
               </a>
             </div>

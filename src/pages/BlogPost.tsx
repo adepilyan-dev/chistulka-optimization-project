@@ -123,9 +123,15 @@ export default function BlogPost() {
             <p className="text-sm font-medium" style={{ color: "var(--dark)" }}>
               Нужна химчистка мебели? Вызовите мастера прямо сейчас.
             </p>
-            <Link to="/#contacts" className="btn-primary px-6 py-2.5 text-sm font-oswald whitespace-nowrap">
+            <a
+              href="https://max.ru/u/f9LHodD0cOIhDoRH_6LXfcSUOHBuL1Ox9Kjst5F3mN4736vAC4pXtz-GKzc"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary px-6 py-2.5 text-sm font-oswald whitespace-nowrap flex items-center gap-2"
+            >
+              <Icon name="MessageCircle" size={16} />
               Вызвать мастера
-            </Link>
+            </a>
           </div>
         </article>
 

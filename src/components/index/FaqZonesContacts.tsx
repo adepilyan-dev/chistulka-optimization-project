@@ -153,101 +153,26 @@ export function Zones() {
   );
 }
 
+const MAX_LINK = "https://max.ru/u/f9LHodD0cOIhDoRH_6LXfcSUOHBuL1Ox9Kjst5F3mN4736vAC4pXtz-GKzc";
+
 function ContactForm({ inView }: { inView: boolean }) {
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [consent, setConsent] = useState(false);
-  const [sent, setSent] = useState(false);
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  const handleSubmit = async () => {
-    if (!name || !phone || !consent) return;
-    setLoading(true);
-    setError(false);
-    try {
-      const res = await fetch("https://functions.poehali.dev/e0c4663b-8df6-4eed-958d-8a57089eb58a", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, phone }),
-      });
-      if (res.ok) {
-        setSent(true);
-        ymGoal("form_submit");
-      } else {
-        setError(true);
-      }
-    } catch {
-      setError(true);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  if (sent) {
-    return (
-      <div className={`rounded-3xl p-8 flex flex-col items-center justify-center text-center gap-4 ${inView ? "animate-scale-in stagger-4" : "opacity-0"}`} style={{ background: "var(--light-bg)", border: "1px solid rgba(12,184,160,0.15)", minHeight: 280 }}>
-        <div className="w-16 h-16 rounded-full flex items-center justify-center text-3xl" style={{ background: "var(--teal-light)" }}>✅</div>
-        <h3 className="font-oswald font-bold text-xl" style={{ color: "var(--dark)" }}>Заявка принята!</h3>
-        <p className="text-sm" style={{ color: "var(--gray)" }}>Перезвоним в течение 15 минут и уточним детали.</p>
-        <button onClick={() => { setSent(false); setName(""); setPhone(""); }}
-          className="text-sm font-semibold mt-2" style={{ color: "var(--teal)" }}>
-          Отправить ещё одну заявку
-        </button>
-      </div>
-    );
-  }
-
   return (
-    <div className={`rounded-3xl p-6 md:p-8 ${inView ? "animate-scale-in stagger-4" : "opacity-0"}`} style={{ background: "var(--light-bg)", border: "1px solid rgba(12,184,160,0.15)" }}>
-      <h3 className="font-oswald font-bold text-xl mb-1" style={{ color: "var(--dark)" }}>Оставить заявку</h3>
-      <p className="text-xs mb-6" style={{ color: "var(--gray)" }}>Перезвоним в течение 15 минут</p>
-
-      <div className="space-y-3">
-        {[
-          { placeholder: "Ваше имя", type: "text", icon: "User", value: name, setter: setName },
-          { placeholder: "Номер телефона", type: "tel", icon: "Phone", value: phone, setter: setPhone },
-        ].map((field) => (
-          <div key={field.placeholder} className="relative">
-            <div className="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none">
-              <Icon name={field.icon} size={16} style={{ color: "var(--gray)" }} />
-            </div>
-            <input
-              type={field.type}
-              placeholder={field.placeholder}
-              value={field.value}
-              onChange={(e) => field.setter(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 rounded-xl bg-white text-sm outline-none"
-              style={{ border: "1px solid var(--border)", color: "var(--dark)", fontFamily: "'Golos Text', sans-serif" }}
-            />
-          </div>
-        ))}
-        <button
-          onClick={handleSubmit}
-          className="w-full btn-primary py-3.5 font-oswald font-semibold text-base disabled:opacity-50"
-          disabled={!name || !phone || !consent || loading}
-        >
-          {loading ? "Отправляем..." : "Вызвать мастера"}
-        </button>
-        {error && (
-          <p className="text-xs text-center font-semibold" style={{ color: "#e53e3e" }}>
-            Не удалось отправить заявку. Позвоните нам: <a href="tel:+79189682882" style={{ color: "#e53e3e" }}>8(918)968-28-82</a>
-          </p>
-        )}
-        <label className="flex items-start gap-2 cursor-pointer">
-          <input
-            type="checkbox"
-            checked={consent}
-            onChange={(e) => setConsent(e.target.checked)}
-            className="mt-0.5 shrink-0 accent-teal-500"
-            style={{ width: 15, height: 15 }}
-          />
-          <span className="text-xs leading-snug" style={{ color: "var(--gray)" }}>
-            Я даю согласие на обработку{" "}
-            <a href="/privacy" className="underline" style={{ color: "var(--teal)" }}>персональных данных</a>
-          </span>
-        </label>
+    <div className={`rounded-3xl p-8 flex flex-col items-center justify-center text-center gap-4 ${inView ? "animate-scale-in stagger-4" : "opacity-0"}`} style={{ background: "var(--light-bg)", border: "1px solid rgba(12,184,160,0.15)", minHeight: 280 }}>
+      <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ background: "var(--teal-light)" }}>
+        <Icon name="MessageCircle" size={30} style={{ color: "var(--teal)" }} />
       </div>
+      <h3 className="font-oswald font-bold text-xl" style={{ color: "var(--dark)" }}>Оставить заявку</h3>
+      <p className="text-sm" style={{ color: "var(--gray)" }}>Напишите нам в MAX — ответим в течение 15 минут и уточним детали</p>
+      <a
+        href={MAX_LINK}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={() => ymGoal("max_click")}
+        className="w-full btn-primary py-3.5 font-oswald font-semibold text-base flex items-center justify-center gap-2"
+      >
+        <Icon name="MessageCircle" size={18} />
+        Написать в MAX
+      </a>
     </div>
   );
 }
