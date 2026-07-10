@@ -1,0 +1,8 @@
+# SPA fallback: все запросы, не совпавшие с реальным файлом, отдаём index.html
+RewriteEngine On
+RewriteBase /
+
+# Не трогаем существующие файлы и папки (js, css, картинки, sitemap и т.д.)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.html [L]
