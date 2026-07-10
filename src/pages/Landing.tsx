@@ -160,7 +160,7 @@ export default function Landing() {
                 Выезжаем в день обращения. Диваны, кресла, матрасы, ковры — сушка за 2–4 часа. Безопасные средства, детям и животным не вредит.
               </p>
 
-              <div className="grid grid-cols-2 gap-3 mb-8">
+              <div className="grid grid-cols-2 gap-2 sm:gap-3 mb-8">
                 {BENEFITS.map((b) => (
                   <div key={b.text} className="flex items-center gap-2.5">
                     <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: "rgba(12,184,160,0.15)" }}>

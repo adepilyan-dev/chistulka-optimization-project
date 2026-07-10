@@ -111,8 +111,8 @@ export function Navbar() {
 export function Hero() {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden mesh-bg" id="home">
-      <div className="absolute top-24 right-12 w-80 h-80 rounded-full opacity-25 animate-float pointer-events-none" style={{ background: "radial-gradient(circle, var(--teal), transparent)" }} />
-      <div className="absolute bottom-24 left-8 w-52 h-52 rounded-full opacity-20 animate-float pointer-events-none" style={{ animationDelay: "2s", background: "radial-gradient(circle, #ffe227, transparent)" }} />
+      <div className="absolute top-24 right-12 w-40 h-40 sm:w-80 sm:h-80 rounded-full opacity-25 animate-float pointer-events-none" style={{ background: "radial-gradient(circle, var(--teal), transparent)" }} />
+      <div className="absolute bottom-24 left-8 w-28 h-28 sm:w-52 sm:h-52 rounded-full opacity-20 animate-float pointer-events-none" style={{ animationDelay: "2s", background: "radial-gradient(circle, #ffe227, transparent)" }} />
       <div className="absolute top-36 right-24 hidden xl:block animate-spin-slow pointer-events-none">
         <svg viewBox="0 0 120 120" className="w-28 h-28">
           <defs><path id="circle-path" d="M 60,60 m -45,0 a 45,45 0 1,1 90,0 a 45,45 0 1,1 -90,0" /></defs>
@@ -121,8 +121,8 @@ export function Hero() {
           </text>
         </svg>
       </div>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full pt-24 pb-16">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 w-full pt-20 sm:pt-24 pb-12 sm:pb-16">
+        <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 items-center">
           <div className="space-y-7">
             <div className="animate-fade-up stagger-1">
               <span className="section-tag">Аренда Чистоты — химчистка мебели</span>
@@ -140,12 +140,12 @@ export function Hero() {
             <p className="speakable text-lg animate-fade-up stagger-3" style={{ color: "var(--gray)", maxWidth: 480 }}>
               Профессиональная химчистка диванов, кресел, матрасов и ковров в Краснодаре. Выезд на дом, безопасные средства, сушка за 2–4 часа.
             </p>
-            <div className="flex flex-wrap gap-4 animate-fade-up stagger-4">
-              <button onClick={() => scrollToId("contacts")} className="btn-primary px-8 py-3.5 text-base font-oswald flex items-center gap-2">
+            <div className="flex flex-wrap gap-3 sm:gap-4 animate-fade-up stagger-4">
+              <button onClick={() => scrollToId("contacts")} className="btn-primary px-5 sm:px-8 py-3 sm:py-3.5 text-sm sm:text-base font-oswald flex items-center gap-2">
                 <Icon name="Calendar" size={18} />
                 Вызвать мастера
               </button>
-              <button onClick={() => scrollToId("prices")} className="btn-outline px-8 py-3.5 text-base font-oswald flex items-center gap-2">
+              <button onClick={() => scrollToId("prices")} className="btn-outline px-5 sm:px-8 py-3 sm:py-3.5 text-sm sm:text-base font-oswald flex items-center gap-2">
                 <Icon name="Calculator" size={18} />
                 Рассчитать цену
               </button>

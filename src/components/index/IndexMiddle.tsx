@@ -33,9 +33,9 @@ export function About() {
   return (
     <section id="about" className="py-20 bg-white">
       <div ref={ref} className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="grid lg:grid-cols-2 gap-14 items-center">
+        <div className="grid lg:grid-cols-2 gap-8 sm:gap-14 items-center">
           <div className={`relative ${inView ? "animate-fade-up" : "opacity-0"}`}>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4">
               <div className="space-y-4">
                 <div className="rounded-2xl overflow-hidden aspect-[3/4] shadow-lg">
                   <img

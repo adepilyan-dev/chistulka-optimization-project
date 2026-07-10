@@ -143,7 +143,7 @@ function WorkModal({ work, onClose }: { work: WorkCase; onClose: () => void }) {
             </button>
           </div>
         </div>
-        <div className="p-6">
+        <div className="p-4 sm:p-6">
           <div className="flex items-center gap-2 mb-3">
             <span
               className="text-xs font-semibold px-3 py-1 rounded-full"
@@ -152,13 +152,13 @@ function WorkModal({ work, onClose }: { work: WorkCase; onClose: () => void }) {
               {work.categoryLabel}
             </span>
           </div>
-          <h2 className="font-oswald font-bold text-2xl mb-2" style={{ color: "var(--dark)" }}>
+          <h2 className="font-oswald font-bold text-xl sm:text-2xl mb-2" style={{ color: "var(--dark)" }}>
             {work.title}
           </h2>
           <p className="text-sm mb-4" style={{ color: "var(--gray)" }}>
             {work.description}
           </p>
-          <div className="grid grid-cols-2 gap-3 mb-5">
+          <div className="grid grid-cols-2 gap-2 sm:gap-3 mb-5">
             <div className="rounded-xl p-3" style={{ background: "#fff3f3" }}>
               <p className="text-xs font-semibold mb-1" style={{ color: "#c0392b" }}>Загрязнение</p>
               <p className="text-sm" style={{ color: "var(--dark)" }}>{work.stain}</p>
