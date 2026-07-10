@@ -39,9 +39,11 @@ export function About() {
               <div className="space-y-4">
                 <div className="rounded-2xl overflow-hidden aspect-[3/4] shadow-lg">
                   <img
-                    src="https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/d094ad5b-a76b-4a14-ad88-7d73d2d3a774.jpg"
+                    src="/images/about-1.webp"
                     alt="Химчистка дивана на дому в Краснодаре"
                     className="w-full h-full object-cover"
+                    width={700}
+                    height={933}
                     fetchPriority="high"
                     decoding="async"
                   />
@@ -54,10 +56,12 @@ export function About() {
               <div className="space-y-4 mt-8">
                 <div className="rounded-2xl overflow-hidden aspect-[3/4] shadow-lg">
                   <img
-                    src="https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/files/4aefd336-06ed-4dc6-84f8-86b03f8805e9.jpg"
+                    src="/images/about-2.webp"
                     alt="Химчистка матраса"
                     className="w-full h-full object-cover"
-                    fetchPriority="high"
+                    width={700}
+                    height={933}
+                    loading="lazy"
                     decoding="async"
                   />
                 </div>

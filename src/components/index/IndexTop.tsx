@@ -164,9 +164,13 @@ export function Hero() {
           <div className="relative animate-scale-in stagger-3">
             <div className="relative rounded-3xl overflow-hidden shadow-2xl" style={{ aspectRatio: "4/3" }}>
               <img
-                src="https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/ce53b60a-fcdf-4aa5-951f-6fff06f91683.jpg"
+                src="/images/hero.webp"
                 alt="Химчистка кресла — до и после | Аренда Чистоты Краснодар"
                 className="w-full h-full object-cover"
+                width={900}
+                height={675}
+                fetchPriority="high"
+                decoding="async"
               />
               <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, rgba(12,184,160,0.12) 0%, transparent 60%)" }} />
             </div>
