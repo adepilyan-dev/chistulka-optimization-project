@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 import Seo from "@/components/Seo";
+import logo from "@/assets/logo.webp";
 
 const COOKIE_TYPES = [
   {
@@ -35,8 +36,10 @@ export default function CookiePolicy() {
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-5 flex items-center justify-between">
           <Link to="/" className="flex items-center">
             <img
-              src="https://cdn.poehali.dev/projects/4c38c16c-b9b4-483b-8a85-5827a4cc2141/bucket/11571f12-8820-4684-967e-430f28b0c7da.jpg"
+              src={logo}
               alt="Аренда Чистоты"
+              width={120}
+              height={36}
               className="h-9 w-auto object-contain"
               loading="eager"
               decoding="async"
