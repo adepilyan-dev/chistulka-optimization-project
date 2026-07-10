@@ -28,6 +28,9 @@
   <FilesMatch "\.(js|css|jpg|jpeg|png|webp|svg|ico|woff|woff2)$">
     Header set Cache-Control "public, max-age=31536000, immutable"
   </FilesMatch>
+  <FilesMatch "\.(woff|woff2)$">
+    Header set Access-Control-Allow-Origin "*"
+  </FilesMatch>
   <FilesMatch "\.html$">
     Header set Cache-Control "public, max-age=0, must-revalidate"
   </FilesMatch>
